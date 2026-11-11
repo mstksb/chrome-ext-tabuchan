@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title data-i18n="options_title">tabuchan settings</title>
+    <link rel="stylesheet" href="src/options.css">
+    <script type="module" src="src/options.js"></script>
+  </head>
+  <body>
+    <main class="settings">
+      <header class="page-header">
+        <img class="app-icon" src="icons/tab.svg" alt="" width="48" height="48">
+        <div>
+          <p class="eyebrow">tabuchan</p>
+          <h1 data-i18n="options_heading">Tab switching settings</h1>
+        </div>
+      </header>
+
+      <p class="intro" data-i18n="options_intro">Move through recently used tabs with Back and Forward shortcuts. Hold the shortcut to choose a tab from a list.</p>
+
+      <section class="panel" aria-labelledby="shortcuts-heading">
+        <div class="section-heading">
+          <span class="step" aria-hidden="true">01</span>
+          <h2 id="shortcuts-heading" data-i18n="options_shortcuts_heading">Shortcuts</h2>
+        </div>
+          <p class="section-description" data-i18n="options_shortcuts_description">Choose Change or Add, then press the key combination you want to use. You can assign multiple shortcuts to each action. Press Esc to cancel.</p>
+        <dl class="shortcut-list">
+          <div class="shortcut-row">
+            <dt><span class="direction" aria-hidden="true">←</span><span><strong data-i18n="options_back">Back</strong><small data-i18n="options_back_description">Go to the previously used tab</small></span></dt>
+              <dd id="back-bindings" class="binding-list">
+                <kbd id="back-shortcut" data-state="loading" data-i18n="options_loading">Loading</kbd>
+                <button id="record-back" type="button" class="button button-secondary record-button"
+                    aria-label="Change the Back shortcut" data-i18n-aria-label="options_back_change_label" aria-describedby="shortcut-status" aria-pressed="false" disabled data-i18n="options_change">Change</button>
+              </dd>
+          </div>
+          <div class="shortcut-row">
+            <dt><span class="direction" aria-hidden="true">→</span><span><strong data-i18n="options_forward">Forward</strong><small data-i18n="options_forward_description">Move back toward the starting tab</small></span></dt>
+              <dd id="forward-bindings" class="binding-list">
+                <kbd id="forward-shortcut" data-state="loading" data-i18n="options_loading">Loading</kbd>
+                <button id="record-forward" type="button" class="button button-secondary record-button"
+                    aria-label="Change the Forward shortcut" data-i18n-aria-label="options_forward_change_label" aria-describedby="shortcut-status" aria-pressed="false" disabled data-i18n="options_change">Change</button>
+              </dd>
+          </div>
+        </dl>
+        <p id="shortcut-status" class="status" role="status" aria-live="polite"></p>
+          <p class="footnote" data-i18n="options_modifier_help">Control is the physical Control key (⌃). Meta is the Command key (⌘) on macOS or the Windows key on Windows. Esc, Tab, Enter, and arrow keys are reserved for navigation. Some keys are handled by Chrome or the OS before this extension receives them.</p>
+          <p class="footnote" data-i18n="options_legacy_help">Assignments from Chrome's shortcut settings are kept separately. The default J/K combinations are the same, and shortcuts configured here are saved in this extension's settings.</p>
+      </section>
+
+      <section class="panel" aria-labelledby="behavior-heading">
+        <div class="section-heading">
+          <span class="step" aria-hidden="true">02</span>
+          <h2 id="behavior-heading" data-i18n="options_behavior_heading">Behavior and history</h2>
+        </div>
+        <form id="behavior-settings">
+          <div class="setting-row">
+            <label for="hold-delay" data-i18n="options_hold_delay">Hold duration</label>
+            <div><input id="hold-delay" name="hold-delay" type="number" min="0.5" max="2" step="0.1" value="1" required disabled> <span data-i18n="options_seconds">seconds</span></div>
+          </div>
+          <p class="footnote" data-i18n="options_hold_range">Choose 0.5–2.0 seconds in 0.1-second increments.</p>
+          <div class="setting-row">
+            <label for="max-past-tabs" data-i18n="options_history_limit">MRU tabs to show and keep</label>
+            <div><input id="max-past-tabs" name="max-past-tabs" type="number" min="10" max="30" step="1" value="10" required disabled> <span data-i18n="options_tabs_unit">tabs</span></div>
+          </div>
+          <p class="footnote" data-i18n="options_history_help">Keep and show 10–30 past tabs in addition to the current tab. Reducing the limit removes older entries. Increasing it starts retaining additional history from then on. The tab-order list shows all tabs in the current window.</p>
+          <label class="checkbox-setting" for="skip-unavailable-tabs">
+            <input id="skip-unavailable-tabs" name="skip-unavailable-tabs" type="checkbox" checked disabled>
+            <span data-i18n="options_skip_unavailable">Skip tabs where shortcuts are unavailable when using a short press</span>
+          </label>
+          <button id="save-settings" class="button button-secondary" type="submit" disabled data-i18n="options_save">Save settings</button>
+          <p id="settings-status" class="status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="display-heading">
+        <div class="section-heading">
+          <span class="step" aria-hidden="true">03</span>
+          <h2 id="display-heading" data-i18n="options_display_heading">Tab list display</h2>
+        </div>
+          <p class="section-description" data-i18n="options_display_description">The extension detects keys on regular web pages and shows tab titles and favicons in the long-press list. Allow access to the sites where you use it.</p>
+        <div class="permission-box">
+          <span id="permission-indicator" class="permission-indicator" aria-hidden="true"></span>
+          <p id="permission-status" class="permission-status" role="status" aria-live="polite" data-i18n="options_permission_checking">Checking site access.</p>
+        </div>
+          <button id="grant-permission" class="button button-secondary" type="button" hidden data-i18n="options_grant_permission">Allow key detection and tab lists on web pages</button>
+          <p class="footnote" data-i18n="options_page_help">Use shortcuts while a regular web page has focus. Chrome internal pages, the Chrome Web Store, and the address bar have input restrictions.</p>
+      </section>
+
+      <section class="usage" aria-labelledby="usage-heading">
+        <h2 id="usage-heading" data-i18n="options_usage_heading">How it works</h2>
+        <ul>
+          <li data-i18n="options_usage_short_press">Press and release before the hold duration to move one tab Back or Forward. Navigation stops at the ends of the history.</li>
+          <li data-i18n="options_usage_hold">Hold the modifier keys and the assigned regular key together to show MRU candidates.</li>
+          <li data-i18n="options_usage_picker">In the list, use Up and Down to select, Enter to switch, and Esc to cancel. Left switches between MRU and tab order. Right has no action.</li>
+          <li data-i18n="options_usage_search">In tab order, type text to filter tab titles. Press Backspace to delete the last character. Search is case-insensitive and uses tab titles.</li>
+          <li data-i18n="options_usage_modifiers">Holding only the modifier keys after releasing a regular key such as J or K does not count as a long press.</li>
+          <li data-i18n="options_usage_unique">Each tab appears once, ordered by recent use.</li>
+          <li data-i18n="options_usage_reset">Selecting another tab normally ends the current traversal.</li>
+        </ul>
+      </section>
+
+      <footer>tabuchan <span id="version"></span></footer>
+    </main>
+  </body>
+</html>

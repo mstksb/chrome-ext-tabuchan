@@ -1,0 +1,326 @@
+{
+  "extension_name": {
+    "message": "tabuchan"
+  },
+  "extension_description": {
+    "message": "Switch to recent tabs with a tap. Hold to browse, search, and select tabs in the current window."
+  },
+  "extension_action_title": {
+    "message": "tabuchan settings"
+  },
+  "controller_display_unavailable": {
+    "message": "In-page display is unavailable"
+  },
+  "controller_untitled": {
+    "message": "Untitled"
+  },
+  "controller_window_read_failed": {
+    "message": "Could not get the target window"
+  },
+  "controller_window_missing": {
+    "message": "The target window is unavailable"
+  },
+  "controller_move_cancelled": {
+    "message": "Tab changed. Navigation was cancelled."
+  },
+  "controller_candidates_updated": {
+    "message": "The candidates changed. Open the list again."
+  },
+  "controller_history_save_status": {
+    "message": "Failed to save tab history"
+  },
+  "controller_history_save_failed": {
+    "message": "Could not save tab history"
+  },
+  "controller_selection_cancelled": {
+    "message": "Tab changed. Selection was cancelled."
+  },
+  "controller_tab_switch_failed": {
+    "message": "Could not switch tabs"
+  },
+  "controller_candidate_retry": {
+    "message": "Could not select the tab. Open the list again."
+  },
+  "controller_no_tabs": {
+    "message": "There are no tabs to switch to"
+  },
+  "controller_source_missing": {
+    "message": "Could not identify the source tab"
+  },
+  "controller_group": {
+    "message": "Group"
+  },
+  "controller_display_source_missing": {
+    "message": "Could not identify the tab for the list"
+  },
+  "controller_list_cancelled": {
+    "message": "Tab changed. The list could not be displayed."
+  },
+  "controller_candidates_failed": {
+    "message": "Could not load tab candidates"
+  },
+  "controller_selection_source_missing": {
+    "message": "Could not identify the selection source tab"
+  },
+  "controller_candidate_failed": {
+    "message": "Could not select the tab"
+  },
+  "picker_recent_tabs": {
+    "message": "Recent tabs"
+  },
+  "picker_tab_list": {
+    "message": "Tab list"
+  },
+  "picker_select_label": {
+    "message": "Select $1"
+  },
+  "picker_search_placeholder": {
+    "message": "Search tab titles"
+  },
+  "picker_search_label": {
+    "message": "Search tab titles"
+  },
+  "picker_candidates_label": {
+    "message": "Tab candidates"
+  },
+  "picker_controls": {
+    "message": "↑↓ Select  ·  ← Switch list  ·  Enter Switch  ·  Esc Cancel"
+  },
+  "picker_unnamed_group": {
+    "message": "Unnamed group"
+  },
+  "picker_untitled": {
+    "message": "Untitled"
+  },
+  "picker_unavailable": {
+    "message": "Shortcuts are unavailable in this tab"
+  },
+  "picker_unavailable_hint": {
+    "message": "You cannot start shortcut-based tab switching after moving to this tab."
+  },
+  "picker_no_matches": {
+    "message": "No matching tabs"
+  },
+  "picker_no_history": {
+    "message": "No previous tabs. Press ← to view all tabs."
+  },
+  "picker_no_candidates": {
+    "message": "No candidates"
+  },
+  "picker_position": {
+    "message": "$1 / $2"
+  },
+  "overlay_untitled": {
+    "message": "Untitled"
+  },
+  "overlay_back": {
+    "message": "Back"
+  },
+  "overlay_forward": {
+    "message": "Forward"
+  },
+  "overlay_back_shortcut": {
+    "message": "Back $1"
+  },
+  "overlay_forward_shortcut": {
+    "message": "Forward $1"
+  },
+  "overlay_boundary": {
+    "message": "End of history reached"
+  },
+  "overlay_shortcuts": {
+    "message": "$1  ·  $2"
+  },
+  "overlay_position": {
+    "message": "$1 / $2"
+  },
+  "options_language_code": {
+    "message": "en"
+  },
+  "options_title": {
+    "message": "tabuchan settings"
+  },
+  "options_heading": {
+    "message": "Tab switching settings"
+  },
+  "options_intro": {
+    "message": "Move through recently used tabs with Back and Forward shortcuts. Hold the shortcut to choose a tab from a list."
+  },
+  "options_shortcuts_heading": {
+    "message": "Shortcuts"
+  },
+  "options_shortcuts_description": {
+    "message": "Choose Change or Add, then press the key combination you want to use. You can assign multiple shortcuts to each action. Press Esc to cancel."
+  },
+  "options_back": {
+    "message": "Back"
+  },
+  "options_forward": {
+    "message": "Forward"
+  },
+  "options_back_description": {
+    "message": "Go to the previously used tab"
+  },
+  "options_forward_description": {
+    "message": "Move back toward the starting tab"
+  },
+  "options_loading": {
+    "message": "Loading"
+  },
+  "options_change": {
+    "message": "Change"
+  },
+  "options_add": {
+    "message": "Add"
+  },
+  "options_delete": {
+    "message": "Delete"
+  },
+  "options_recording": {
+    "message": "Waiting for keys…"
+  },
+  "options_back_change_label": {
+    "message": "Change the Back shortcut"
+  },
+  "options_forward_change_label": {
+    "message": "Change the Forward shortcut"
+  },
+  "options_add_shortcut_label": {
+    "message": "Add a $1 shortcut"
+  },
+  "options_shortcut_action_label": {
+    "message": "$3 $1 shortcut $2"
+  },
+  "options_modifier_help": {
+    "message": "Control is the physical Control key (⌃). Meta is the Command key (⌘) on macOS or the Windows key on Windows. Esc, Tab, Enter, and arrow keys are reserved for navigation. Some keys are handled by Chrome or the OS before this extension receives them."
+  },
+  "options_legacy_help": {
+    "message": "Assignments from Chrome's shortcut settings are kept separately. The default J/K combinations are the same, and shortcuts configured here are saved in this extension's settings."
+  },
+  "options_behavior_heading": {
+    "message": "Behavior and history"
+  },
+  "options_hold_delay": {
+    "message": "Hold duration"
+  },
+  "options_seconds": {
+    "message": "seconds"
+  },
+  "options_hold_range": {
+    "message": "Choose 0.5–2.0 seconds in 0.1-second increments."
+  },
+  "options_history_limit": {
+    "message": "MRU tabs to show and keep"
+  },
+  "options_tabs_unit": {
+    "message": "tabs"
+  },
+  "options_history_help": {
+    "message": "Keep and show 10–30 past tabs in addition to the current tab. Reducing the limit removes older entries. Increasing it starts retaining additional history from then on. The tab-order list shows all tabs in the current window."
+  },
+  "options_skip_unavailable": {
+    "message": "Skip tabs where shortcuts are unavailable when using a short press"
+  },
+  "options_save": {
+    "message": "Save settings"
+  },
+  "options_display_heading": {
+    "message": "Tab list display"
+  },
+  "options_display_description": {
+    "message": "The extension detects keys on regular web pages and shows tab titles and favicons in the long-press list. Allow access to the sites where you use it."
+  },
+  "options_permission_checking": {
+    "message": "Checking site access."
+  },
+  "options_grant_permission": {
+    "message": "Allow key detection and tab lists on web pages"
+  },
+  "options_page_help": {
+    "message": "Use shortcuts while a regular web page has focus. Chrome internal pages, the Chrome Web Store, and the address bar have input restrictions."
+  },
+  "options_usage_heading": {
+    "message": "How it works"
+  },
+  "options_usage_short_press": {
+    "message": "Press and release before the hold duration to move one tab Back or Forward. Navigation stops at the ends of the history."
+  },
+  "options_usage_hold": {
+    "message": "Hold the modifier keys and the assigned regular key together to show MRU candidates."
+  },
+  "options_usage_picker": {
+    "message": "In the list, use Up and Down to select, Enter to switch, and Esc to cancel. Left switches between MRU and tab order. Right has no action."
+  },
+  "options_usage_search": {
+    "message": "In tab order, type text to filter tab titles. Press Backspace to delete the last character. Search is case-insensitive and uses tab titles."
+  },
+  "options_usage_modifiers": {
+    "message": "Holding only the modifier keys after releasing a regular key such as J or K does not count as a long press."
+  },
+  "options_usage_unique": {
+    "message": "Each tab appears once, ordered by recent use."
+  },
+  "options_usage_reset": {
+    "message": "Selecting another tab normally ends the current traversal."
+  },
+  "options_capture_cancelled": {
+    "message": "Shortcut change cancelled."
+  },
+  "options_capture_prompt": {
+    "message": "Press the shortcut for $1. Include Control, Alt, or Meta. Press Esc to cancel."
+  },
+  "options_settings_changed": {
+    "message": "The settings changed in another view. Try the action again."
+  },
+  "options_duplicate_shortcut": {
+    "message": "This shortcut is already assigned. Choose a different combination."
+  },
+  "options_shortcut_required": {
+    "message": "Each action needs at least one shortcut."
+  },
+  "options_shortcut_saved": {
+    "message": "Shortcut saved."
+  },
+  "options_shortcut_deleted": {
+    "message": "Shortcut deleted."
+  },
+  "options_shortcut_save_error": {
+    "message": "Could not save the shortcut. Try configuring it again."
+  },
+  "options_invalid_shortcut": {
+    "message": "Combine Control, Alt, or Meta with a regular key. Esc, Tab, Enter, and arrow keys are reserved."
+  },
+  "options_shortcut_ready": {
+    "message": "Use the displayed shortcuts on web pages."
+  },
+  "options_settings_load_error": {
+    "message": "Could not load settings. Reload this page."
+  },
+  "options_permission_allowed": {
+    "message": "Key detection and tab lists are allowed on web pages."
+  },
+  "options_permission_limited": {
+    "message": "Site access is restricted. Allow access to the sites where you want to use key detection and tab lists."
+  },
+  "options_permission_error": {
+    "message": "Could not check site access. Reload this page."
+  },
+  "options_settings_saved": {
+    "message": "Behavior and history settings saved. Active key gestures and tab lists are cancelled."
+  },
+  "options_settings_save_error": {
+    "message": "Could not save settings. Try saving again."
+  },
+  "options_permission_denied": {
+    "message": "Site access is pending. Key detection and tab lists become available after access is granted."
+  },
+  "options_permission_request_error": {
+    "message": "Could not grant site access. Check site access in Chrome's extension settings."
+  },
+  "shortcut_not_set": {
+    "message": "Not set"
+  },
+  "options_settings_refresh_error": {
+    "message": "Could not refresh settings. Reload this page."
+  }
+}

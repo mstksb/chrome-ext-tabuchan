@@ -1,0 +1,84 @@
+# Chrome Web Store掲載原稿
+
+公開用バージョン `0.1.0` の機能に基づく草案です。公開用の確定値と未決事項は[公開記録](../releases.md)で管理します。
+
+## 基本情報
+
+| 項目 | 原稿・現状 |
+| --- | --- |
+| 掲載名 | tabuchan |
+| バージョン | 0.1.0。初回公開候補 |
+| 主言語 | 英語を基本とし、日本語の翻訳も掲載する案。UIはChromeの日本語環境で日本語、それ以外で英語。Dashboardの保存値は確認待ち |
+| カテゴリ案 | 機能と UI（Functionality & UI）。タブ管理・ショートカット管理を含む現行の公式分類に基づく案。Dashboardで保存した値は確認待ち |
+| 概要 | 短押しで最近使ったタブへ移動し、長押しで候補やグループ付きタブ一覧を表示・検索します。 |
+| ホームページ・サポート | 公開者の実際の窓口を確定後に記入 |
+| 公開範囲・対象国 | 公開者が確定後に記入 |
+| プライバシーポリシーURL | 公開者情報を補った原稿を公開するHTTPS URLを確定後に記入 |
+
+## 詳細説明（日本語）
+
+tabuchanは、現在のウィンドウで最近使ったタブへキーボードで移動する拡張です。
+
+戻る・進むのキーを短く押すと、固定した最近使用順をたどります。初期設定では、移動先でショートカットを使えないタブを飛ばします。
+
+キーの組み合わせ全体を長押しすると候補一覧が開きます。上下キーで選択し、Enterで切り替え、Escで取り消せます。キーをすべて離しても一覧を保ちます。
+
+左キーで最近使用順と実際のタブ順を切り替えられます。タブ順一覧はグループの名前と色を表示し、Unicode文字列でタイトルを検索できます。検索はNFC正規化後の大文字・小文字を区別しない部分一致とし、入力に合うタブと所属グループを表示します。画面はChromeの日本語環境で日本語、それ以外では英語を表示します。
+
+設定画面では、各方向に複数のキーを割り当てられます。長押し時間は0.5〜2秒、履歴件数は10〜30件へ調整できます。初期値は1秒・10件です。
+
+macOSの初期キーは、戻るがControl + Shift + J、進むがControl + Shift + Kです。その他のOS向け初期キーはAlt + Shift + JとAlt + Shift + Kです。設定画面で実際のキーを押して変更できます。
+
+操作は通常のHTTP(S)ページ内で開始します。Chrome内部ページ、Chrome Web Store、他の拡張ページ、ファイルページ、アドレス欄には開始位置の制限があります。一覧には移動先での利用可否を表示します。OS・Chromeが優先するキーはページへの配送に制限があります。
+
+履歴と設定は端末内で処理・保存します。候補一覧にはタブのタイトルとファビコンを表示します。ファビコンの表示には、画像の提供元への通信が生じる場合があります。データの取扱いは掲載するプライバシーポリシーで説明します。
+
+## 英語掲載用原稿
+
+概要は次の文を使います。
+
+```text
+Switch to recent tabs with a tap. Hold to browse, search, and select tabs in the current window.
+```
+
+詳細説明は次の原稿を使います。
+
+```text
+tabuchan lets you switch between tabs in the current window using keyboard shortcuts.
+
+Tap Back or Forward to move through a fixed recent-use order. By default, short presses skip tabs where the shortcuts are unavailable.
+
+Hold the shortcut to open a tab list. Use Up and Down to select, Enter to switch, and Esc to cancel. The list stays open after you release the shortcut.
+
+Press Left to switch between recent-use order and tab order. The tab-order list preserves tab groups and lets you filter tab titles with Unicode text, independently of the UI language. Search uses case-insensitive substring matching with Unicode NFC normalization.
+
+The settings page supports multiple shortcuts per action, a hold duration of 0.5–2 seconds, and a history limit of 10–30 past tabs. The defaults are 1 second and 10 tabs.
+
+On macOS, the default shortcuts are Control + Shift + J for Back and Control + Shift + K for Forward. Other platforms use Alt + Shift + J and Alt + Shift + K. You can record your own combinations in settings.
+
+The interface uses Japanese when Chrome's UI language is Japanese, and English otherwise. Start shortcuts while a regular HTTP(S) web page has focus. Chrome internal pages, the Chrome Web Store, extension pages, local files, and the address bar have input restrictions.
+
+History and settings are processed and stored locally. Displaying tab favicons may cause image requests to the favicon provider. See the privacy policy for data-handling details.
+```
+
+## 掲載画像
+
+| 用途 | 対応する実装・準備状況 |
+| --- | --- |
+| ストアアイコン | [icons/tab-128.png](../icons/tab-128.png)。既存のタブ図柄を128×128 PNGへ変換 |
+| 英語の設定画面 | [options-en-1280x800.png](images/options-en-1280x800.png)。1280×800。英語の設定画面 |
+| 英語の候補一覧 | [picker-en-1280x800.png](images/picker-en-1280x800.png)。1280×800。実キー入力から開いたタブ順一覧とWorkグループ |
+| 日本語の設定画面 | [options-1280x800.png](images/options-1280x800.png)。1280×800。初期設定のショートカットを実際の設定画面で表示 |
+| 日本語の候補一覧 | [picker-1280x800.png](images/picker-1280x800.png)。1280×800。試験用ページのタブを使い、実キー入力から開いた最近使用順の一覧を表示 |
+
+日本語2枚は公開版 `0.1.0` のChrome試験で採取した。英語2枚は、公開版と同じUIコード・英語辞書だけを含む撮影用コピーを実Chromeで表示して採取した。英語辞書の適用と英語UIのレイアウトを確認した。元の2言語パッケージで英語環境へ自動選択する実機確認は残課題として保持する。4枚とも1280×800・透過なしで、表示内容を目視確認した。候補一覧のタブは撮影用データを使用している。
+
+## 審査担当向け機能確認原稿
+
+HTTP(S)のWebページを3つ開いて順に選び、ページ内にフォーカスを置いて戻るキーを短押しすると、直前のタブへ移動します。戻るキーを設定時間以上長押しすると一覧が開きます。左キーでタブ順へ切り替え、タイトルの一部を入力して検索できます。アイコンから設定画面を開き、使用するキーや長押し時間を変更できます。
+
+## 原稿の確認根拠
+
+2026年11月10日にカテゴリ案を現行のFunctionality & UIへ修正した。公式資料がタブ管理・ショートカット管理を例示していることと、旧分類Productivityからの分類変更を確認した。[カテゴリの選び方](https://developer.chrome.com/docs/webstore/best-practices#choose-your-extensions-category-well)
+
+掲載情報の欄と画像要件は2026年11月9日に公式資料を参照した。Dashboardの現在の必須欄は提出前の確認対象です。[Store listing](https://developer.chrome.com/docs/webstore/cws-dashboard-listing)、[Supplying Images](https://developer.chrome.com/docs/webstore/images)

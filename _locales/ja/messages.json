@@ -1,0 +1,326 @@
+{
+  "extension_name": {
+    "message": "tabuchan"
+  },
+  "extension_description": {
+    "message": "短押しで最近使ったタブへ移動し、長押しで候補やグループ付きタブ一覧を表示・検索します。"
+  },
+  "extension_action_title": {
+    "message": "tabuchan の設定"
+  },
+  "controller_display_unavailable": {
+    "message": "ページ内表示を利用できません"
+  },
+  "controller_untitled": {
+    "message": "タイトルなし"
+  },
+  "controller_window_read_failed": {
+    "message": "対象のウィンドウを取得できませんでした"
+  },
+  "controller_window_missing": {
+    "message": "対象のウィンドウがありません"
+  },
+  "controller_move_cancelled": {
+    "message": "タブが切り替わったため移動を取り消しました"
+  },
+  "controller_candidates_updated": {
+    "message": "候補が更新されました。もう一度一覧を開いてください"
+  },
+  "controller_history_save_status": {
+    "message": "履歴の保存に失敗しました"
+  },
+  "controller_history_save_failed": {
+    "message": "履歴を保存できませんでした"
+  },
+  "controller_selection_cancelled": {
+    "message": "タブが切り替わったため選択を取り消しました"
+  },
+  "controller_tab_switch_failed": {
+    "message": "タブを切り替えられませんでした"
+  },
+  "controller_candidate_retry": {
+    "message": "候補を選択できませんでした。もう一度一覧を開いてください"
+  },
+  "controller_no_tabs": {
+    "message": "移動できるタブがありません"
+  },
+  "controller_source_missing": {
+    "message": "移動元のタブを確認できませんでした"
+  },
+  "controller_group": {
+    "message": "グループ"
+  },
+  "controller_display_source_missing": {
+    "message": "候補を表示するタブを確認できませんでした"
+  },
+  "controller_list_cancelled": {
+    "message": "タブが切り替わったため一覧を表示できません"
+  },
+  "controller_candidates_failed": {
+    "message": "候補を読み込めませんでした"
+  },
+  "controller_selection_source_missing": {
+    "message": "選択元のタブを確認できませんでした"
+  },
+  "controller_candidate_failed": {
+    "message": "候補を選択できませんでした"
+  },
+  "picker_recent_tabs": {
+    "message": "最近使ったタブ"
+  },
+  "picker_tab_list": {
+    "message": "タブ一覧"
+  },
+  "picker_select_label": {
+    "message": "$1の選択"
+  },
+  "picker_search_placeholder": {
+    "message": "タブのタイトルを検索"
+  },
+  "picker_search_label": {
+    "message": "タブのタイトルを検索"
+  },
+  "picker_candidates_label": {
+    "message": "タブの候補"
+  },
+  "picker_controls": {
+    "message": "↑↓ 選択  ·  ← 一覧切替  ·  Enter 決定  ·  Esc 取消"
+  },
+  "picker_unnamed_group": {
+    "message": "名前のないグループ"
+  },
+  "picker_untitled": {
+    "message": "タイトルなし"
+  },
+  "picker_unavailable": {
+    "message": "このタブではショートカットを使えません"
+  },
+  "picker_unavailable_hint": {
+    "message": "このタブへ移動した後は、ショートカットによる切替操作を開始できません"
+  },
+  "picker_no_matches": {
+    "message": "一致するタブはありません"
+  },
+  "picker_no_history": {
+    "message": "過去のタブはありません。←でタブ一覧を開けます"
+  },
+  "picker_no_candidates": {
+    "message": "候補はありません"
+  },
+  "picker_position": {
+    "message": "$1 / $2"
+  },
+  "overlay_untitled": {
+    "message": "タイトルなし"
+  },
+  "overlay_back": {
+    "message": "戻る"
+  },
+  "overlay_forward": {
+    "message": "進む"
+  },
+  "overlay_back_shortcut": {
+    "message": "戻る $1"
+  },
+  "overlay_forward_shortcut": {
+    "message": "進む $1"
+  },
+  "overlay_boundary": {
+    "message": "履歴の端に到達しました"
+  },
+  "overlay_shortcuts": {
+    "message": "$1  ·  $2"
+  },
+  "overlay_position": {
+    "message": "$1 / $2"
+  },
+  "options_language_code": {
+    "message": "ja"
+  },
+  "options_title": {
+    "message": "tabuchan の設定"
+  },
+  "options_heading": {
+    "message": "タブ切替の設定"
+  },
+  "options_intro": {
+    "message": "最近使ったタブを「戻る」「進む」のショートカットでたどります。長押しすると一覧からタブを選べます。"
+  },
+  "options_shortcuts_heading": {
+    "message": "ショートカット"
+  },
+  "options_shortcuts_description": {
+    "message": "「変更」または「追加」を選び、使いたいキーの組み合わせを実際に押してください。各操作に複数のキーを登録できます。Escで変更を取り消せます。"
+  },
+  "options_back": {
+    "message": "戻る"
+  },
+  "options_forward": {
+    "message": "進む"
+  },
+  "options_back_description": {
+    "message": "1つ前に使ったタブへ"
+  },
+  "options_forward_description": {
+    "message": "戻った位置から開始タブの方向へ"
+  },
+  "options_loading": {
+    "message": "読込中"
+  },
+  "options_change": {
+    "message": "変更"
+  },
+  "options_add": {
+    "message": "追加"
+  },
+  "options_delete": {
+    "message": "削除"
+  },
+  "options_recording": {
+    "message": "キー入力待ち…"
+  },
+  "options_back_change_label": {
+    "message": "戻るのキーを変更"
+  },
+  "options_forward_change_label": {
+    "message": "進むのキーを変更"
+  },
+  "options_add_shortcut_label": {
+    "message": "$1のキーを追加"
+  },
+  "options_shortcut_action_label": {
+    "message": "$1のキー$2を$3"
+  },
+  "options_modifier_help": {
+    "message": "Controlは物理Controlキー（⌃）です。MetaはmacOSのCommandキー（⌘）、WindowsのWindowsキーに相当します。Esc・Tab・Enter・矢印キーは操作用に予約されています。ChromeやOSが先に処理するキーは、この拡張で検出できない場合があります。"
+  },
+  "options_legacy_help": {
+    "message": "以前Chromeのショートカット設定で変更した割り当ては自動移行されません。初期キーは従来と同じJ/Kの組み合わせで、今回からこの画面に独立して保存します。"
+  },
+  "options_behavior_heading": {
+    "message": "操作と履歴"
+  },
+  "options_hold_delay": {
+    "message": "長押し時間"
+  },
+  "options_seconds": {
+    "message": "秒"
+  },
+  "options_hold_range": {
+    "message": "0.5〜2.0秒を0.1秒刻みで設定できます。"
+  },
+  "options_history_limit": {
+    "message": "MRUの表示・保持件数"
+  },
+  "options_tabs_unit": {
+    "message": "件"
+  },
+  "options_history_help": {
+    "message": "現在タブを別枠として、過去10〜30件を保持・表示します。件数を減らして除かれた履歴は、増やしても復元されません。タブ順一覧には現在のウィンドウの全タブを表示します。"
+  },
+  "options_skip_unavailable": {
+    "message": "短押しではショートカットを使えないタブをスキップする"
+  },
+  "options_save": {
+    "message": "設定を保存"
+  },
+  "options_display_heading": {
+    "message": "一覧の表示"
+  },
+  "options_display_description": {
+    "message": "通常のWebページでキー入力を検出し、長押ししたときの候補一覧にタイトル・ファビコンを表示します。使用するサイトへのアクセスを許可してください。"
+  },
+  "options_permission_checking": {
+    "message": "表示権限を確認しています。"
+  },
+  "options_grant_permission": {
+    "message": "Webページでのキー検出と表示を許可"
+  },
+  "options_page_help": {
+    "message": "キー操作は通常のWebページ内にフォーカスがあるときに使用できます。Chrome内部ページ、Chrome Web Store、アドレス欄などでは検出できません。"
+  },
+  "options_usage_heading": {
+    "message": "基本の動き"
+  },
+  "options_usage_short_press": {
+    "message": "設定した長押し時間より短くキーを押して離すと、戻る・進むの方向へ1件移動します。履歴の端で停止します。"
+  },
+  "options_usage_hold": {
+    "message": "修飾キーと設定した通常キーを一緒に長押しすると、MRUの候補を表示します。"
+  },
+  "options_usage_picker": {
+    "message": "候補表示中は上下キーで選び、Enterで移動、Escで取り消します。左キーでMRUとタブ順一覧を切り替えます。右キーは無効です。"
+  },
+  "options_usage_search": {
+    "message": "タブ順一覧では文字を入力してタイトルを絞り込み、Backspaceで1文字削除できます。大文字・小文字を区別せず、グループ名は検索対象外です。"
+  },
+  "options_usage_modifiers": {
+    "message": "J/Kなどの通常キーを離し、修飾キーだけ押している間は長押しとして扱いません。"
+  },
+  "options_usage_unique": {
+    "message": "同じタブは重複させず、最近使った順に並べます。"
+  },
+  "options_usage_reset": {
+    "message": "別のタブを通常の操作で選ぶと、その巡回を終了します。"
+  },
+  "options_capture_cancelled": {
+    "message": "キーの変更を取り消しました。"
+  },
+  "options_capture_prompt": {
+    "message": "$1のキーを押してください。Control・Alt・Metaのいずれかを含めます。Escで取り消せます。"
+  },
+  "options_settings_changed": {
+    "message": "設定が変更されています。もう一度操作してください。"
+  },
+  "options_duplicate_shortcut": {
+    "message": "このキーはすでに登録されています。異なるキーを設定してください。"
+  },
+  "options_shortcut_required": {
+    "message": "各操作には少なくとも1つのキーが必要です。"
+  },
+  "options_shortcut_saved": {
+    "message": "ショートカットを保存しました。"
+  },
+  "options_shortcut_deleted": {
+    "message": "ショートカットを削除しました。"
+  },
+  "options_shortcut_save_error": {
+    "message": "ショートカットを保存できませんでした。再度設定してください。"
+  },
+  "options_invalid_shortcut": {
+    "message": "Control・Alt・Metaのいずれかと通常キーを組み合わせてください。Esc・Tab・Enter・矢印キーは予約されています。"
+  },
+  "options_shortcut_ready": {
+    "message": "Webページ上で、表示されたショートカットを使用できます。"
+  },
+  "options_settings_load_error": {
+    "message": "設定を読み込めませんでした。この画面を再読み込みしてください。"
+  },
+  "options_permission_allowed": {
+    "message": "Webページでのキー検出と表示が許可されています。"
+  },
+  "options_permission_limited": {
+    "message": "Webページへのアクセスが制限されています。キー検出と表示を使うサイトへのアクセスを許可してください。"
+  },
+  "options_permission_error": {
+    "message": "権限を確認できませんでした。この画面を再読み込みしてください。"
+  },
+  "options_settings_saved": {
+    "message": "操作と履歴の設定を保存しました。進行中のキー操作と一覧は取り消されます。"
+  },
+  "options_settings_save_error": {
+    "message": "設定を保存できませんでした。もう一度保存してください。"
+  },
+  "options_permission_denied": {
+    "message": "アクセスは許可されていません。許可後にキー検出と表示を利用できます。"
+  },
+  "options_permission_request_error": {
+    "message": "アクセスを許可できませんでした。Chromeの拡張機能設定でサイトへのアクセスを確認してください。"
+  },
+  "shortcut_not_set": {
+    "message": "未設定"
+  },
+  "options_settings_refresh_error": {
+    "message": "設定を更新できませんでした。この画面を再読み込みしてください。"
+  }
+}
