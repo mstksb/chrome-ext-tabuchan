@@ -1,50 +1,56 @@
+---
+lang: en
+---
+
 # tabuchan
 
-最近使ったタブへキーボードで移動するChrome拡張です。短押しで履歴をたどり、長押しで候補を表示します。
+English | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | [Português (Brasil)](README.pt-BR.md) | [Español](README.es.md) | [Deutsch](README.de.md)
 
-公開用バージョンは `0.1.0` です。配布物と確認済みの環境、審査・公開状態は[公開記録](releases.md)を参照してください。
+A Chrome extension for switching to recently used tabs with the keyboard. Tap a shortcut to move through your history; hold it to open a tab list.
 
-設定画面と候補一覧はChromeの表示言語に合わせて自動選択します。日本語環境では日本語、それ以外では英語を表示します。検索はUI言語と独立してUnicode文字列を扱い、タイトルと入力をNFC正規化してから大小文字を区別しない部分一致で絞り込みます。
+The public release candidate is `0.1.0`. See the [release record](releases.md) for the distribution files, verified environments, and review/publication status.
 
-## 主な機能
+Documentation languages: English, Japanese, Simplified Chinese, Traditional Chinese, Brazilian Portuguese, Spanish, and German. Documentation translations are separate from extension UI support: settings and the tab list currently use Japanese when Chrome's display language is Japanese, and English otherwise. Title search handles Unicode text independently of the UI language, using NFC normalization and case-insensitive substring matching.
 
-- 現在のウィンドウ内で、最近使ったタブを固定した順序で戻る・進む。
-- 長押しで候補一覧を開き、上下キーで選択してEnterで切り替える。
-- 左キーで最近使用順と実際のタブ順を切り替え、タブ順一覧でタイトルを検索する。
-- タブグループの名前・色と、移動先でショートカットを使えるかを表示する。
-- 各方向へ複数のショートカットを割り当て、長押し時間や履歴件数を設定する。
+## Features
 
-## 動作条件
+- Move backward and forward through a fixed recent-use order in the current window.
+- Hold a shortcut to open the list; select with Up/Down and switch with Enter.
+- Press Left to switch between recent-use order and actual tab order, and search titles in the tab-order list.
+- See tab group names/colors and whether shortcuts are available in the destination tab.
+- Assign multiple shortcuts per direction and configure the hold duration and history limit.
 
-Manifest V3に対応するGoogle Chromeを使用します。manifestの最低バージョン指定は102です。実際に確認した環境・対象版は[公開記録](releases.md)で区別しています。Windows・Linux・旧ChromeとOSの日本語IME自体の動作は未確認です。
+## Requirements
 
-キー操作の開始位置は通常のHTTP(S)ページ内です。iframe内からの操作にも対応します。Chrome内部ページ、Chrome Web Store、他の拡張ページ、ファイルページ、アドレス欄ではキー操作を開始できません。
+Google Chrome with Manifest V3 support. The manifest declares Chrome 102 as the minimum version. The [release record](releases.md) distinguishes the environments and versions actually tested. Windows, Linux, older Chrome versions, and the operating system's Japanese IME itself remain unverified.
 
-## 読み込みと設定
+Start shortcuts inside a regular HTTP(S) page, including an iframe. Shortcuts cannot start from Chrome internal pages, the Chrome Web Store, other extensions' pages, file pages, or the address bar.
 
-1. このリポジトリーをダウンロードして展開します。
-2. Chromeで `chrome://extensions` を開き、デベロッパーモードを有効にします。
-3. 「パッケージ化されていない拡張機能を読み込む」で、このREADMEと `manifest.json` があるフォルダーを選びます。
-4. ツールバーのtabuchanアイコンから設定画面を開き、キーと動作設定を確認します。
+## Load and configure
 
-| 操作 | macOSの初期キー | その他のOS向け初期キー |
+1. Download and extract this repository.
+2. Open `chrome://extensions` in Chrome and enable Developer mode.
+3. Choose **Load unpacked** and select the folder containing this README and `manifest.json`.
+4. Open settings from the tabuchan toolbar icon and review the shortcuts and behavior settings.
+
+| Action | Default on macOS | Default on other operating systems |
 | --- | --- | --- |
-| 戻る | Control + Shift + J | Alt + Shift + J |
-| 進む | Control + Shift + K | Alt + Shift + K |
+| Back | Control + Shift + J | Alt + Shift + J |
+| Forward | Control + Shift + K | Alt + Shift + K |
 
-macOSでは物理的なControlキーを使います。設定画面では、実際に使用する組み合わせを押して各方向へ登録できます。Chrome・OS・他の拡張が優先して処理する組み合わせは、ページへの配送に制限があります。
+On macOS, use the physical Control key. In settings, press the actual combination to register it for a direction. Chrome, the operating system, or other extensions may intercept combinations before they reach the page.
 
-短押しはキーを離すと確定します。長押しの初期値は1秒です。候補一覧は全キーを離した後も表示され、上下で選択、Enterで確定、Escで取消できます。左キーで最近使用順とタブ順を切り替えます。タブ順一覧では英数字・日本語でタイトルを絞り込み、Backspaceで末尾を削除します。日本語変換中のEnter・上下・EscはIMEの操作に使います。
+A tap takes effect when a required key is released. The default hold duration is 1 second. The list stays open after you release all keys: Up/Down selects, Enter confirms, and Esc cancels. Left switches between recent-use order and tab order. In tab order, type to filter titles and use Backspace to delete the last character. During Japanese IME composition, Enter, Up/Down, and Esc are reserved for the IME.
 
-設定可能な長押し時間は0.5〜2秒、0.1秒刻みです。過去の履歴件数は10〜30件、初期値10件です。短押しで使えないタブを飛ばす設定は初期値ONです。候補一覧からは、そのタブを明示的に選んで移動できます。
+The hold duration can be set from 0.5 to 2 seconds in 0.1-second increments. The history limit is 10–30 past tabs, with a default of 10. Skipping unavailable tabs on a tap is enabled by default; you can still select those tabs explicitly from the list.
 
-## データの保存
+## Data storage
 
-履歴はウィンドウごとに端末内のセッション領域へ保持します。ブラウザー再起動、拡張の無効化・再読み込み・更新で履歴は消去され、現在タブから再び蓄積します。キーと動作設定は端末内に保存します。データの取扱いは[プライバシーポリシー草案](privacy-policy.md)を参照してください。
+History is kept per window in local session storage. Restarting the browser or disabling, reloading, or updating the extension clears history; tracking then starts again from the current tab. Shortcuts and behavior settings are stored locally. See the [draft privacy policy](privacy-policy.md) for data-handling details, including favicon requests.
 
-## 配布ZIPの再梱包
+## Repackage the distribution ZIP
 
-このフォルダーの20実行ファイルだけを使い、macOS標準の `zip` と `shasum` で再梱包できます。ターミナルでこのREADMEがあるフォルダーを開き、次を実行します。既存の配布ZIPとチェックサムを更新します。
+You can repackage the 20 runtime files in this folder using macOS's standard `zip` and `shasum` tools. Open a terminal in the folder containing this README and run the following. This replaces the existing distribution ZIP and checksum.
 
 ```sh
 mkdir -p dist &&
@@ -75,23 +81,23 @@ rmdir "$tabuchan_package_tmp" &&
 (cd dist && shasum -a 256 tabuchan-0.1.0.zip > tabuchan-0.1.0.zip.sha256)
 ```
 
-ZIPの直下に `manifest.json` が入り、掲載資料・画像・公開記録は収録されません。再梱包ではZIPのSHA-256が変わる場合があります。配布時は実際のZIPのチェックサムと[公開記録](releases.md)を対応させてください。
+The ZIP contains `manifest.json` at its root; listing documents, screenshots, and release records are excluded. Repackaging may change its SHA-256. Match the actual ZIP checksum to the [release record](releases.md) before distribution.
 
-## Webサイト
+## Website
 
-使い方と公開資料をGitHub Pagesで公開しています。URLは次のとおりです。公開状況は[公開記録](releases.md#github-pages)を参照してください。
+Usage instructions and public documents are hosted on GitHub Pages. See the [publication record](releases.md#github-pages) for the verified deployment status.
 
-- [使い方](https://mstksb.github.io/chrome-ext-tabuchan/)
-- [プライバシーポリシー草案](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)
+- [Usage instructions](https://mstksb.github.io/chrome-ext-tabuchan/)
+- [Draft privacy policy](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)
 
-プライバシーポリシーは、公開者名・連絡先・施行日が未確定の草案です。ストア提出前に内容を確定します。
+The publisher name, contact details, and effective date are still undecided. Finalize the policy before store submission.
 
-## 公開資料
+## Public documents
 
-| ファイル | 内容 |
+| File | Contents |
 | --- | --- |
-| [README.md](README.md) | 導入、使い方、設定、動作条件、配布ZIPの再梱包 |
-| [store/listing.md](store/listing.md) | ストア掲載原稿と掲載画像 |
-| [store/privacy.md](store/privacy.md) | 権限理由とプライバシー申告原稿 |
-| [privacy-policy.md](privacy-policy.md) | 利用者向けデータ取扱いの草案 |
-| [releases.md](releases.md) | 対象版、配布物、確認済みの環境、審査・公開状態 |
+| [README.md](README.md) | Installation, usage, settings, requirements, and ZIP repackaging |
+| [store/listing.md](store/listing.md) | Store listing drafts and screenshots |
+| [store/privacy.md](store/privacy.md) | Permission justifications and privacy disclosure drafts |
+| [privacy-policy.md](privacy-policy.md) | Draft user-facing data-handling policy |
+| [releases.md](releases.md) | Version, distribution files, verified environments, and review/publication status |

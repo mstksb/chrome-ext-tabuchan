@@ -1,44 +1,50 @@
-# tabuchan プライバシーポリシー草案
+---
+lang: en
+---
 
-対象版は `0.1.0` です。公開者名・連絡先・公開日を確定する前の草案として管理しています。確定状況は[公開記録](releases.md)を参照してください。
+# tabuchan draft privacy policy
 
-## 目的
+English | [日本語](privacy-policy.ja.md) | [简体中文](privacy-policy.zh-CN.md) | [繁體中文](privacy-policy.zh-TW.md) | [Português (Brasil)](privacy-policy.pt-BR.md) | [Español](privacy-policy.es.md) | [Deutsch](privacy-policy.de.md)
 
-tabuchanは、現在のウィンドウ内で最近使ったタブやタイトル検索したタブへキーボードで移動する機能を提供します。
+This draft covers version `0.1.0`. The publisher name, contact details, and publication/effective date have not been finalized. See the [release record](releases.md) for the current status.
 
-## 取り扱う情報
+## Purpose
 
-- Chromeから取得するタブID、ウィンドウID、タブのタイトル、URL、ファビコンURL、グループのID・名前・色。
-- タブの選択順序、固定した巡回順序、一覧の選択状態。
-- ページ内で検出するショートカット用のキーの押下・解放、候補一覧の操作とタイトル検索文字。
-- 設定画面で利用者が登録するキーの組み合わせ、長押し時間、履歴件数、短押しスキップの設定。
+tabuchan provides keyboard navigation to recently used tabs and tabs found by title in the current window.
 
-これらを、タブ切替、履歴・候補の作成、候補のタイトル検索、入力利用可否の表示、利用者が選んだ設定の実現に使用します。
+## Information handled
 
-## 端末内の処理と保存
+- Tab IDs, window IDs, tab titles, URLs, favicon URLs, and group IDs, names, and colors obtained from Chrome.
+- Tab selection order, the fixed traversal order, and selection state in the list.
+- Shortcut key-down/key-up events detected within pages, list operations, and title-search text.
+- Shortcut combinations, hold duration, history limit, and tap-to-skip settings registered by the user.
 
-履歴と巡回状態は、端末内のChrome拡張用セッション領域 `storage.session` に保持します。保存する履歴の中心はタブIDと順序・選択状態です。設定したキーと動作設定は `storage.local` に保存します。
+This information is used to switch tabs, build history and lists, search titles, indicate shortcut availability, and apply the user's settings.
 
-タイトル、URL、グループ情報などは処理中にChromeから取得します。候補一覧は現在のページ内に表示し、タイトルとグループ名をテキストとして描画します。検索文字と押下状態は処理中のメモリで使用します。
+## Local processing and storage
 
-## ファビコンの取得に伴う通信
+History and traversal state are kept in Chrome's local extension session storage, `storage.session`. Stored history primarily consists of tab IDs, order, and selection state. Shortcut combinations and behavior settings are saved in `storage.local`.
 
-候補一覧のファビコン表示では、Chromeが提供したHTTP(S)の画像URLを使う場合があります。その際、利用者のブラウザーから画像サーバーへの要求が生じる場合があります。
+Titles, URLs, and group information are obtained from Chrome during processing. The tab list is displayed within the current page, with titles and group names rendered as text. Search text and key-press state are used in memory during processing.
 
-画像の提供元へはIPアドレスや通常の要求情報が渡る場合があります。拡張は画像の要求に `no-referrer` を指定します。Cookie、キャッシュ、混在コンテンツなどの扱いは、利用者のChromeの設定・ポリシーと要求先に依存します。各画像サーバーが保持するアクセス記録などの期間や取扱いは、各提供元の規定に従います。
+## Network requests for favicons
 
-## 保持期間と削除方法
+The list may use HTTP(S) image URLs provided by Chrome to display favicons. This may cause the user's browser to send requests to the image server.
 
-セッション履歴は、ブラウザー再起動、拡張の無効化・再読み込み・更新で消去されます。その後は現在のタブから新しい履歴を蓄積します。タブを閉じると該当タブを履歴から除去します。履歴件数を減らした場合は、保持件数を超えた末尾の履歴を除去します。
+Image providers may receive the user's IP address and ordinary request information. The extension specifies `no-referrer` for image requests. Cookie, cache, and mixed-content behavior depends on Chrome settings/policies and the destination. Each image provider's own rules govern access-log retention and other processing.
 
-キーと動作設定は、利用者が変更するまで端末内に保持します。設定画面で変更して保存できます。拡張を削除すると、Chromeがその拡張の保存領域を削除します。Chromeが管理する画像キャッシュなどは、ブラウザーの閲覧データ削除機能から管理できます。
+## Retention and deletion
 
-検索文字は一覧の表示中に使用し、一覧終了やモード変更に応じて破棄します。
+Session history is cleared when the browser restarts or the extension is disabled, reloaded, or updated. New history is then built from the current tab. Closing a tab removes it from history. Reducing the history limit removes the oldest entries beyond that limit.
 
-## データ利用の範囲
+Shortcuts and behavior settings remain on the device until changed by the user. They can be changed and saved in settings. When the extension is removed, Chrome deletes its extension storage. Browser-managed image caches can be managed through Chrome's browsing-data controls.
 
-情報の利用目的は、本ポリシーに記載したタブ切替・候補表示・検索・設定の機能です。外部の画像提供元への要求は、ファビコン表示に伴います。Chrome Web Storeのデータ利用欄には、この取扱いに対応する申告を行います。
+Search text is used while the list is open and discarded when the list closes or its mode changes.
 
-## 公開者・問い合わせ
+## Scope of data use
 
-ポリシーの公開URLは[こちら](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)です。公開者名、問い合わせ窓口、施行日は未確定のため、ストア提出前に確定します。ポリシーの変更時は、対象版と変更後の取扱いを掲載内容へ反映します。
+Information is used for the tab switching, list display, search, and settings functions described in this policy. Requests to external image providers are associated with favicon display. Chrome Web Store data-use disclosures must reflect this handling.
+
+## Publisher and contact
+
+The policy's public URL is [here](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html). The publisher name, contact channel, and effective date remain undecided and must be finalized before store submission. Policy changes must be reflected in the listing with the applicable version and updated data handling.

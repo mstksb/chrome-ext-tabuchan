@@ -1,8 +1,8 @@
 title: tabuchan
-description: 最近使ったタブへキーボードで移動するChrome拡張
+description: A Chrome extension for switching to recently used tabs with the keyboard
 url: https://mstksb.github.io
 baseurl: /chrome-ext-tabuchan
-lang: ja
+lang: en
 timezone: Asia/Tokyo
 theme: jekyll-theme-primer
 

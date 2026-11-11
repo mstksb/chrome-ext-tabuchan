@@ -1,59 +1,65 @@
-# プライバシー申告原稿
+---
+lang: en
+---
 
-対象は公開準備用 `0.1.0` です。現行コードの処理に基づく原稿で、公開者の認証・法的区分・連絡先などの入力は公開前に確定します。未決事項と検証・提出状態は[公開記録](../releases.md)で管理します。
+# Privacy disclosure draft
 
-## 単一目的
+English | [日本語](privacy.ja.md) | [简体中文](privacy.zh-CN.md) | [繁體中文](privacy.zh-TW.md) | [Português (Brasil)](privacy.pt-BR.md) | [Español](privacy.es.md) | [Deutsch](privacy.de.md)
 
-現在のウィンドウ内で、最近使ったタブやタイトル検索したタブへキーボードで移動すること。
+This draft covers public release candidate `0.1.0` and reflects current code behavior. Publisher verification, legal status, and contact details must be finalized before publication. Open items and verification/submission status are tracked in the [release record](../releases.md).
 
-## 権限の理由
+## Single purpose
 
-| 権限 | Dashboard向け説明原稿 |
+Provide keyboard navigation to recently used tabs and tabs found by title in the current window.
+
+## Permission justifications
+
+| Permission | Draft explanation for the Dashboard |
 | --- | --- |
-| `tabs` | 各ウィンドウのタブを列挙し、ID、タイトル、URL、ファビコンURLなどを取得してウィンドウごとの履歴・候補一覧・入力利用可否判定を作り、利用者が選んだタブへ移動するために使用します。 |
-| `tabGroups` | タブ順一覧でグループの名前と色を表示し、グループ階層を保って候補を示すために使用します。 |
-| `storage` | 端末内にキー・動作設定を保存し、ブラウザーセッション中のタブ履歴と巡回状態を保持するために使用します。 |
-| `scripting` | 開いているHTTP(S)ページへ入力検出と候補一覧の表示処理を注入し、拡張の導入後・更新後などにページ側処理を準備するために使用します。 |
-| `http://*/*`・`https://*/*` | 利用者が選んだHTTP(S)ページとiframe内でキーの押下・解放を検出し、最上位フレームへ候補を表示するために使用します。任意の通常Webページで操作を開始できる機能に対応します。 |
+| `tabs` | Enumerate tabs in each window and obtain IDs, titles, URLs, and favicon URLs to build per-window history and lists, determine shortcut availability, and activate the tab selected by the user. |
+| `tabGroups` | Display group names and colors in the tab-order list and preserve the group hierarchy when presenting tabs. |
+| `storage` | Save shortcut/behavior settings locally and retain tab history and traversal state during the browser session. |
+| `scripting` | Inject input detection and tab-list display into open HTTP(S) pages, including preparing page-side behavior after installation or an update. |
+| `http://*/*` and `https://*/*` | Detect shortcut key-down/key-up events in the user's HTTP(S) pages and iframes, and display the list in the top-level frame. This supports starting shortcuts from arbitrary regular web pages. |
 
-## データの取得・利用・保存
+## Data collection, use, and storage
 
-| データ | 利用目的 | 保存・保持 |
+| Data | Purpose | Storage / retention |
 | --- | --- | --- |
-| タブID、ウィンドウID、最近使用順、巡回状態 | 最近使用順の移動と履歴の整合性管理 | `storage.session.mruState`。ブラウザーセッション中に保持 |
-| タブのタイトル、URL、ファビコンURL、グループID・名前・色 | 候補表示、タイトル検索、キー利用可否判定 | Chrome APIから取得し、処理中のメモリ・候補の表示状態で使用 |
-| キーの押下・解放イベント、設定画面で記録した組み合わせ | ショートカット判定、長押し・一覧操作、キー設定 | 押下状態はメモリ。確定したキー設定は `storage.local.mruShortcuts` |
-| 長押し時間、履歴件数、使えないタブの短押しスキップ設定 | 利用者が選んだ動作の実現 | `storage.local.mruSettings` |
-| 候補一覧へ入力したタイトル検索文字 | 表示するタブの絞り込み | 一覧の表示中にメモリで使用。モード変更や一覧の終了に応じて破棄 |
+| Tab/window IDs, recent-use order, traversal state | Recent-use navigation and history consistency | `storage.session.mruState`, retained during the browser session |
+| Tab titles, URLs, favicon URLs, group IDs/names/colors | List display, title search, shortcut-availability detection | Obtained from Chrome APIs and used in memory/list display state |
+| Key-down/key-up events and combinations recorded in settings | Shortcut detection, hold/list operations, shortcut configuration | Key state in memory; confirmed combinations in `storage.local.mruShortcuts` |
+| Hold duration, history limit, skip-unavailable-on-tap setting | Apply the user's selected behavior | `storage.local.mruSettings` |
+| Title-search text entered in the list | Filter displayed tabs | In memory while the list is open; discarded on mode changes or closure |
 
-候補のタイトルとグループ名はテキストとして、ページ内に挿入した一覧へ表示します。検索文字はその一覧内の入力欄で扱います。入力イベントの処理はショートカット・一覧操作・設定した組み合わせの記録に対応します。
+Titles and group names are rendered as text in a list inserted into the current page. Search text is handled in that list's input field. Input-event processing supports shortcuts, list operations, and recording configured combinations.
 
-## 外部要求と第三者の処理
+## External requests and third-party processing
 
-HTTP(S)のファビコンURLを一覧の画像へ設定すると、その画像サーバーへブラウザーから要求が生じる場合があります。要求先はChromeがタブ情報として提供したファビコンURLのサーバーです。実装は `referrerPolicy="no-referrer"` を指定します。
+Setting an HTTP(S) favicon URL as a list image may cause the browser to request that image from its server. The destination is the server for the favicon URL provided by Chrome's tab information. The implementation sets `referrerPolicy="no-referrer"`.
 
-画像の提供元はIPアドレスやブラウザーが付与する通常の要求情報を受け取る場合があります。Cookie、キャッシュ、混在コンテンツなどの扱いは、Chromeの設定・ポリシーと要求先に依存します。第三者が保持するアクセス記録の期間は、各提供元の規定に従います。HTTPの画像URLを含む動作と安全なデータ取扱いの適合性は、提出前の確認事項です。
+Image providers may receive the IP address and ordinary browser request information. Cookie, cache, and mixed-content behavior depends on Chrome settings/policies and the destination. Third-party access-log retention follows each provider's rules. Behavior involving HTTP image URLs and compliance with secure-data-handling requirements must be checked before submission.
 
-実行コードの参照先は拡張に同梱したJavaScriptです。ファビコンは表示用の画像として扱います。現行の実行コード監査では、外部JavaScript・WASMの取得実行や動的評価を検出していません。
+Executable code references JavaScript packaged with the extension. Favicons are display images. The existing runtime-code audit did not detect fetching/executing external JavaScript or WASM, or dynamic evaluation.
 
-## Dashboardのデータ利用欄への対応
+## Dashboard data-use fields
 
-| 欄 | 原稿・判断材料 |
+| Field | Draft / decision basis |
 | --- | --- |
-| Web history / 閲覧履歴 | タブのURLと最近使用順を機能のために端末内で扱うため、該当するデータとして開示する |
-| Website content / ウェブサイトのコンテンツ | タイトル・ファビコンと、検索欄に利用者が入力する文字を候補表示・絞り込みに使うため、扱うデータとして開示する |
-| User activity / ユーザーのアクティビティ | タブ選択、キーの押下・解放、候補一覧の操作を機能のために扱う。現在のDashboard定義に照らして申告範囲を確定する |
-| その他の種類 | 現在のDashboardの説明と実装を照合して公開者が確定する |
-| リモートコード | 同梱コードの監査結果に基づき「No, I am not using remote code.」を選ぶ原稿 |
-| Limited Useの認証 | 本原稿と実装の目的・データ利用を公開者が確認して認証する |
-| ポリシーURL | 公開者・窓口を補った[ポリシー原稿](../privacy-policy.md)を、ログイン不要のHTTPS URLへ掲載してから記入する |
+| Web history | Disclose tab URLs and recent-use order handled locally for the feature |
+| Website content | Disclose titles, favicons, and user-entered search text used for display/filtering |
+| User activity | Tab selection, key-down/key-up events, and list operations support the feature; finalize the scope against the current Dashboard definition |
+| Other data types | Publisher to compare the current Dashboard definitions with the implementation |
+| Remote code | Draft answer: “No, I am not using remote code,” based on the packaged-code audit |
+| Limited Use certification | Publisher to verify and certify the purposes/data use in this draft and the implementation |
+| Policy URL | Use the [draft policy](../privacy-policy.md) at a public HTTPS URL requiring no login, after adding publisher/contact information |
 
-端末内処理だけのデータも取扱いを開示します。申告分類と認証はDashboardの現在の説明を基に確定します。[Privacy fields](https://developer.chrome.com/docs/webstore/cws-dashboard-privacy)、[User Data FAQ](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq)
+Disclose handling even when data remains local. Finalize categories and certifications using the Dashboard's current definitions: [Privacy fields](https://developer.chrome.com/docs/webstore/cws-dashboard-privacy), [User Data FAQ](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq).
 
-## 保持期間と削除
+## Retention and deletion
 
-セッション履歴はブラウザー再起動、拡張の無効化・再読み込み・更新で消去されます。タブを閉じると該当IDを履歴から除去し、履歴件数を減らすと末尾の対象を除去します。ローカル設定は変更して保存でき、拡張の削除によりその拡張の保存領域を削除できます。
+Session history is cleared on browser restart or extension disable/reload/update. Closed tabs and history entries beyond a reduced limit are removed. Settings remain local until changed; uninstalling the extension removes its Chrome extension storage. Search text is discarded on list closure or mode changes. Browser-managed image caches can be managed through Chrome's browsing-data controls. See the [draft policy](../privacy-policy.md).
 
-## 公開者による確定が必要な項目
+## Items requiring publisher confirmation
 
-ポリシーの[公開URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)は確定し、認証なしで閲覧できることを確認しました。公開者の表示情報・窓口・施行日、Trader / Non-Traderの区分、アカウントの認証状態と配布先は未決です。ポリシーは草案のまま管理し、ストア提出前に内容を確定します。確定状況は[公開記録](../releases.md)へ対応付けます。
+The [policy URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) is confirmed and was verified accessible without authentication. Publisher display details, contact channel, effective date, Trader / Non-Trader status, account verification, and distribution destinations remain undecided. Keep the policy as a draft until finalized before store submission, and track the status in the [release record](../releases.md).

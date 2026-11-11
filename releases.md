@@ -1,43 +1,51 @@
-# 公開記録
+---
+lang: en
+---
+
+# Release record
+
+English | [日本語](releases.ja.md) | [简体中文](releases.zh-CN.md) | [繁體中文](releases.zh-TW.md) | [Português (Brasil)](releases.pt-BR.md) | [Español](releases.es.md) | [Deutsch](releases.de.md)
 
 ## GitHub Pages
 
-2026年11月11日に、既存のREADMEと公開資料をGitHub Pagesで公開しました。公開元は `main` ブランチのルートです。READMEをトップページにし、Markdown内の相対リンクはGitHub Pages標準のJekyll処理でHTMLのURLへ変換します。ページの編集は引き続きMarkdownで行います。拡張の `src/`・`options.html`・`manifest.json` はサイトの生成対象から除きます。
+On November 11, 2026, the existing README and public documents were published on GitHub Pages from the root of the `main` branch. The README is the home page; GitHub Pages' standard Jekyll processing converts relative Markdown links to HTML URLs. Pages continue to be edited as Markdown. Extension files in `src/`, `options.html`, and `manifest.json` are excluded from the generated site.
 
-公開URLは[使い方](https://mstksb.github.io/chrome-ext-tabuchan/)と[プライバシーポリシー草案](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)です。標準ビルドと初回デプロイが成功し、両ページを認証なしのHTTPSで取得できることと、ブラウザーで本文が表示されることを確認しました。ポリシーの公開者名・連絡先・施行日は未確定で、ストア提出用の確定版にはしていません。
+The public URLs are [usage instructions](https://mstksb.github.io/chrome-ext-tabuchan/) and the [draft privacy policy](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html). The standard build and initial deployment succeeded. Both pages were accessible over HTTPS without authentication, and their content was checked in a browser. The policy's publisher name, contact details, and effective date remain undecided; it is not a finalized store-submission policy.
+
+This historical deployment record does not confirm deployment of the translations added in the current documentation update.
 
 ## 0.1.0
 
-最近使用したタブへの短押し移動、長押しの候補一覧、最近使用順とタブ順の切り替え、タブグループ表示、タイトル検索、ショートカット・動作設定を含む公開候補です。
+This public release candidate includes tap-to-switch recent tabs, a hold-to-open tab list, switching between recent-use order and tab order, tab group display, title search, and shortcut/behavior settings.
 
-設定画面と候補一覧は日本語・英語に対応し、日本語以外のChrome表示言語では英語を選択する構成です。検索はUI言語に依存せず、Unicode NFC正規化後に大小文字を区別しない部分一致を行います。
+Settings and the tab list support Japanese and English. Chrome display languages other than Japanese select English. Search is independent of the UI language and uses case-insensitive substring matching after Unicode NFC normalization. Documentation translations do not expand extension UI support.
 
-| 項目 | 内容 |
+| Item | Details |
 | --- | --- |
-| バージョン | `0.1.0`（SemVer・manifest共通） |
-| 配布ZIP | [tabuchan-0.1.0.zip](dist/tabuchan-0.1.0.zip)。manifestを直下に置き、20実行ファイルを収録 |
+| Version | `0.1.0` for both SemVer and the manifest |
+| Distribution ZIP | [tabuchan-0.1.0.zip](dist/tabuchan-0.1.0.zip), containing 20 runtime files with the manifest at its root |
 | SHA-256 | `ffa1b545cf7974f4a16806d73bad0d95d050118caed7b898b2380b6b3f87c65b` |
-| チェックサム | [tabuchan-0.1.0.zip.sha256](dist/tabuchan-0.1.0.zip.sha256) |
-| 動作要件 | Manifest V3対応のGoogle Chrome。manifestの最低バージョン指定は102 |
-| ストア状態 | この国際化対応ZIPのアップロード・受理結果、審査・公開状態、ストア項目ID・URLは未確認 |
+| Checksum file | [tabuchan-0.1.0.zip.sha256](dist/tabuchan-0.1.0.zip.sha256) |
+| Requirements | Google Chrome with Manifest V3 support; the manifest declares a minimum of Chrome 102 |
+| Store status | Upload/acceptance of this internationalized ZIP, review/publication status, and the store item ID/URL remain unverified |
 
-## 確認済みの範囲
+## Verified scope
 
-2026年11月10日に、macOSのChrome `156.0.8078.80`で日本語UIと主要操作を確認しました。短押し・長押し、候補の選択・取消、タブ順・グループ表示、設定保存、iframe内の入力、制限タブの扱い、検索とIME変換中の操作中継を含みます。ZIPを別の領域に展開した実行資産でも、日本語UIとNFC検索を確認しました。
+On November 10, 2026, Japanese UI and major operations were checked on macOS with Chrome `156.0.8078.80`: taps, holds, selection/cancellation, tab order/groups, settings persistence, iframe input, restricted tabs, search, and forwarding operations during IME composition. Japanese UI and NFC search were also checked using the ZIP extracted into a separate location.
 
-2026年11月11日に、macOSのChrome `157.0.8103.40`（UI言語 `ja`）で、このリポジトリーの実行資産を読み込み、設定画面のバージョン表示 `0.1.0` を含む主要操作17群を確認しました。再読み込み後の再稼働は未確認です。
+On November 11, 2026, 17 groups of major operations were checked using this repository's runtime files on macOS with Chrome `157.0.8103.40` (UI language `ja`), including version `0.1.0` in settings. Operation after extension reload remains unverified.
 
-日本語・英語の翻訳キーとmanifest参照の整合、NFCの合成文字・結合文字、多言語・絵文字の部分一致は構成・自動検証で確認しています。英語UIのレイアウトは、同じUIコードと英語辞書を使った撮影用構成で確認しました。
+Configuration/automated checks cover Japanese/English translation keys and manifest references, precomposed/combining NFC characters, and multilingual/emoji substring matching. The English UI layout was checked using a screenshot setup with the same UI code and the English dictionary.
 
-[掲載原稿](store/listing.md#掲載画像)に、日本語・英語それぞれの設定画面・候補一覧の画像があります。掲載画像は1280×800の透過なしPNGで、候補一覧には撮影用データを使用しています。
+The [listing draft](store/listing.md#screenshots) links to Japanese and English settings/list screenshots. They are opaque 1280×800 PNGs; the list uses sample tabs prepared for screenshots.
 
-## 未確認・未確定の事項
+## Unverified or undecided
 
-- Windows・Linux、旧Chrome、OSの各言語IMEそのものの動作。
-- 2言語パッケージを実際の英語環境で使う場合と、未対応言語で英語へフォールバックする場合の画面表示。
-- 通常のChromeで、拡張の再読み込み後に再稼働する動作。
-- 公開者情報・問い合わせ窓口、ライセンス、配布範囲・対象国。
-- ポリシーの公開者名・連絡先・施行日の確定、HTTPファビコン要求を含むデータ取扱いの適合確認。
-- Dashboardの掲載・プライバシー申告の保存結果と、審査・公開状態。
+- Windows, Linux, older Chrome versions, and the operating system's IMEs for individual languages.
+- The actual two-language package in an English environment and English fallback in unsupported-language environments.
+- Operation after extension reload in regular Chrome.
+- Publisher/contact details, license, distribution visibility, and target countries.
+- Final policy publisher/contact/effective date and data-handling compliance, including HTTP favicon requests.
+- Saved listing/privacy disclosures in the Dashboard and review/publication status.
 
-操作は[使い方](README.md)、データの取扱いは[プライバシーポリシー草案](privacy-policy.md)、掲載・申告の原稿は[掲載原稿](store/listing.md)と[プライバシー申告原稿](store/privacy.md)を参照してください。
+Finalize these items before store submission. Current disclosure drafts and the draft policy are working materials, not evidence that submission requirements have been completed.
