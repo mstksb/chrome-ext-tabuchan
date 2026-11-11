@@ -79,7 +79,7 @@ ZIPの直下に `manifest.json` が入り、掲載資料・画像・公開記録
 
 ## Webサイト
 
-GitHub Pages向けの設定を用意しています。有効化後のURLは次のとおりです。公開状況は[公開記録](releases.md#github-pages)を参照してください。
+使い方と公開資料をGitHub Pagesで公開しています。URLは次のとおりです。公開状況は[公開記録](releases.md#github-pages)を参照してください。
 
 - [使い方](https://mstksb.github.io/chrome-ext-tabuchan/)
 - [プライバシーポリシー草案](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)

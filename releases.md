@@ -2,9 +2,9 @@
 
 ## GitHub Pages
 
-2026年11月11日に、既存のREADMEと公開資料をGitHub Pagesで表示する設定を準備しました。公開元は `main` ブランチのルートです。READMEをトップページにし、Markdown内の相対リンクはGitHub Pages標準のJekyll処理でHTMLのURLへ変換します。拡張の `src/`・`options.html`・`manifest.json` はサイトの生成対象から除きます。
+2026年11月11日に、既存のREADMEと公開資料をGitHub Pagesで公開しました。公開元は `main` ブランチのルートです。READMEをトップページにし、Markdown内の相対リンクはGitHub Pages標準のJekyll処理でHTMLのURLへ変換します。ページの編集は引き続きMarkdownで行います。拡張の `src/`・`options.html`・`manifest.json` はサイトの生成対象から除きます。
 
-予定URLは[使い方](https://mstksb.github.io/chrome-ext-tabuchan/)と[プライバシーポリシー草案](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)です。設定の反映・Pagesの有効化・公開URLでの表示確認は未実施です。ポリシーの公開者名・連絡先・施行日は未確定で、ストア提出用の確定版にはしていません。
+公開URLは[使い方](https://mstksb.github.io/chrome-ext-tabuchan/)と[プライバシーポリシー草案](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)です。標準ビルドと初回デプロイが成功し、両ページを認証なしのHTTPSで取得できることと、ブラウザーで本文が表示されることを確認しました。ポリシーの公開者名・連絡先・施行日は未確定で、ストア提出用の確定版にはしていません。
 
 ## 0.1.0
 
@@ -37,7 +37,7 @@
 - 2言語パッケージを実際の英語環境で使う場合と、未対応言語で英語へフォールバックする場合の画面表示。
 - 通常のChromeで、拡張の再読み込み後に再稼働する動作。
 - 公開者情報・問い合わせ窓口、ライセンス、配布範囲・対象国。
-- 公開HTTPSポリシーURL、HTTPファビコン要求を含むデータ取扱いの適合確認。
+- ポリシーの公開者名・連絡先・施行日の確定、HTTPファビコン要求を含むデータ取扱いの適合確認。
 - Dashboardの掲載・プライバシー申告の保存結果と、審査・公開状態。
 
 操作は[使い方](README.md)、データの取扱いは[プライバシーポリシー草案](privacy-policy.md)、掲載・申告の原稿は[掲載原稿](store/listing.md)と[プライバシー申告原稿](store/privacy.md)を参照してください。
