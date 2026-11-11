@@ -62,4 +62,4 @@ Reinicio, desactivación/recarga/actualización borran el historial de sesión. 
 
 ## Confirmaciones pendientes
 
-La [URL existente](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) se verificó sin autenticación; no se confirmó el despliegue de las nuevas traducciones. Responsable, contacto, vigencia, condición Trader / Non-Trader, verificación de cuenta y destinos siguen pendientes. Finaliza antes del envío y registra el estado en el [registro](../releases.es.md).
+La [URL existente](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) se verificó sin autenticación; al terminar los borradores no se había confirmado el despliegue de las nuevas traducciones. Responsable, contacto, vigencia, condición Trader / Non-Trader, verificación de cuenta y destinos siguen pendientes. Finaliza antes del envío y registra el estado en el [registro](../releases.es.md).

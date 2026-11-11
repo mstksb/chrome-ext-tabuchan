@@ -62,4 +62,4 @@ Reinício do navegador ou desativação/recarga/atualização apagam o históric
 
 ## Confirmações do responsável
 
-A [URL existente da política](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) foi verificada sem autenticação; a implantação das novas traduções não foi confirmada. Dados do responsável, contato, vigência, condição Trader / Non-Trader, verificação da conta e destinos de distribuição seguem indefinidos. Finalize antes do envio e acompanhe no [registro](../releases.pt-BR.md).
+A [URL existente da política](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) foi verificada sem autenticação; na conclusão dos rascunhos, a implantação das novas traduções ainda não havia sido confirmada. Dados do responsável, contato, vigência, condição Trader / Non-Trader, verificação da conta e destinos de distribuição seguem indefinidos. Finalize antes do envio e acompanhe no [registro](../releases.pt-BR.md).

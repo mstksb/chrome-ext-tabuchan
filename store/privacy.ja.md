@@ -62,4 +62,4 @@ HTTP(S)のファビコンURLを一覧の画像へ設定すると、その画像�
 
 ## 公開者による確定が必要な項目
 
-ポリシーの[公開URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)は確定し、認証なしで閲覧できることを確認しました。公開者の表示情報・窓口・施行日、Trader / Non-Traderの区分、アカウントの認証状態と配布先は未決です。今回追加する翻訳ページのデプロイは未実施です。ポリシーは草案のまま管理し、ストア提出前に内容を確定します。確定状況は[公開記録](../releases.ja.md)へ対応付けます。
+ポリシーの[公開URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)は確定し、認証なしで閲覧できることを確認しました。公開者の表示情報・窓口・施行日、Trader / Non-Traderの区分、アカウントの認証状態と配布先は未決です。翻訳原稿の作成時点では、翻訳ページのデプロイは未実施でした。ポリシーは草案のまま管理し、ストア提出前に内容を確定します。確定状況は[公開記録](../releases.ja.md)へ対応付けます。

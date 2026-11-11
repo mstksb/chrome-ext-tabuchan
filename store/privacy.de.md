@@ -62,4 +62,4 @@ Neustart oder Deaktivieren/Neuladen/Aktualisieren löscht Sitzungsverlauf. Gesch
 
 ## Bestätigung durch Herausgeber
 
-Die [bestehende URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) wurde ohne Anmeldung geprüft; neue Übersetzungen sind noch nicht als bereitgestellt bestätigt. Herausgeberdaten, Kontakt, Gültigkeit, Trader-/Non-Trader-Status, Kontoprüfung und Verteilungsziele sind offen. Vor Einreichung abschließen und im [Protokoll](../releases.de.md) festhalten.
+Die [bestehende URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) wurde ohne Anmeldung geprüft; bei Abschluss der Übersetzungsentwürfe war deren Bereitstellung noch nicht bestätigt. Herausgeberdaten, Kontakt, Gültigkeit, Trader-/Non-Trader-Status, Kontoprüfung und Verteilungsziele sind offen. Vor Einreichung abschließen und im [Protokoll](../releases.de.md) festhalten.

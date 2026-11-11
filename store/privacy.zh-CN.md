@@ -62,4 +62,4 @@ lang: zh-CN
 
 ## 发布者须确认的事项
 
-[现有政策网址](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)已确认无需登录即可访问；本次新增翻译的部署尚未确认。发布者显示信息、联系渠道、生效日期、Trader／Non-Trader 身份、账户认证和分发目标仍待确定。提交商店前须定稿，并在[发布记录](../releases.zh-CN.md)中跟踪状态。
+[现有政策网址](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)已确认无需登录即可访问；翻译原稿完成时，新增翻译的部署尚未确认。发布者显示信息、联系渠道、生效日期、Trader／Non-Trader 身份、账户认证和分发目标仍待确定。提交商店前须定稿，并在[发布记录](../releases.zh-CN.md)中跟踪状态。

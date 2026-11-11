@@ -62,4 +62,4 @@ lang: zh-TW
 
 ## 發佈者待確認事項
 
-[既有政策網址](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)已確認可無須登入存取；新增翻譯尚未確認部署。發佈者資訊、聯絡管道、生效日期、Trader／Non-Trader 身分、帳號驗證與發佈目的地仍待確定。提交商店前須定稿，狀態記錄於[發佈紀錄](../releases.zh-TW.md)。
+[既有政策網址](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)已確認可無須登入存取；翻譯原稿完成時，新增翻譯尚未確認部署。發佈者資訊、聯絡管道、生效日期、Trader／Non-Trader 身分、帳號驗證與發佈目的地仍待確定。提交商店前須定稿，狀態記錄於[發佈紀錄](../releases.zh-TW.md)。
