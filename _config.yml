@@ -1,0 +1,14 @@
+title: tabuchan
+description: 最近使ったタブへキーボードで移動するChrome拡張
+url: https://mstksb.github.io
+baseurl: /chrome-ext-tabuchan
+lang: ja
+timezone: Asia/Tokyo
+theme: jekyll-theme-primer
+
+exclude:
+  - src
+  - options.html
+  - manifest.json
+  - .skill-state
+  - .skill-logs

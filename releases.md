@@ -1,5 +1,11 @@
 # 公開記録
 
+## GitHub Pages
+
+2026年11月11日に、既存のREADMEと公開資料をGitHub Pagesで表示する設定を準備しました。公開元は `main` ブランチのルートです。READMEをトップページにし、Markdown内の相対リンクはGitHub Pages標準のJekyll処理でHTMLのURLへ変換します。拡張の `src/`・`options.html`・`manifest.json` はサイトの生成対象から除きます。
+
+予定URLは[使い方](https://mstksb.github.io/chrome-ext-tabuchan/)と[プライバシーポリシー草案](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)です。設定の反映・Pagesの有効化・公開URLでの表示確認は未実施です。ポリシーの公開者名・連絡先・施行日は未確定で、ストア提出用の確定版にはしていません。
+
 ## 0.1.0
 
 最近使用したタブへの短押し移動、長押しの候補一覧、最近使用順とタブ順の切り替え、タブグループ表示、タイトル検索、ショートカット・動作設定を含む公開候補です。
