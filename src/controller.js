@@ -6,9 +6,9 @@ import {
   removeTab,
   setHistoryLimit,
 } from "./history.js";
-import { formatShortcut } from "./shortcuts.js";
-import { DEFAULT_MAX_PAST_TABS, readSettings } from "./settings.js";
-import { canUsePageInput } from "./tab-access.js";
+import { DEFAULT_MAX_PAST_TABS, readBehaviorSettings } from "./settings.js";
+import { createPageInputAccessCheck } from "./tab-access.js";
+import { createLegacyCommands } from "./legacy-command.js";
 
 // Accept the provisional 0.3.0 state format, then apply the current limit on restore.
 const MAX_SAVED_PAST_TABS = 100;
@@ -69,6 +69,9 @@ function reconcileTabs(state, tabs, internalTarget = null) {
 
   const activeTab = tabs.find((tab) => tab.active);
   if (activeTab) {
+    if (nextState.activeTabId === activeTab.id && nextState.mruTabIds[0] === activeTab.id) {
+      return nextState;
+    }
     return observeActivation(nextState, activeTab.id, {
       internal: activeTab.id === internalTarget,
     });
@@ -114,12 +117,12 @@ function restoreWindow(windowId, saved, tabs, maxPastTabs) {
 }
 
 export function createController(browser) {
-  const translate = (name, substitutions) => browser.i18n.getMessage(name, substitutions);
   let session = { schemaVersion: 1, revision: 0, windows: {} };
   let started = false;
   let initialization = Promise.resolve();
   let queue = Promise.resolve();
   let maxPastTabs = DEFAULT_MAX_PAST_TABS;
+  let saveRequired = false;
   const inFlight = new Map();
   const expectedActivations = new Map();
   // Detect input-context changes before their queued history updates run.
@@ -129,18 +132,23 @@ export function createController(browser) {
     console.warn(`tabuchan: ${kind}`);
   }
 
+  const legacy = createLegacyCommands(browser, { reportFailure, getRevision: () => session.revision });
+
   function nextRevision() {
     session.revision = Math.max(Date.now(), session.revision + 1);
     return session.revision;
   }
 
   async function save() {
+    saveRequired = true;
     await browser.storage.session.set({ mruState: structuredClone(session) });
+    saveRequired = false;
   }
 
   function enqueue(task) {
     queue = queue.then(() => initialization).then(task).catch(() => {
       reportFailure("operation failed");
+      return { ok: false, code: "operation-failed", error: browser.i18n.getMessage("controller_operation_failed") };
     });
     return queue;
   }
@@ -153,7 +161,8 @@ export function createController(browser) {
     }
 
     let state = session.windows[windowId] ?? createWindowState(windowId, null, maxPastTabs);
-    if (observedTabId !== null && tabs.some((tab) => tab.id === observedTabId)) {
+    if (observedTabId !== null && state.activeTabId !== observedTabId
+      && tabs.some((tab) => tab.id === observedTabId)) {
       state = observeActivation(state, observedTabId);
     }
     const updated = reconcileTabs(state, tabs, internalTarget);
@@ -161,79 +170,18 @@ export function createController(browser) {
     return { tabs, state: updated, activeTab: tabs.find((tab) => tab.active) ?? null };
   }
 
-  async function showStatus(tab, unavailable = false, message = translate("controller_display_unavailable")) {
-    const title = tab.title || translate("controller_untitled");
-    await Promise.allSettled([
-      browser.action.setBadgeText({ tabId: tab.id, text: unavailable ? "!" : "" }),
-      browser.action.setTitle({
-        tabId: tab.id,
-        title: unavailable ? `tabuchan\n${title}\n${message}` : `tabuchan\n${title}`,
-      }),
-    ]);
-  }
-
-  async function showOverlay(tab, state, boundary) {
-    if (!tab) {
-      return;
-    }
-    if (!/^https?:\/\//i.test(tab.url ?? "")) {
-      await showStatus(tab, true);
-      return;
-    }
-
-    let shortcuts = [];
-    try {
-      if (browser.commands) {
-        shortcuts = await browser.commands.getAll();
-      } else {
-        const { shortcuts: bindings } = await readSettings(browser);
-        shortcuts = [
-          { name: "history-back", shortcut: formatShortcut(bindings.back[0]) },
-          { name: "history-forward", shortcut: formatShortcut(bindings.forward[0]) },
-        ];
-      }
-    } catch {
-      reportFailure("shortcut information unavailable");
-    }
-
-    const message = {
-      type: "mru-show",
-      revision: session.revision,
-      title: tab.title || translate("controller_untitled"),
-      favIconUrl: tab.favIconUrl || "",
-      position: state.traversal?.cursor ?? 0,
-      pastCount: Math.max(0, (state.traversal?.tabIds.length ?? state.mruTabIds.length) - 1),
-      backShortcut: shortcuts.find((command) => command.name === "history-back")?.shortcut || "",
-      forwardShortcut: shortcuts.find((command) => command.name === "history-forward")?.shortcut || "",
-      boundary,
-    };
-
-    try {
-      let response;
-      try {
-        response = await browser.tabs.sendMessage(tab.id, message);
-      } catch {
-        response = null;
-      }
-      if (!response?.ok) {
-        await browser.scripting.executeScript({ target: { tabId: tab.id }, files: ["src/overlay.js"] });
-        response = await browser.tabs.sendMessage(tab.id, message);
-      }
-      await showStatus(tab, !response?.ok);
-    } catch {
-      await showStatus(tab, true);
-    }
-  }
-
   async function initialize() {
-    maxPastTabs = (await readSettings(browser)).maxPastTabs;
-    const tabs = (await browser.tabs.query({})).filter((tab) => isTabId(tab.id));
-    let stored;
-    try {
-      stored = (await browser.storage.session.get("mruState")).mruState;
-    } catch {
-      reportFailure("saved history unavailable");
-    }
+    const [settings, allTabs, stored] = await Promise.all([
+      readBehaviorSettings(browser),
+      browser.tabs.query({}),
+      Promise.resolve().then(() => browser.storage.session.get("mruState"))
+        .then((value) => value.mruState).catch(() => {
+          reportFailure("saved history unavailable");
+          return undefined;
+        }),
+    ]);
+    maxPastTabs = settings.maxPastTabs;
+    const tabs = allTabs.filter((tab) => isTabId(tab.id));
 
     const savedWindows = stored?.schemaVersion === 1 && stored.windows
       && typeof stored.windows === "object" && !Array.isArray(stored.windows) ? stored.windows : {};
@@ -258,104 +206,177 @@ export function createController(browser) {
     }
   }
 
-  async function findAvailableMove(request, tabs, direction) {
+  async function findAvailableMove(request, tabs, direction, canUsePageInput) {
     if (request.targetTabId === null) return request;
     const { tabIds, cursor } = request.state.traversal;
     const step = direction === "back" ? 1 : -1;
     for (let index = cursor + step; index >= 0 && index < tabIds.length; index += step) {
       const candidate = tabs.find((tab) => tab.id === tabIds[index]);
-      if (candidate && await canUsePageInput(browser, candidate)) {
+      if (candidate && await canUsePageInput(candidate)) {
         return { ...request, targetTabId: candidate.id };
       }
     }
     return { ...request, targetTabId: null };
   }
 
-  async function runCommand(command, suppliedWindowId, selection = null, input = null) {
-    const windowId = suppliedWindowId ?? (await browser.windows.getLastFocused({ populate: false })).id;
-    if (!isTabId(windowId)) {
-      return { ok: false, error: translate("controller_window_read_failed") };
+  async function prepareSwitch(current, switchRequest, windowId, canUsePageInput) {
+    const { kind, direction } = switchRequest;
+    const selection = kind === "select" ? switchRequest.selection : null;
+    const input = kind === "move" ? switchRequest.input : null;
+  if (!current.state) {
+    return { ok: false, error: browser.i18n.getMessage("controller_window_missing") };
+  }
+  if (input && (current.activeTab?.id !== input.sourceTabId
+    || (inputRevisions.get(windowId) ?? 0) !== input.revision)) {
+    return { ok: false, error: browser.i18n.getMessage("controller_move_cancelled") };
+  }
+  const tabListSelection = selection?.mode === "tabs";
+  const snapshot = tabListSelection ? current.state.tabListSnapshot : current.state.traversal;
+  if (selection && (current.activeTab?.id !== selection.sourceTabId
+    || current.state.generation !== selection.generation
+    || !snapshot?.tabIds.includes(selection.targetTabId)
+    || (tabListSelection && (snapshot.sourceTabId !== selection.sourceTabId
+      || snapshot.generation !== selection.generation))
+    || (!tabListSelection && selection.targetTabId === selection.sourceTabId)
+    || !current.tabs.some((tab) => tab.id === selection.targetTabId))) {
+    return { ok: false, error: browser.i18n.getMessage("controller_candidates_updated") };
+  }
+  if (tabListSelection && selection.targetTabId === selection.sourceTabId) return { ok: true };
+  const requestState = tabListSelection ? endTraversal(current.state) : current.state;
+  let request = selection
+    ? { state: requestState, targetTabId: selection.targetTabId }
+    : beginOrMove(current.state, direction);
+  if (input?.skipUnavailableTabs) {
+    request = await findAvailableMove(request, current.tabs, direction, canUsePageInput);
+  }
+  if (input) {
+    const refreshed = await synchronizeWindow(windowId);
+    if (!refreshed.state || refreshed.activeTab?.id !== input.sourceTabId
+      || refreshed.state.generation !== current.state.generation
+      || (inputRevisions.get(windowId) ?? 0) !== input.revision) {
+      await save();
+      return { ok: false, error: browser.i18n.getMessage("controller_move_cancelled") };
+    }
+    if (request.targetTabId !== null && !refreshed.tabs.some((tab) => tab.id === request.targetTabId)) {
+      return { retry: true };
+    }
+    if (refreshed.state !== current.state) {
+      request = { ...request, state: request.state === current.state
+        ? refreshed.state : reconcileTabs(request.state, refreshed.tabs) };
+    }
+  }
+    return { request };
+  }
+
+  async function saveSwitchIntent(windowId, request, operation, activeTab) {
+    session.windows[windowId] = {
+      ...request.state,
+      pendingSwitch: {
+        operationId: session.revision,
+        generation: operation.generation,
+        fromTabId: request.state.activeTabId,
+        targetTabId: request.targetTabId,
+      },
+    };
+
+    try {
+      await save();
+      return { ok: true };
+    } catch {
+      session.windows[windowId] = { ...request.state, pendingSwitch: null };
+      reportFailure("history could not be saved before switching");
+      if (activeTab) await legacy.showStatus(activeTab, true, browser.i18n.getMessage("controller_history_save_status"));
+      return { ok: false, error: browser.i18n.getMessage("controller_history_save_failed") };
+    }
+  }
+
+  async function activateTarget(windowId, operation) {
+    let updateFailed = false;
+    const expected = expectedActivations.get(windowId) ?? [];
+    expected.push(operation);
+    expectedActivations.set(windowId, expected);
+    try {
+      await browser.tabs.update(operation.targetTabId, { active: true });
+    } catch {
+      updateFailed = true;
+      const index = expected.indexOf(operation);
+      if (index >= 0) expected.splice(index, 1);
     }
 
-    const quiet = selection !== null || input !== null;
-    const direction = command === "history-back" ? "back" : "forward";
+    return updateFailed;
+  }
+
+  async function reconcileSwitch(windowId, operation, updateFailed) {
+    const internalTarget = operation.interrupted || updateFailed ? null : operation.targetTabId;
+    const result = await synchronizeWindow(windowId, internalTarget);
+    if (!result.state) {
+      await save();
+      return { result, succeeded: false, saved: true };
+    }
+
+    const succeeded = !updateFailed && !operation.interrupted
+      && result.activeTab?.id === operation.targetTabId
+      && result.state.generation === operation.generation;
+    let updated = result.state;
+    if (succeeded) {
+      updated = confirmMove(updated, operation.targetTabId);
+    }
+    session.windows[windowId] = { ...updated, pendingSwitch: null };
+
+    let saved = true;
+    try {
+      await save();
+    } catch {
+      saved = false;
+      reportFailure("history could not be saved after switching");
+    }
+
+    operation.confirmed = succeeded && saved;
+    return { result, succeeded, saved };
+  }
+
+  // Each entry point declares its intent; selection is never encoded as a direction.
+  async function executeSwitch(switchRequest) {
+    const { kind, windowId: suppliedWindowId } = switchRequest;
+    const selection = kind === "select" ? switchRequest.selection : null;
+    const input = kind === "move" ? switchRequest.input : null;
+    const windowId = suppliedWindowId ?? (await browser.windows.getLastFocused({ populate: false })).id;
+    if (!isTabId(windowId)) {
+      return { ok: false, error: browser.i18n.getMessage("controller_window_read_failed") };
+    }
+
+    const quiet = kind !== "legacy";
+    const canUsePageInput = createPageInputAccessCheck(browser);
     for (let attempt = 0; attempt <= maxPastTabs; attempt += 1) {
+      const previousState = session.windows[windowId];
       const current = await synchronizeWindow(windowId);
-      if (!current.state) {
-        return { ok: false, error: translate("controller_window_missing") };
-      }
-      if (input && (current.activeTab?.id !== input.sourceTabId
-        || (inputRevisions.get(windowId) ?? 0) !== input.revision)) {
-        return { ok: false, error: translate("controller_move_cancelled") };
-      }
-      const tabListSelection = selection?.mode === "tabs";
-      const snapshot = tabListSelection ? current.state.tabListSnapshot : current.state.traversal;
-      if (selection && (current.activeTab?.id !== selection.sourceTabId
-        || current.state.generation !== selection.generation
-        || !snapshot?.tabIds.includes(selection.targetTabId)
-        || (tabListSelection && (snapshot.sourceTabId !== selection.sourceTabId
-          || snapshot.generation !== selection.generation))
-        || (!tabListSelection && selection.targetTabId === selection.sourceTabId)
-        || !current.tabs.some((tab) => tab.id === selection.targetTabId))) {
-        return { ok: false, error: translate("controller_candidates_updated") };
-      }
-      if (tabListSelection && selection.targetTabId === selection.sourceTabId) return { ok: true };
-      const requestState = tabListSelection ? endTraversal(current.state) : current.state;
-      let request = selection
-        ? { state: requestState, targetTabId: selection.targetTabId }
-        : beginOrMove(current.state, direction);
-      if (input?.skipUnavailableTabs) {
-        request = await findAvailableMove(request, current.tabs, direction);
-      }
-      if (input) {
-        const refreshed = await synchronizeWindow(windowId);
-        if (!refreshed.state || refreshed.activeTab?.id !== input.sourceTabId
-          || refreshed.state.generation !== current.state.generation
-          || (inputRevisions.get(windowId) ?? 0) !== input.revision) {
-          await save();
-          return { ok: false, error: translate("controller_move_cancelled") };
-        }
-        if (request.targetTabId !== null && !refreshed.tabs.some((tab) => tab.id === request.targetTabId)) {
-          continue;
-        }
-      }
+      const prepared = await prepareSwitch(current, switchRequest, windowId, canUsePageInput);
+      if (prepared.retry) continue;
+      if (!prepared.request) return prepared;
+      const { request } = prepared;
+      const stateChanged = current.state !== previousState || request.state !== current.state
+        || session.windows[windowId] !== request.state;
       session.windows[windowId] = request.state;
-      nextRevision();
 
       if (request.targetTabId === null) {
-        await save();
-        if (!quiet) await showOverlay(current.activeTab, request.state, true);
+        if (stateChanged || saveRequired) {
+          nextRevision();
+          await save();
+        }
+        if (!quiet) await legacy.showOverlay(current.activeTab, request.state, true);
         return { ok: true };
       }
 
+      nextRevision();
       const operation = {
         targetTabId: request.targetTabId,
         generation: request.state.generation,
         interrupted: false,
       };
       inFlight.set(windowId, operation);
-      session.windows[windowId] = {
-        ...request.state,
-        pendingSwitch: {
-          operationId: session.revision,
-          generation: operation.generation,
-          fromTabId: request.state.activeTabId,
-          targetTabId: request.targetTabId,
-        },
-      };
-
       try {
-        try {
-          await save();
-        } catch {
-          session.windows[windowId] = { ...request.state, pendingSwitch: null };
-          reportFailure("history could not be saved before switching");
-          if (current.activeTab) {
-            await showStatus(current.activeTab, true, translate("controller_history_save_status"));
-          }
-          return { ok: false, error: translate("controller_history_save_failed") };
-        }
-
+        const intent = await saveSwitchIntent(windowId, request, operation, current.activeTab);
+        if (!intent.ok) return intent;
         if (selection || input) {
           const currentTabs = await browser.tabs.query({ windowId });
           const sourceTabId = selection?.sourceTabId ?? input.sourceTabId;
@@ -370,73 +391,40 @@ export function createController(browser) {
           session.windows[windowId] = endTraversal(session.windows[windowId]);
           await synchronizeWindow(windowId);
           await save();
-          return { ok: false, error: translate("controller_selection_cancelled") };
+          return { ok: false, error: browser.i18n.getMessage("controller_selection_cancelled") };
         }
 
-        let updateFailed = false;
-        const expected = expectedActivations.get(windowId) ?? [];
-        expected.push(operation);
-        expectedActivations.set(windowId, expected);
-        try {
-          await browser.tabs.update(request.targetTabId, { active: true });
-        } catch {
-          updateFailed = true;
-          const index = expected.indexOf(operation);
-          if (index >= 0) expected.splice(index, 1);
-        }
-
+        const updateFailed = await activateTarget(windowId, operation);
         if (operation.interrupted) {
           session.windows[windowId] = endTraversal(session.windows[windowId]);
         }
-        const internalTarget = operation.interrupted || updateFailed ? null : request.targetTabId;
-        const result = await synchronizeWindow(windowId, internalTarget);
-        if (!result.state) {
-          await save();
-          return { ok: false, error: translate("controller_window_missing") };
-        }
-
-        const succeeded = !updateFailed && !operation.interrupted
-          && result.activeTab?.id === request.targetTabId
-          && result.state.generation === operation.generation;
-        let updated = result.state;
-        if (succeeded) {
-          updated = confirmMove(updated, request.targetTabId);
-        }
-        session.windows[windowId] = { ...updated, pendingSwitch: null };
-
-        let saved = true;
-        try {
-          await save();
-        } catch {
-          saved = false;
-          reportFailure("history could not be saved after switching");
-        }
-
+        const { result, succeeded, saved } = await reconcileSwitch(windowId, operation, updateFailed);
+        if (!result.state) return { ok: false, error: browser.i18n.getMessage("controller_window_missing") };
         const targetDisappeared = !result.tabs.some((tab) => tab.id === request.targetTabId);
         if (!selection && updateFailed && targetDisappeared && !operation.interrupted && saved) {
           continue;
         }
         if (!quiet && result.activeTab && (succeeded || !updateFailed)) {
-          await showOverlay(result.activeTab, session.windows[windowId], false);
+          await legacy.showOverlay(result.activeTab, session.windows[windowId], false);
         }
         if (!saved && result.activeTab) {
-          await showStatus(result.activeTab, true, translate("controller_history_save_status"));
+          await legacy.showStatus(result.activeTab, true, browser.i18n.getMessage("controller_history_save_status"));
         }
         if (updateFailed && !targetDisappeared) {
           reportFailure("tab could not be switched");
           if (result.activeTab) {
-            await showStatus(result.activeTab, true, translate("controller_tab_switch_failed"));
+            await legacy.showStatus(result.activeTab, true, browser.i18n.getMessage("controller_tab_switch_failed"));
           }
         }
         if (succeeded) {
           return { ok: true };
         }
-        return { ok: false, error: translate("controller_candidate_retry") };
+        return { ok: false, error: browser.i18n.getMessage("controller_candidate_retry") };
       } finally {
         inFlight.delete(windowId);
       }
     }
-    return { ok: false, error: translate("controller_no_tabs") };
+    return { ok: false, error: browser.i18n.getMessage("controller_no_tabs") };
   }
 
   function handleCommand(command, tab) {
@@ -447,60 +435,68 @@ export function createController(browser) {
       start();
     }
     const windowId = isTabId(tab?.windowId) ? tab.windowId : null;
-    return enqueue(() => runCommand(command, windowId));
+    return enqueue(() => executeSwitch({
+      kind: "legacy", direction: command === "history-back" ? "back" : "forward", windowId,
+    }));
   }
 
   function handleMove(direction, tab) {
     if ((direction !== "back" && direction !== "forward")
       || !isTabId(tab?.id) || !isTabId(tab?.windowId)) {
-      return Promise.resolve({ ok: false, error: translate("controller_source_missing") });
+      return Promise.resolve({ ok: false, error: browser.i18n.getMessage("controller_source_missing") });
     }
     if (!started) start();
     return enqueue(async () => {
       const revision = inputRevisions.get(tab.windowId) ?? 0;
-      const { skipUnavailableTabs } = await readSettings(browser);
-      return runCommand(`history-${direction}`, tab.windowId, null, {
-        sourceTabId: tab.id,
-        skipUnavailableTabs,
-        revision,
+      const { skipUnavailableTabs } = await readBehaviorSettings(browser);
+      return executeSwitch({
+        kind: "move", direction, windowId: tab.windowId,
+        input: { sourceTabId: tab.id, skipUnavailableTabs, revision },
       });
     });
   }
 
-  async function candidateItems(tabs) {
-    const groupIds = [...new Set(tabs.map((tab) => tab.groupId).filter(isTabId))];
-    const groups = new Map(await Promise.all(groupIds.map(async (groupId) => {
-      try {
-        const group = await browser.tabGroups.get(groupId);
-        return [groupId, { title: group.title || translate("controller_group"), color: group.color }];
-      } catch {
-        return [groupId, { title: translate("controller_group"), color: "grey" }];
-      }
-    })));
-    return Promise.all(tabs.map(async (candidate) => ({
+  async function candidateItems(tabs, mode) {
+    const canUsePageInput = createPageInputAccessCheck(browser);
+    const availabilityRequest = Promise.all(tabs.map((tab) => canUsePageInput(tab)));
+    let groups;
+    if (mode === "tabs") {
+      const groupIds = [...new Set(tabs.map((tab) => tab.groupId).filter(isTabId))];
+      groups = new Map(await Promise.all(groupIds.map(async (groupId) => {
+        try {
+          const group = await browser.tabGroups.get(groupId);
+          return [groupId, { title: group.title || browser.i18n.getMessage("controller_group"), color: group.color }];
+        } catch {
+          return [groupId, { title: browser.i18n.getMessage("controller_group"), color: "grey" }];
+        }
+      })));
+    }
+    const availability = await availabilityRequest;
+    return tabs.map((candidate, index) => ({
       tabId: candidate.id,
-      title: candidate.title || translate("controller_untitled"),
+      title: candidate.title || browser.i18n.getMessage("controller_untitled"),
       favIconUrl: candidate.favIconUrl || "",
       groupId: isTabId(candidate.groupId) ? candidate.groupId : -1,
-      group: groups.get(candidate.groupId),
-      inputAvailable: await canUsePageInput(browser, candidate),
-    })));
+      group: groups?.get(candidate.groupId),
+      inputAvailable: availability[index],
+    }));
   }
 
   function getCandidates(direction, tab, mode = "mru") {
     if ((direction !== "back" && direction !== "forward")
       || (mode !== "mru" && mode !== "tabs")
       || !isTabId(tab?.id) || !isTabId(tab?.windowId)) {
-      return Promise.resolve({ ok: false, error: translate("controller_display_source_missing") });
+      return Promise.resolve({ ok: false, error: browser.i18n.getMessage("controller_display_source_missing") });
     }
     if (!started) {
       start();
     }
     const { id: sourceTabId, windowId } = tab;
     return enqueue(async () => {
+      const previousState = session.windows[windowId];
       const current = await synchronizeWindow(windowId);
       if (!current.state || current.activeTab?.id !== sourceTabId) {
-        return { ok: false, error: translate("controller_list_cancelled") };
+        return { ok: false, error: browser.i18n.getMessage("controller_list_cancelled") };
       }
 
       const request = mode === "tabs"
@@ -513,7 +509,7 @@ export function createController(browser) {
           .filter((tabId) => tabId !== sourceTabId)
           .map((tabId) => current.tabs.find((candidate) => candidate.id === tabId))
           .filter(Boolean);
-      const items = await candidateItems(candidateTabs);
+      const items = await candidateItems(candidateTabs, mode);
       if (mode === "tabs") {
         session.windows[windowId] = {
           ...request.state,
@@ -528,7 +524,7 @@ export function createController(browser) {
       if (selectedIndex < 0 && items.length > 0) {
         selectedIndex = direction === "back" ? items.length - 1 : 0;
       }
-      await save();
+      if (saveRequired || session.windows[windowId] !== previousState) await save();
       return {
         ok: true,
         mode,
@@ -538,7 +534,7 @@ export function createController(browser) {
         sourceTabId,
         windowId,
       };
-    }).then((result) => result ?? { ok: false, error: translate("controller_candidates_failed") });
+    }).then((result) => result ?? { ok: false, error: browser.i18n.getMessage("controller_candidates_failed") });
   }
 
   function selectCandidate(selection, tab) {
@@ -547,7 +543,7 @@ export function createController(browser) {
       || !Number.isSafeInteger(selection?.generation) || selection.generation < 0
       || (selection.mode !== undefined && selection.mode !== "mru" && selection.mode !== "tabs")
       || selection.sourceTabId !== tab.id) {
-      return Promise.resolve({ ok: false, error: translate("controller_selection_source_missing") });
+      return Promise.resolve({ ok: false, error: browser.i18n.getMessage("controller_selection_source_missing") });
     }
     if (!started) {
       start();
@@ -559,14 +555,17 @@ export function createController(browser) {
       mode: selection.mode ?? "mru",
     };
     const windowId = tab.windowId;
-    return enqueue(() => runCommand("history-back", windowId, request))
-      .then((result) => result ?? { ok: false, error: translate("controller_candidate_failed") });
+    return enqueue(() => executeSwitch({ kind: "select", windowId, selection: request }))
+      .then((result) => result ?? { ok: false, error: browser.i18n.getMessage("controller_candidate_failed") });
   }
 
-  function reconcileEvent(windowId) {
+  function reconcileEvent(windowId, createdTab = null) {
     return enqueue(async () => {
-      await synchronizeWindow(windowId);
-      await save();
+      const previous = session.windows[windowId];
+      if (createdTab?.active === false && previous?.activeTabId != null && !saveRequired
+        && !previous.mruTabIds.includes(createdTab.id)) return;
+      const { state } = await synchronizeWindow(windowId);
+      if (saveRequired || (state !== previous && !(state === null && previous === undefined))) await save();
     });
   }
 
@@ -597,35 +596,71 @@ export function createController(browser) {
     }
     started = true;
     // Chrome exposes this API only when the manifest declares legacy commands.
-    browser.commands?.onCommand.addListener((command, tab) => { void handleCommand(command, tab); });
+    legacy.listen(handleCommand);
     browser.tabs.onActivated.addListener((info) => {
       const operation = inFlight.get(info.windowId);
       const expected = expectedActivations.get(info.windowId) ?? [];
       const ownIndex = expected.findIndex((entry) => entry.targetTabId === info.tabId);
-      const ownActivation = ownIndex >= 0;
-      if (ownActivation) expected.splice(ownIndex, 1);
-      if (!ownActivation && session.windows[info.windowId]?.activeTabId !== info.tabId) {
+      const ownOperation = ownIndex >= 0 ? expected.splice(ownIndex, 1)[0] : null;
+      const matchesConfirmed = () => ownOperation?.confirmed && !saveRequired
+        && session.windows[info.windowId]?.activeTabId === info.tabId
+        && session.windows[info.windowId]?.generation === ownOperation.generation;
+      // Skip only a notification that still describes the state we saved.
+      if (matchesConfirmed()) return;
+      const ownActivation = ownOperation !== null && !ownOperation.confirmed;
+      let observedTabId = ownActivation ? null : info.tabId;
+      let shouldReconcile = true;
+      const observeExternal = () => {
         inputRevisions.set(info.windowId, (inputRevisions.get(info.windowId) ?? 0) + 1);
-      }
+      };
       let verification = Promise.resolve();
-      if (operation && !ownActivation && operation.targetTabId !== info.tabId
-        && session.windows[info.windowId]?.activeTabId !== info.tabId) {
+      if (ownOperation?.confirmed) {
+        // A previous expected target can also be a new, external selection.
+        // Ignore a delayed old notification only when its tab is no longer active.
         verification = browser.tabs.query({ windowId: info.windowId, active: true }).then((tabs) => {
-          if (tabs.some((tab) => tab.id === info.tabId) && inFlight.get(info.windowId) === operation) {
+          shouldReconcile = tabs.some((tab) => tab.id === info.tabId);
+          if (!shouldReconcile) return;
+          const externalSelection = session.windows[info.windowId]?.activeTabId !== info.tabId;
+          if (externalSelection) observeExternal();
+          if (externalSelection && operation && operation.targetTabId !== info.tabId
+            && inFlight.get(info.windowId) === operation) {
             operation.interrupted = true;
           }
         }).catch(() => {
-          operation.interrupted = true;
+          if (session.windows[info.windowId]?.activeTabId !== info.tabId) observeExternal();
+          observedTabId = null;
+          if (operation) operation.interrupted = true;
         });
+      } else {
+        if (!ownActivation && session.windows[info.windowId]?.activeTabId !== info.tabId) observeExternal();
+        if (operation && !ownActivation && operation.targetTabId !== info.tabId
+          && session.windows[info.windowId]?.activeTabId !== info.tabId) {
+          verification = browser.tabs.query({ windowId: info.windowId, active: true }).then((tabs) => {
+            if (tabs.some((tab) => tab.id === info.tabId) && inFlight.get(info.windowId) === operation) {
+              operation.interrupted = true;
+            }
+          }).catch(() => {
+            operation.interrupted = true;
+          });
+        }
       }
       void enqueue(async () => {
         await verification;
-        await synchronizeWindow(info.windowId, null, ownActivation ? null : info.tabId);
-        await save();
+        if (!shouldReconcile || matchesConfirmed()) return;
+        const previous = session.windows[info.windowId];
+        await synchronizeWindow(info.windowId, null, observedTabId);
+        if (saveRequired || session.windows[info.windowId] !== previous) await save();
       });
     });
-    browser.tabs.onCreated.addListener((tab) => { void reconcileEvent(tab.windowId); });
-    browser.tabs.onRemoved.addListener((_tabId, info) => { void reconcileEvent(info.windowId); });
+    browser.tabs.onCreated.addListener((tab) => { void reconcileEvent(tab.windowId, tab); });
+    browser.tabs.onRemoved.addListener((_tabId, info) => {
+      if (info.isWindowClosing) {
+        const operation = inFlight.get(info.windowId);
+        if (operation) operation.interrupted = true;
+        return;
+      }
+      void reconcileEvent(info.windowId);
+    });
     browser.tabs.onDetached.addListener((_tabId, info) => { void reconcileEvent(info.oldWindowId); });
     browser.tabs.onAttached.addListener((_tabId, info) => { void reconcileEvent(info.newWindowId); });
     browser.tabs.onReplaced.addListener((added, removed) => { void enqueue(() => replaceTab(added, removed)); });
@@ -654,7 +689,7 @@ export function createController(browser) {
       }
       if (!Object.hasOwn(changes, "mruSettings")) return;
       void enqueue(async () => {
-        const updated = (await readSettings(browser)).maxPastTabs;
+        const updated = (await readBehaviorSettings(browser)).maxPastTabs;
         if (updated === maxPastTabs) return;
         maxPastTabs = updated;
         for (const [windowId, state] of Object.entries(session.windows)) {

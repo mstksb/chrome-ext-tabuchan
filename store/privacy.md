@@ -20,7 +20,7 @@ Provide keyboard navigation to recently used tabs and tabs found by title in the
 | `tabGroups` | Display group names and colors in the tab-order list and preserve the group hierarchy when presenting tabs. |
 | `storage` | Save shortcut/behavior settings locally and retain tab history and traversal state during the browser session. |
 | `scripting` | Inject input detection and tab-list display into open HTTP(S) pages, including preparing page-side behavior after installation or an update. |
-| `http://*/*` and `https://*/*` | Detect shortcut key-down/key-up events in the user's HTTP(S) pages and iframes, and display the list in the top-level frame. This supports starting shortcuts from arbitrary regular web pages. |
+| `http://*/*` and `https://*/*` | Detect shortcut key-down and key-up events in HTTP(S) pages and their iframes, and display the list in an extension frame embedded in the top-level page. This allows shortcuts to start on regular web pages. |
 
 ## Data collection, use, and storage
 
@@ -32,7 +32,7 @@ Provide keyboard navigation to recently used tabs and tabs found by title in the
 | Hold duration, history limit, skip-unavailable-on-tap setting | Apply the user's selected behavior | `storage.local.mruSettings` |
 | Title-search text entered in the list | Filter displayed tabs | In memory while the list is open; discarded on mode changes or closure |
 
-Titles and group names are rendered as text in a list inserted into the current page. Search text is handled in that list's input field. Input-event processing supports shortcuts, list operations, and recording configured combinations.
+The extension renders titles and group names as text inside its own frame. The search field handles title queries within that frame. The extension keeps list contents and search text within the extension. Input events support shortcuts, list operations, and shortcut recording.
 
 ## External requests and third-party processing
 

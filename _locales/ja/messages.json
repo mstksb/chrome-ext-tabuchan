@@ -75,7 +75,7 @@
     "message": "$1の選択"
   },
   "picker_search_placeholder": {
-    "message": "タブのタイトルを検索"
+    "message": "タブ名で検索"
   },
   "picker_search_label": {
     "message": "タブのタイトルを検索"
@@ -93,10 +93,10 @@
     "message": "タイトルなし"
   },
   "picker_unavailable": {
-    "message": "このタブではショートカットを使えません"
+    "message": "移動後はtabuchanのキー操作が使えません"
   },
   "picker_unavailable_hint": {
-    "message": "このタブへ移動した後は、ショートカットによる切替操作を開始できません"
+    "message": "このページではtabuchanのキー操作を開始できません。移動後はChromeのタブをクリックして切り替えてください。"
   },
   "picker_no_matches": {
     "message": "一致するタブはありません"
@@ -207,7 +207,7 @@
     "message": "秒"
   },
   "options_hold_range": {
-    "message": "0.5〜2.0秒を0.1秒刻みで設定できます。"
+    "message": "0.2〜2.0秒を0.1秒刻みで設定できます。"
   },
   "options_history_limit": {
     "message": "MRUの表示・保持件数"
@@ -252,7 +252,7 @@
     "message": "候補表示中は上下キーで選び、Enterで移動、Escで取り消します。左キーでMRUとタブ順一覧を切り替えます。右キーは無効です。"
   },
   "options_usage_search": {
-    "message": "タブ順一覧では文字を入力してタイトルを絞り込み、Backspaceで1文字削除できます。大文字・小文字を区別せず、グループ名は検索対象外です。"
+    "message": "タブ順一覧では文字を入力してタブ名を絞り込み、Backspaceで1文字削除できます。大文字・小文字を区別せず、グループ名は検索対象外です。"
   },
   "options_usage_modifiers": {
     "message": "J/Kなどの通常キーを離し、修飾キーだけ押している間は長押しとして扱いません。"
@@ -322,5 +322,29 @@
   },
   "options_settings_refresh_error": {
     "message": "設定を更新できませんでした。この画面を再読み込みしてください。"
+  },
+  "controller_operation_failed": {
+    "message": "操作を完了できませんでした"
+  },
+  "picker_title": {
+    "message": "tabuchan のタブ選択"
+  },
+  "options_search_match_mode": {
+    "message": "検索方法"
+  },
+  "options_search_contains": {
+    "message": "部分一致"
+  },
+  "options_search_prefix": {
+    "message": "前方一致"
+  },
+  "options_search_match_help": {
+    "message": "スペースで検索語を分けられます。部分一致はすべての語を含むタイトルが対象です。前方一致は先頭から入力順で照合し、検索語の間に文字があっても一致します。たとえば「A C」で「ABC」「AXBYC」に一致します。"
+  },
+  "options_shortcut_change_invalid": {
+    "message": "キーの設定が不正です。もう一度操作してください。"
+  },
+  "options_settings_invalid": {
+    "message": "設定値の範囲と刻みを確認してください。"
   }
 }

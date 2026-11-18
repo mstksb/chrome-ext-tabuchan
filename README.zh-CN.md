@@ -8,9 +8,9 @@ lang: zh-CN
 
 通过键盘切换到最近使用的标签页的 Chrome 扩展。短按快捷键可浏览历史顺序，长按可打开标签页列表。
 
-公开候选版本为 `0.1.0`。分发文件、已验证环境以及审核和发布状态见[发布记录](releases.zh-CN.md)。
+此软件包的版本为 `0.1.0`。提交版本号将在核对 Dashboard 的上传记录后确定。分发文件、已验证环境以及审核和发布状态见[发布记录](releases.zh-CN.md)。
 
-文档提供英语、日语、简体中文、繁体中文、巴西葡萄牙语、西班牙语和德语版本。文档语言与扩展界面语言不同：目前 Chrome 显示语言为日语时，设置页面和标签页列表使用日语，其他情况下使用英语。标题搜索独立于界面语言，支持 Unicode 文本，采用 NFC 规范化后不区分大小写的子串匹配。
+文档提供英语、日语、简体中文、繁体中文、巴西葡萄牙语、西班牙语和德语版本。文档语言与扩展界面语言不同：目前 Chrome 显示语言为日语时，设置页面和标签页列表使用日语，其他情况下使用英语。
 
 ## 主要功能
 
@@ -22,9 +22,9 @@ lang: zh-CN
 
 ## 运行要求
 
-需要支持 Manifest V3 的 Google Chrome。清单声明的最低版本为 Chrome 102。[发布记录](releases.zh-CN.md)列出了实际验证过的环境和版本。Windows、Linux、旧版 Chrome 和操作系统自带的日语输入法尚未验证。
+需要支持 Manifest V3 的 Google Chrome。清单声明的最低版本为 Chrome 102。[发布记录](releases.zh-CN.md)列出了实际验证过的环境和版本。Windows、旧版 Chrome 和操作系统原生输入法尚未验证。Linux 环境使用 arm64 无头版 Chrome for Testing 验证。
 
-快捷键须在普通 HTTP(S) 网页内触发，也支持 iframe。无法从 Chrome 内部页面、Chrome 应用商店、其他扩展的页面、本地文件页面或地址栏触发快捷键。
+快捷键须在普通 HTTP(S) 网页内触发，也支持 iframe。无法从 Chrome 内部页面、Chrome 应用商店、其他扩展的页面、本地文件页面或地址栏触发快捷键。Chrome 应用商店的限制适用于 `chromewebstore.google.com` 和 `chrome.google.com`，包括两者的子域名。
 
 ## 加载和设置
 
@@ -40,9 +40,11 @@ lang: zh-CN
 
 macOS 使用实体 Control 键。在设置中实际按下所需组合即可注册。Chrome、操作系统或其他扩展可能优先拦截按键，导致网页无法接收。
 
-短按在松开所需按键时生效。默认长按时间为 1 秒。松开所有按键后列表仍保持显示：上下方向键选择，Enter 确认，Esc 取消。左方向键切换最近使用顺序与标签页顺序。在标签页顺序列表中输入文字可筛选标题，Backspace 删除最后一个字符。日语输入法组合输入期间，Enter、上下方向键和 Esc 保留给输入法操作。
+短按在松开所需按键时生效。默认长按时间为 0.5 秒。松开所有按键后列表仍保持显示：上下方向键选择，Enter 确认，Esc 取消。左方向键切换最近使用顺序与标签页顺序。在标签页顺序列表中输入文字可筛选标题，Backspace 删除最后一个字符。日语输入法组合输入期间，Enter、上下方向键和 Esc 保留给输入法操作。
 
-长按时间可设为 0.5–2 秒，步长为 0.1 秒。历史记录保留 10–30 个过去的标签页，默认 10 个。短按时默认跳过无法使用快捷键的标签页；仍可从列表中明确选择这些标签页。
+用空格分隔搜索词。部分匹配（默认）要求标题包含所有搜索词，顺序不限。前缀匹配要求第一个词出现在标题开头，其余词按输入顺序出现，词间可以有其他字符。两种方式都采用 Unicode NFC 规范化，且不区分大小写。
+
+长按时间可设为 0.2–2.0 秒，步长为 0.1 秒，默认为 0.5 秒。历史记录保留 10–30 个过去的标签页，默认为 10 个。短按时默认跳过无法使用快捷键的标签页。这些标签页在列表中显示为灰色，行高不变，仍可按 Enter 选择。
 
 ## 数据存储
 
@@ -50,7 +52,7 @@ macOS 使用实体 Control 键。在设置中实际按下所需组合即可注�
 
 ## 重新打包分发 ZIP
 
-在本 README 所在文件夹打开终端，可用 macOS 标准的 `zip` 和 `shasum` 工具将 20 个运行文件重新打包。以下命令会替换现有 ZIP 和校验和文件。
+在本 README 所在文件夹打开终端，可用 macOS 标准的 `zip` 和 `shasum` 工具将 29 个运行文件重新打包。以下命令会替换现有 ZIP 和校验和文件。
 
 ```sh
 mkdir -p dist &&
@@ -58,8 +60,6 @@ tabuchan_package_tmp=$(mktemp -d) &&
 zip -X "$tabuchan_package_tmp/tabuchan-0.1.0.zip" \
   manifest.json \
   options.html \
-  _locales/en/messages.json \
-  _locales/ja/messages.json \
   icons/tab.svg \
   icons/tab-16.png \
   icons/tab-48.png \
@@ -75,7 +75,18 @@ zip -X "$tabuchan_package_tmp/tabuchan-0.1.0.zip" \
   src/press-state.js \
   src/settings.js \
   src/shortcuts.js \
-  src/tab-access.js && \
+  src/tab-access.js \
+  _locales/en/messages.json \
+  _locales/ja/messages.json \
+  picker.html \
+  src/input-protocol.js \
+  src/legacy-command.js \
+  src/picker-model.js \
+  src/picker-view.js \
+  src/picker.css \
+  src/picker.js \
+  src/settings-rules.js \
+  src/shortcut-changes.js && \
   mv "$tabuchan_package_tmp/tabuchan-0.1.0.zip" dist/tabuchan-0.1.0.zip &&
 rmdir "$tabuchan_package_tmp" &&
 (cd dist && shasum -a 256 tabuchan-0.1.0.zip > tabuchan-0.1.0.zip.sha256)

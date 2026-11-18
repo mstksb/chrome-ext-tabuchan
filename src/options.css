@@ -63,8 +63,9 @@ kbd[data-state="error"] { color: #a53e3e; border-color: #efcccc; font-family: in
 .shortcut-row { align-items: flex-start; }
 .setting-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 20px; }
 .setting-row label { font-weight: 600; }
-.setting-row input { width: 90px; padding: 7px 9px; border: 1px solid #cbd9ed; border-radius: 6px; color: inherit; background: #fff; font: inherit; }
-.setting-row input:focus-visible { outline: 3px solid #8ab0ff; outline-offset: 2px; }
+.setting-row input, .setting-row select { width: 90px; padding: 7px 9px; border: 1px solid #cbd9ed; border-radius: 6px; color: inherit; background: #fff; font: inherit; }
+.setting-row select { width: 120px; }
+.setting-row input:focus-visible, .setting-row select:focus-visible { outline: 3px solid #8ab0ff; outline-offset: 2px; }
 .checkbox-setting { display: flex; align-items: flex-start; gap: 10px; margin-top: 22px; font-weight: 600; }
 .checkbox-setting input { flex-shrink: 0; margin-top: 5px; accent-color: #315991; }
 .checkbox-setting input:focus-visible { outline: 3px solid #8ab0ff; outline-offset: 2px; }

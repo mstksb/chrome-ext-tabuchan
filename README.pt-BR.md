@@ -8,9 +8,9 @@ lang: pt-BR
 
 Extensão do Chrome para alternar entre abas recentes pelo teclado. Toque no atalho para percorrer o histórico ou mantenha-o pressionado para abrir a lista de abas.
 
-A versão candidata à distribuição pública é `0.1.0`. Consulte o [registro de lançamento](releases.pt-BR.md) para arquivos, ambientes verificados e situação da revisão/publicação.
+Este pacote usa a versão `0.1.0`. A versão a enviar depende do histórico de uploads no Dashboard. Consulte o [registro de lançamento](releases.pt-BR.md) para arquivos, ambientes verificados e estado da loja.
 
-A documentação está disponível em inglês, japonês, chinês simplificado, chinês tradicional, português do Brasil, espanhol e alemão. Isso é independente dos idiomas da interface: as configurações e a lista usam japonês quando o idioma de exibição do Chrome é japonês, e inglês nos demais casos. A busca por título aceita Unicode independentemente da interface, com normalização NFC e correspondência de trechos sem diferenciar maiúsculas de minúsculas.
+A documentação está disponível em inglês, japonês, chinês simplificado, chinês tradicional, português do Brasil, espanhol e alemão. Isso é independente dos idiomas da interface: as configurações e a lista usam japonês quando o idioma de exibição do Chrome é japonês, e inglês nos demais casos.
 
 ## Recursos
 
@@ -22,9 +22,9 @@ A documentação está disponível em inglês, japonês, chinês simplificado, c
 
 ## Requisitos
 
-Google Chrome compatível com Manifest V3. O manifesto declara Chrome 102 como versão mínima. O [registro de lançamento](releases.pt-BR.md) distingue os ambientes e versões efetivamente testados. Windows, Linux, versões antigas do Chrome e o IME japonês do sistema operacional ainda não foram verificados.
+Google Chrome compatível com Manifest V3. O manifesto declara Chrome 102 como versão mínima. O [registro de lançamento](releases.pt-BR.md) distingue os ambientes e versões efetivamente testados. Windows, versões antigas do Chrome e IMEs nativos do sistema ainda não foram verificados. Em Linux, os testes usaram o Chrome for Testing arm64 sem interface gráfica.
 
-Inicie os atalhos dentro de páginas HTTP(S) comuns, inclusive em iframes. Não é possível iniciá-los em páginas internas do Chrome, na Chrome Web Store, em páginas de outras extensões, em arquivos locais ou na barra de endereço.
+Inicie os atalhos dentro de páginas HTTP(S) comuns, inclusive em iframes. Não é possível iniciá-los em páginas internas do Chrome, na Chrome Web Store, em páginas de outras extensões, em arquivos locais ou na barra de endereço. As restrições da Chrome Web Store abrangem `chromewebstore.google.com` e `chrome.google.com`, inclusive seus subdomínios.
 
 ## Carregar e configurar
 
@@ -40,9 +40,11 @@ Inicie os atalhos dentro de páginas HTTP(S) comuns, inclusive em iframes. Não 
 
 No macOS, use a tecla física Control. Nas configurações, pressione a combinação desejada para registrá-la. Chrome, o sistema ou outras extensões podem interceptar combinações antes que cheguem à página.
 
-Um toque é aplicado ao soltar uma tecla necessária. O tempo padrão para abrir a lista é 1 segundo. A lista permanece aberta após soltar todas as teclas: cima/baixo selecionam, Enter confirma e Esc cancela. Esquerda alterna os modos. Na ordem das abas, digite para filtrar títulos e use Backspace para apagar o último caractere. Durante a composição pelo IME japonês, Enter, cima/baixo e Esc ficam reservados ao IME.
+Um toque é aplicado ao soltar uma tecla necessária. O tempo padrão para abrir a lista é 0,5 segundo. A lista permanece aberta após soltar todas as teclas: cima/baixo selecionam, Enter confirma e Esc cancela. Esquerda alterna os modos. Na ordem das abas, digite para filtrar títulos e use Backspace para apagar o último caractere. Durante a composição pelo IME japonês, Enter, cima/baixo e Esc ficam reservados ao IME.
 
-O tempo pode variar de 0,5 a 2 segundos, em passos de 0,1 segundo. O histórico guarda de 10 a 30 abas anteriores, com padrão de 10. Por padrão, um toque pula abas sem atalhos disponíveis; elas ainda podem ser selecionadas explicitamente na lista.
+Separe os termos de busca com espaços. A correspondência parcial (padrão) encontra títulos que contêm todos os termos em qualquer ordem. A busca por prefixo exige que o título comece com o primeiro termo e contenha os demais na ordem digitada, mesmo com caracteres entre eles. Os dois modos usam normalização Unicode NFC e ignoram diferenças entre maiúsculas e minúsculas.
+
+O tempo de pressionamento pode variar de 0,2 a 2,0 segundos, em passos de 0,1 segundo, com padrão de 0,5 segundo. O histórico guarda de 10 a 30 abas anteriores, com padrão de 10. Por padrão, um toque pula abas sem atalhos disponíveis. Na lista, essas abas aparecem em cinza e mantêm a altura da linha. Você pode selecioná-las com Enter.
 
 ## Armazenamento de dados
 
@@ -50,7 +52,7 @@ O histórico é mantido por janela no armazenamento de sessão local. Reiniciar 
 
 ## Recriar o ZIP de distribuição
 
-Abra um terminal na pasta deste README. Os comandos usam `zip` e `shasum` padrão do macOS para empacotar os 20 arquivos de execução e substituem o ZIP e a soma de verificação existentes.
+Abra um terminal na pasta deste README. Os comandos usam `zip` e `shasum` padrão do macOS para empacotar os 29 arquivos de execução e substituem o ZIP e a soma de verificação existentes.
 
 ```sh
 mkdir -p dist &&
@@ -58,8 +60,6 @@ tabuchan_package_tmp=$(mktemp -d) &&
 zip -X "$tabuchan_package_tmp/tabuchan-0.1.0.zip" \
   manifest.json \
   options.html \
-  _locales/en/messages.json \
-  _locales/ja/messages.json \
   icons/tab.svg \
   icons/tab-16.png \
   icons/tab-48.png \
@@ -75,7 +75,18 @@ zip -X "$tabuchan_package_tmp/tabuchan-0.1.0.zip" \
   src/press-state.js \
   src/settings.js \
   src/shortcuts.js \
-  src/tab-access.js && \
+  src/tab-access.js \
+  _locales/en/messages.json \
+  _locales/ja/messages.json \
+  picker.html \
+  src/input-protocol.js \
+  src/legacy-command.js \
+  src/picker-model.js \
+  src/picker-view.js \
+  src/picker.css \
+  src/picker.js \
+  src/settings-rules.js \
+  src/shortcut-changes.js && \
   mv "$tabuchan_package_tmp/tabuchan-0.1.0.zip" dist/tabuchan-0.1.0.zip &&
 rmdir "$tabuchan_package_tmp" &&
 (cd dist && shasum -a 256 tabuchan-0.1.0.zip > tabuchan-0.1.0.zip.sha256)

@@ -25,7 +25,7 @@ Diese Informationen dienen dem Tab-Wechsel, Verlauf und Listen, der Titelsuche, 
 
 Verlauf und Durchlaufzustand liegen im lokalen Chrome-Erweiterungs-Sitzungsspeicher `storage.session`, hauptsächlich als Tab-IDs, Reihenfolge und Auswahlzustand. Tastenkürzel und Verhaltenseinstellungen werden in `storage.local` gespeichert.
 
-Titel, URLs und Gruppeninformationen werden während der Verarbeitung von Chrome abgefragt. Die Liste erscheint in der aktuellen Seite; Titel und Gruppennamen werden als Text dargestellt. Suchtext und Tastenzustand werden während der Verarbeitung im Arbeitsspeicher verwendet.
+Titel, URLs und Gruppeninformationen werden während der Verarbeitung von Chrome abgefragt. Die Liste erscheint in einem Frame der Erweiterung, der in die aktuelle Seite eingebettet ist. Titel und Gruppennamen werden als Text angezeigt. Listeninhalte und Suchtext werden innerhalb der Erweiterung verarbeitet. Suchtext und Tastenzustand werden während der Verarbeitung im Arbeitsspeicher verwendet.
 
 ## Netzwerkanfragen für Favicons
 

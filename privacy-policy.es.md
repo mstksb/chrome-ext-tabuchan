@@ -25,7 +25,7 @@ Estos datos se usan para cambiar de pestaña, crear el historial/listas, buscar 
 
 El historial y el estado de recorrido se guardan en `storage.session`, el almacenamiento local de sesión de extensiones de Chrome. El historial contiene principalmente IDs, orden y selección. Los atajos y ajustes se guardan en `storage.local`.
 
-Títulos, URLs y grupos se obtienen de Chrome durante el procesamiento. La lista se muestra dentro de la página actual, con títulos y nombres de grupos como texto. El texto de búsqueda y el estado de las teclas se usan en memoria durante el procesamiento.
+Los títulos, las URL y los grupos se obtienen de Chrome durante el procesamiento. La lista aparece en un marco de la extensión insertado en la página actual, con títulos y nombres de grupos como texto. El contenido de la lista y el texto de búsqueda se procesan dentro de la extensión. El texto de búsqueda y el estado de las teclas se usan en memoria durante el procesamiento.
 
 ## Solicitudes de red para favicons
 

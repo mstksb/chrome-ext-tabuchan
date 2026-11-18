@@ -6,6 +6,19 @@ const reservedKeys = new Set([
   "CapsLock", "NumLock", "ScrollLock", "Dead", "Process", "Unidentified",
 ]);
 const modifierCode = /^(?:Control|Alt|Shift|Meta|OS)(?:Left|Right)$/;
+const platformRequests = new WeakMap();
+
+export function getPlatform(browser) {
+  if (!platformRequests.has(browser)) {
+    const request = Promise.resolve().then(() => browser.runtime.getPlatformInfo())
+      .then((info) => info.os).catch(() => {
+        platformRequests.delete(browser);
+        return "";
+      });
+    platformRequests.set(browser, request);
+  }
+  return platformRequests.get(browser);
+}
 
 function defaultsFor(platform) {
   const binding = {
@@ -79,17 +92,12 @@ export function formatShortcut(binding) {
 }
 
 export async function readShortcuts(browser) {
-  let platform = "";
+  const platformPromise = getPlatform(browser);
   let value;
-  try {
-    platform = (await browser.runtime.getPlatformInfo()).os;
-  } catch {
-    // Keep the non-macOS defaults when platform information is unavailable.
-  }
   try {
     value = (await browser.storage.local.get("mruShortcuts")).mruShortcuts;
   } catch {
     // A malformed or unreadable setting must not prevent input initialization.
   }
-  return normalizeShortcuts(value, platform);
+  return normalizeShortcuts(value, await platformPromise);
 }

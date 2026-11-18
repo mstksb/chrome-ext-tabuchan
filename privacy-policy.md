@@ -25,7 +25,7 @@ This information is used to switch tabs, build history and lists, search titles,
 
 History and traversal state are kept in Chrome's local extension session storage, `storage.session`. Stored history primarily consists of tab IDs, order, and selection state. Shortcut combinations and behavior settings are saved in `storage.local`.
 
-Titles, URLs, and group information are obtained from Chrome during processing. The tab list is displayed within the current page, with titles and group names rendered as text. Search text and key-press state are used in memory during processing.
+Titles, URLs, and group information are obtained from Chrome during processing. The list appears inside an extension frame embedded in the current page. The extension renders titles and group names as text and keeps list contents and search text within the extension. Search text and key-press state are used in memory during processing.
 
 ## Network requests for favicons
 

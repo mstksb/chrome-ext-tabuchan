@@ -8,9 +8,9 @@ lang: de
 
 Chrome-Erweiterung zum Wechseln zwischen zuletzt verwendeten Tabs per Tastatur. Kurzes Drücken durchläuft den Verlauf, langes Drücken öffnet die Tab-Liste.
 
-Der öffentliche Veröffentlichungskandidat ist `0.1.0`. Dateien, geprüfte Umgebungen und Prüfungs-/Veröffentlichungsstatus stehen im [Veröffentlichungsprotokoll](releases.de.md).
+Dieses Paket verwendet die Version `0.1.0`. Die Version für die Einreichung richtet sich nach dem Uploadverlauf im Dashboard. Dateien, geprüfte Umgebungen und Store-Status stehen im [Veröffentlichungsprotokoll](releases.de.md).
 
-Die Dokumentation gibt es auf Englisch, Japanisch, vereinfachtem und traditionellem Chinesisch, brasilianischem Portugiesisch, Spanisch und Deutsch. Dies ist unabhängig von der Oberfläche: Einstellungen und Liste sind bei japanischer Chrome-Anzeigesprache japanisch, sonst englisch. Die Titelsuche verarbeitet Unicode unabhängig von der Oberflächensprache und verwendet NFC-Normalisierung sowie Teilzeichenfolgen ohne Beachtung der Groß-/Kleinschreibung.
+Die Dokumentation gibt es auf Englisch, Japanisch, vereinfachtem und traditionellem Chinesisch, brasilianischem Portugiesisch, Spanisch und Deutsch. Dies ist unabhängig von der Oberfläche: Einstellungen und Liste sind bei japanischer Chrome-Anzeigesprache japanisch, sonst englisch.
 
 ## Funktionen
 
@@ -22,9 +22,9 @@ Die Dokumentation gibt es auf Englisch, Japanisch, vereinfachtem und traditionel
 
 ## Voraussetzungen
 
-Google Chrome mit Manifest-V3-Unterstützung. Das Manifest nennt Chrome 102 als Mindestversion. Das [Protokoll](releases.de.md) unterscheidet tatsächlich geprüfte Versionen/Umgebungen. Windows, Linux, ältere Chrome-Versionen und der japanische IME des Betriebssystems sind ungeprüft.
+Google Chrome mit Manifest-V3-Unterstützung. Das Manifest nennt Chrome 102 als Mindestversion. Das [Protokoll](releases.de.md) unterscheidet tatsächlich geprüfte Versionen/Umgebungen. Windows, ältere Chrome-Versionen und systemeigene IMEs sind ungeprüft. Unter Linux wurde Chrome for Testing ohne grafische Oberfläche auf arm64 verwendet.
 
-Tastenkürzel beginnen innerhalb normaler HTTP(S)-Seiten, auch in iframes. Auf internen Chrome-Seiten, im Chrome Web Store, auf Seiten anderer Erweiterungen, Dateiseiten oder in der Adressleiste können sie nicht gestartet werden.
+Tastenkürzel beginnen innerhalb normaler HTTP(S)-Seiten, auch in iframes. Auf internen Chrome-Seiten, im Chrome Web Store, auf Seiten anderer Erweiterungen, Dateiseiten oder in der Adressleiste können sie nicht gestartet werden. Die Chrome-Web-Store-Beschränkungen gelten für `chromewebstore.google.com` und `chrome.google.com` einschließlich ihrer Subdomains.
 
 ## Laden und einrichten
 
@@ -40,9 +40,11 @@ Tastenkürzel beginnen innerhalb normaler HTTP(S)-Seiten, auch in iframes. Auf i
 
 Unter macOS ist die physische Control-Taste gemeint. Gewünschte Kombinationen werden durch tatsächliches Drücken in den Einstellungen erfasst. Chrome, das Betriebssystem oder andere Erweiterungen können Tastenkombinationen abfangen, bevor sie die Seite erreichen.
 
-Kurzes Drücken wird beim Loslassen einer erforderlichen Taste wirksam. Die Standard-Haltedauer beträgt 1 Sekunde. Die Liste bleibt nach dem Loslassen aller Tasten offen: Auf/Ab wählt, Enter bestätigt, Esc bricht ab. Links wechselt den Modus. In der Tab-Reihenfolge filtert Texteingabe die Titel; Backspace löscht das letzte Zeichen. Während japanischer IME-Komposition bleiben Enter, Auf/Ab und Esc dem IME vorbehalten.
+Kurzes Drücken wird beim Loslassen einer erforderlichen Taste wirksam. Die Standard-Haltedauer beträgt 0,5 Sekunden. Die Liste bleibt nach dem Loslassen aller Tasten offen: Auf/Ab wählt, Enter bestätigt, Esc bricht ab. Links wechselt den Modus. In der Tab-Reihenfolge filtert Texteingabe die Titel; Backspace löscht das letzte Zeichen. Während japanischer IME-Komposition bleiben Enter, Auf/Ab und Esc dem IME vorbehalten.
 
-Die Haltedauer lässt sich von 0,5 bis 2 Sekunden in Schritten von 0,1 einstellen. Der Verlauf umfasst 10–30 vorherige Tabs, standardmäßig 10. Kurzes Drücken überspringt standardmäßig Tabs ohne verfügbare Tastenkürzel; diese bleiben in der Liste ausdrücklich auswählbar.
+Suchbegriffe werden durch Leerzeichen getrennt. Die Teilsuche (Standard) findet Titel, die alle Begriffe in beliebiger Reihenfolge enthalten. Bei der Präfixsuche muss der Titel mit dem ersten Begriff beginnen und die übrigen Begriffe in der eingegebenen Reihenfolge enthalten. Zeichen zwischen den Begriffen sind erlaubt. Beide Modi verwenden Unicode-NFC-Normalisierung und ignorieren Groß- und Kleinschreibung.
+
+Die Haltedauer lässt sich in Schritten von 0,1 Sekunden auf 0,2 bis 2,0 Sekunden einstellen. Der Standardwert beträgt 0,5 Sekunden. Der Verlauf umfasst 10 bis 30 vorherige Tabs, standardmäßig 10. Kurzes Drücken überspringt standardmäßig Tabs ohne verfügbare Tastenkürzel. In der Liste erscheinen diese Tabs ausgegraut, wobei die Zeilenhöhe gleich bleibt. Sie lassen sich mit Enter auswählen.
 
 ## Datenspeicherung
 
@@ -50,7 +52,7 @@ Der Verlauf wird je Fenster lokal im Sitzungsspeicher gehalten. Browserneustart 
 
 ## ZIP neu erstellen
 
-Ein Terminal im Ordner dieser README öffnen. Die Befehle verwenden macOS-Standardwerkzeuge `zip` und `shasum` für die 20 Laufzeitdateien und ersetzen ZIP und Prüfsumme.
+Ein Terminal im Ordner dieser README öffnen. Die Befehle verwenden macOS-Standardwerkzeuge `zip` und `shasum` für die 29 Laufzeitdateien und ersetzen ZIP und Prüfsumme.
 
 ```sh
 mkdir -p dist &&
@@ -58,8 +60,6 @@ tabuchan_package_tmp=$(mktemp -d) &&
 zip -X "$tabuchan_package_tmp/tabuchan-0.1.0.zip" \
   manifest.json \
   options.html \
-  _locales/en/messages.json \
-  _locales/ja/messages.json \
   icons/tab.svg \
   icons/tab-16.png \
   icons/tab-48.png \
@@ -75,7 +75,18 @@ zip -X "$tabuchan_package_tmp/tabuchan-0.1.0.zip" \
   src/press-state.js \
   src/settings.js \
   src/shortcuts.js \
-  src/tab-access.js && \
+  src/tab-access.js \
+  _locales/en/messages.json \
+  _locales/ja/messages.json \
+  picker.html \
+  src/input-protocol.js \
+  src/legacy-command.js \
+  src/picker-model.js \
+  src/picker-view.js \
+  src/picker.css \
+  src/picker.js \
+  src/settings-rules.js \
+  src/shortcut-changes.js && \
   mv "$tabuchan_package_tmp/tabuchan-0.1.0.zip" dist/tabuchan-0.1.0.zip &&
 rmdir "$tabuchan_package_tmp" &&
 (cd dist && shasum -a 256 tabuchan-0.1.0.zip > tabuchan-0.1.0.zip.sha256)

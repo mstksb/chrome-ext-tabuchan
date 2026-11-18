@@ -56,15 +56,25 @@
         <form id="behavior-settings">
           <div class="setting-row">
             <label for="hold-delay" data-i18n="options_hold_delay">Hold duration</label>
-            <div><input id="hold-delay" name="hold-delay" type="number" min="0.5" max="2" step="0.1" value="1" required disabled> <span data-i18n="options_seconds">seconds</span></div>
+            <div><input id="hold-delay" name="hold-delay" type="number" min="0.2" max="2" step="0.1" value="0.5" required disabled> <span data-i18n="options_seconds">seconds</span></div>
           </div>
-          <p class="footnote" data-i18n="options_hold_range">Choose 0.5–2.0 seconds in 0.1-second increments.</p>
+          <p class="footnote" data-i18n="options_hold_range">Choose 0.2–2.0 seconds in 0.1-second increments.</p>
           <div class="setting-row">
             <label for="max-past-tabs" data-i18n="options_history_limit">MRU tabs to show and keep</label>
             <div><input id="max-past-tabs" name="max-past-tabs" type="number" min="10" max="30" step="1" value="10" required disabled> <span data-i18n="options_tabs_unit">tabs</span></div>
           </div>
           <p class="footnote" data-i18n="options_history_help">Keep and show 10–30 past tabs in addition to the current tab. Reducing the limit removes older entries. Increasing it starts retaining additional history from then on. The tab-order list shows all tabs in the current window.</p>
-          <label class="checkbox-setting" for="skip-unavailable-tabs">
+          <div class="setting-row">
+          <label for="search-match-mode" data-i18n="options_search_match_mode">Search matching</label>
+          <div class="setting-input">
+            <select id="search-match-mode" name="search-match-mode" required>
+              <option value="contains" data-i18n="options_search_contains">Partial match</option>
+              <option value="prefix" data-i18n="options_search_prefix">Prefix match</option>
+            </select>
+          </div>
+        </div>
+        <p class="footnote" data-i18n="options_search_match_help">Separate search terms with spaces. Partial match finds titles containing every term, in any order. Prefix match requires the first term at the start of the title and later terms in order, with gaps allowed. For example, “A C” matches “ABC” and “AXBYC”.</p>
+        <label class="checkbox-setting" for="skip-unavailable-tabs">
             <input id="skip-unavailable-tabs" name="skip-unavailable-tabs" type="checkbox" checked disabled>
             <span data-i18n="options_skip_unavailable">Skip tabs where shortcuts are unavailable when using a short press</span>
           </label>
@@ -93,7 +103,7 @@
           <li data-i18n="options_usage_short_press">Press and release before the hold duration to move one tab Back or Forward. Navigation stops at the ends of the history.</li>
           <li data-i18n="options_usage_hold">Hold the modifier keys and the assigned regular key together to show MRU candidates.</li>
           <li data-i18n="options_usage_picker">In the list, use Up and Down to select, Enter to switch, and Esc to cancel. Left switches between MRU and tab order. Right has no action.</li>
-          <li data-i18n="options_usage_search">In tab order, type text to filter tab titles. Press Backspace to delete the last character. Search is case-insensitive and uses tab titles.</li>
+          <li data-i18n="options_usage_search">In tab order, enter text to filter tab titles. Backspace removes a character. Search is case-insensitive and only matches tab titles.</li>
           <li data-i18n="options_usage_modifiers">Holding only the modifier keys after releasing a regular key such as J or K does not count as a long press.</li>
           <li data-i18n="options_usage_unique">Each tab appears once, ordered by recent use.</li>
           <li data-i18n="options_usage_reset">Selecting another tab normally ends the current traversal.</li>

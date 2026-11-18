@@ -8,9 +8,9 @@ lang: ja
 
 最近使ったタブへキーボードで移動するChrome拡張です。短押しで履歴をたどり、長押しで候補を表示します。
 
-公開用バージョンは `0.1.0` です。配布物と確認済みの環境、審査・公開状態は[公開記録](releases.ja.md)を参照してください。
+このパッケージのバージョンは `0.1.0` です。提出版番号はDashboardのアップロード履歴を確認して決定します。配布物と確認済みの環境、審査・公開状態は[公開記録](releases.ja.md)を参照してください。
 
-設定画面と候補一覧はChromeの表示言語に合わせて自動選択します。日本語環境では日本語、それ以外では英語を表示します。検索はUI言語と独立してUnicode文字列を扱い、タイトルと入力をNFC正規化してから大小文字を区別しない部分一致で絞り込みます。
+設定画面と候補一覧はChromeの表示言語に合わせて自動選択します。日本語環境では日本語、それ以外では英語を表示します。
 
 文書は英語、日本語、中国語（簡体字・繁体字）、ポルトガル語（ブラジル）、スペイン語、ドイツ語に対応します。文書の対応言語と拡張UIの対応言語は別です。
 
@@ -24,9 +24,9 @@ lang: ja
 
 ## 動作条件
 
-Manifest V3に対応するGoogle Chromeを使用します。manifestの最低バージョン指定は102です。実際に確認した環境・対象版は[公開記録](releases.ja.md)で区別しています。Windows・Linux・旧ChromeとOSの日本語IME自体の動作は未確認です。
+Manifest V3に対応するGoogle Chromeを使用します。manifestの最低バージョン指定は102です。実際に確認した環境・対象版は[公開記録](releases.ja.md)で区別しています。Windows、旧Chrome、OSのIMEそのものは未確認です。Linuxではarm64のヘッドレス版Chrome for Testingで確認しました。
 
-キー操作の開始位置は通常のHTTP(S)ページ内です。iframe内からの操作にも対応します。Chrome内部ページ、Chrome Web Store、他の拡張ページ、ファイルページ、アドレス欄ではキー操作を開始できません。
+キー操作の開始位置は通常のHTTP(S)ページ内です。iframe内からの操作にも対応します。Chrome内部ページ、Chrome Web Store、他の拡張ページ、ファイルページ、アドレス欄ではキー操作を開始できません。Chrome Web Store関連の制限は `chromewebstore.google.com` と `chrome.google.com` の両方に適用され、サブドメインも含みます。
 
 ## 読み込みと設定
 
@@ -42,9 +42,11 @@ Manifest V3に対応するGoogle Chromeを使用します。manifestの最低バ
 
 macOSでは物理的なControlキーを使います。設定画面では、実際に使用する組み合わせを押して各方向へ登録できます。Chrome・OS・他の拡張が優先して処理する組み合わせは、ページへの配送に制限があります。
 
-短押しはキーを離すと確定します。長押しの初期値は1秒です。候補一覧は全キーを離した後も表示され、上下で選択、Enterで確定、Escで取消できます。左キーで最近使用順とタブ順を切り替えます。タブ順一覧ではUnicode文字列でタイトルを絞り込み、Backspaceで末尾を削除します。日本語変換中のEnter・上下・EscはIMEの操作に使います。
+短押しはキーを離すと確定します。長押しの初期値は0.5秒です。候補一覧は全キーを離した後も表示され、上下で選択、Enterで確定、Escで取消できます。左キーで最近使用順とタブ順を切り替えます。タブ順一覧ではUnicode文字列でタイトルを絞り込み、Backspaceで末尾を削除します。日本語変換中のEnter・上下・EscはIMEの操作に使います。
 
-設定可能な長押し時間は0.5〜2秒、0.1秒刻みです。過去の履歴件数は10〜30件、初期値10件です。短押しで使えないタブを飛ばす設定は初期値ONです。候補一覧からは、そのタブを明示的に選んで移動できます。
+検索語はスペースで区切ります。部分一致（初期設定）は全検索語を含むタイトルを語順に関係なく表示します。前方一致は最初の語がタイトルの先頭にあり、後続の語が入力順に現れるものを表示します。語の間に別の文字があっても一致します。どちらもUnicode NFCで正規化し、大小文字を区別しません。
+
+長押し時間は0.2〜2.0秒を0.1秒刻みで設定でき、初期値は0.5秒です。過去の履歴件数は10〜30件で、初期値は10件です。初期設定では短押しでショートカットを使えないタブを飛ばします。一覧では行の高さを保ったままグレーアウトし、Enterで選択できます。
 
 ## データの保存
 
@@ -52,7 +54,7 @@ macOSでは物理的なControlキーを使います。設定画面では、実�
 
 ## 配布ZIPの再梱包
 
-このフォルダーの20実行ファイルだけを使い、macOS標準の `zip` と `shasum` で再梱包できます。ターミナルでこのREADMEがあるフォルダーを開き、次を実行します。既存の配布ZIPとチェックサムを更新します。
+このフォルダーの29実行ファイルだけを使い、macOS標準の `zip` と `shasum` で再梱包できます。ターミナルでこのREADMEがあるフォルダーを開き、次を実行します。既存の配布ZIPとチェックサムを更新します。
 
 ```sh
 mkdir -p dist &&
@@ -60,8 +62,6 @@ tabuchan_package_tmp=$(mktemp -d) &&
 zip -X "$tabuchan_package_tmp/tabuchan-0.1.0.zip" \
   manifest.json \
   options.html \
-  _locales/en/messages.json \
-  _locales/ja/messages.json \
   icons/tab.svg \
   icons/tab-16.png \
   icons/tab-48.png \
@@ -77,7 +77,18 @@ zip -X "$tabuchan_package_tmp/tabuchan-0.1.0.zip" \
   src/press-state.js \
   src/settings.js \
   src/shortcuts.js \
-  src/tab-access.js && \
+  src/tab-access.js \
+  _locales/en/messages.json \
+  _locales/ja/messages.json \
+  picker.html \
+  src/input-protocol.js \
+  src/legacy-command.js \
+  src/picker-model.js \
+  src/picker-view.js \
+  src/picker.css \
+  src/picker.js \
+  src/settings-rules.js \
+  src/shortcut-changes.js && \
   mv "$tabuchan_package_tmp/tabuchan-0.1.0.zip" dist/tabuchan-0.1.0.zip &&
 rmdir "$tabuchan_package_tmp" &&
 (cd dist && shasum -a 256 tabuchan-0.1.0.zip > tabuchan-0.1.0.zip.sha256)

@@ -38,6 +38,9 @@
         "https://*/*"
       ],
       "js": [
+        "src/settings-rules.js",
+        "src/input-protocol.js",
+        "src/picker-model.js",
         "src/press-state.js",
         "src/page-input.js"
       ],
@@ -51,5 +54,17 @@
     "48": "icons/tab-48.png",
     "128": "icons/tab-128.png"
   },
-  "default_locale": "en"
+  "default_locale": "en",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "picker.html"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
 }

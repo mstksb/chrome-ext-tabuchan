@@ -20,7 +20,7 @@ Permitir navegação pelo teclado para abas recentes ou encontradas pelo título
 | `tabGroups` | Mostrar nomes/cores dos grupos e preservar sua hierarquia na lista por ordem das abas. |
 | `storage` | Salvar atalhos/configurações localmente e manter histórico/estado de navegação durante a sessão. |
 | `scripting` | Injetar detecção de entrada e lista nas páginas HTTP(S) abertas, inclusive após instalar/atualizar. |
-| `http://*/*` e `https://*/*` | Detectar pressionamento/liberação de atalhos nas páginas HTTP(S) e iframes e mostrar a lista no frame principal, permitindo iniciar em páginas comuns arbitrárias. |
+| `http://*/*` e `https://*/*` | Detectar quando teclas de atalho são pressionadas ou soltas em páginas HTTP(S) e seus iframes, e exibir a lista em um quadro da extensão incorporado à página principal. Isso permite iniciar atalhos em páginas comuns. |
 
 ## Coleta, uso e armazenamento
 
@@ -32,7 +32,7 @@ Permitir navegação pelo teclado para abas recentes ou encontradas pelo título
 | Tempo, limite de histórico, opção de pular abas | Comportamento escolhido | `storage.local.mruSettings` |
 | Texto da busca por título | Filtragem | Memória enquanto aberta; descartado ao fechar/mudar modo |
 
-Títulos e grupos são renderizados como texto na lista inserida na página. A busca usa seu campo de entrada. Eventos atendem atalhos, lista e gravação de combinações.
+Títulos e nomes de grupos aparecem como texto dentro do quadro da extensão. O campo de busca no mesmo quadro recebe o texto digitado. O conteúdo da lista e o texto da busca são processados dentro da extensão. Os eventos de entrada são usados para atalhos, ações da lista e gravação de atalhos.
 
 ## Solicitações externas e terceiros
 

@@ -1,7 +1,7 @@
 (() => {
   if (globalThis.MruPressState) return;
 
-  const threshold = 1000;
+  const threshold = globalThis.MruSettingsRules.DEFAULT_HOLD_DELAY_MS;
 
   function create(holdDelayMs = threshold) {
     const delay = Number.isFinite(holdDelayMs) && holdDelayMs > 0 ? holdDelayMs : threshold;

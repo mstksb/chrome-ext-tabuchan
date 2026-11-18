@@ -20,7 +20,7 @@ Navegación por teclado a pestañas recientes o encontradas por título en la ve
 | `tabGroups` | Mostrar nombres/colores y conservar la jerarquía de grupos en el orden de pestañas. |
 | `storage` | Guardar atajos/ajustes localmente y mantener historial/recorrido durante la sesión. |
 | `scripting` | Inyectar detección de entrada y lista en páginas HTTP(S) abiertas, también después de instalar/actualizar. |
-| `http://*/*` y `https://*/*` | Detectar pulsación/liberación en páginas HTTP(S) e iframes y mostrar la lista en el marco principal, para iniciar desde cualquier página normal. |
+| `http://*/*` y `https://*/*` | Detectar la pulsación y la liberación de teclas de atajo en páginas HTTP(S) y sus iframes, y mostrar la lista en un marco de la extensión insertado en la página principal. Esto permite iniciar atajos desde páginas normales. |
 
 ## Obtención, uso y almacenamiento
 
@@ -32,7 +32,7 @@ Navegación por teclado a pestañas recientes o encontradas por título en la ve
 | Duración, límite, omisión de pestañas | Aplicar ajustes | `storage.local.mruSettings` |
 | Texto de búsqueda | Filtrar | Memoria mientras está abierta; descartar al cerrar/cambiar modo |
 
-Títulos y grupos se muestran como texto en la lista insertada en la página. La búsqueda usa su campo de entrada. Los eventos sirven para atajos, lista y registro de combinaciones.
+Los títulos y nombres de grupos se muestran como texto en el marco de la extensión. El campo de búsqueda del mismo marco recibe el texto introducido. El contenido de la lista y el texto de búsqueda se procesan dentro de la extensión. Los eventos de entrada se usan para los atajos, las acciones de la lista y el registro de atajos.
 
 ## Solicitudes externas y terceros
 

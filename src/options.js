@@ -1,10 +1,15 @@
 import {
   formatShortcut,
+  getPlatform,
   isValidShortcut,
   normalizeShortcuts,
   sameShortcut,
 } from "./shortcuts.js";
-import { normalizeSettings } from "./settings.js";
+import {
+  DEFAULT_HOLD_DELAY_MS, MIN_HOLD_DELAY_MS, MAX_HOLD_DELAY_MS, HOLD_DELAY_STEP_MS,
+  DEFAULT_MAX_PAST_TABS, MIN_PAST_TABS, MAX_PAST_TABS, DEFAULT_SEARCH_MATCH_MODE, readSettings, validateSettings,
+} from "./settings.js";
+import { changeShortcut as applyShortcutChange } from "./shortcut-changes.js";
 
 document.documentElement.lang = chrome.i18n.getMessage("options_language_code") || "en";
 for (const element of document.querySelectorAll("[data-i18n]")) {
@@ -24,6 +29,7 @@ const behaviorForm = document.querySelector("#behavior-settings");
 const holdDelayInput = document.querySelector("#hold-delay");
 const maxPastTabsInput = document.querySelector("#max-past-tabs");
 const skipUnavailableTabsInput = document.querySelector("#skip-unavailable-tabs");
+const searchMatchModeInput = document.querySelector("#search-match-mode");
 const saveSettingsButton = document.querySelector("#save-settings");
 const settingsStatus = document.querySelector("#settings-status");
 const permissionStatus = document.querySelector("#permission-status");
@@ -34,7 +40,23 @@ let currentShortcuts;
 let capture = null;
 let saving = false;
 let refreshVersion = 0;
+let permissionsVersion = 0;
+let refreshPending = false;
+let refreshTask = null;
+let permissionsTask = null;
+let permissionsPending = false;
 let settingsDirty = false;
+let settingsReadFailed = false;
+const currentTab = chrome.tabs.getCurrent().catch(() => null);
+
+Object.assign(holdDelayInput, {
+  min: String(MIN_HOLD_DELAY_MS / 1000), max: String(MAX_HOLD_DELAY_MS / 1000),
+  step: String(HOLD_DELAY_STEP_MS / 1000), value: String(DEFAULT_HOLD_DELAY_MS / 1000),
+});
+Object.assign(maxPastTabsInput, {
+  min: String(MIN_PAST_TABS), max: String(MAX_PAST_TABS), step: "1", value: String(DEFAULT_MAX_PAST_TABS),
+});
+searchMatchModeInput.value = DEFAULT_SEARCH_MATCH_MODE;
 
 document.querySelector("#version").textContent = "v" + chrome.runtime.getManifest().version;
 
@@ -51,8 +73,7 @@ function updateControls() {
     button.disabled = saving || !currentShortcuts
       || (button.dataset.action === "delete" && currentShortcuts[direction].length === 1);
     if (button.dataset.action === "record") {
-      const label = recording ? "options_recording" : index < 0 ? "options_add" : "options_change";
-      button.textContent = chrome.i18n.getMessage(label);
+      button.textContent = chrome.i18n.getMessage(recording ? "options_recording" : index < 0 ? "options_add" : "options_change");
       button.setAttribute("aria-pressed", String(recording));
     }
   }
@@ -60,6 +81,7 @@ function updateControls() {
   holdDelayInput.disabled = saving || !currentShortcuts;
   maxPastTabsInput.disabled = saving || !currentShortcuts;
   skipUnavailableTabsInput.disabled = saving || !currentShortcuts;
+  searchMatchModeInput.disabled = saving || !currentShortcuts;
 }
 
 function makeButton(direction, index, action, label) {
@@ -71,15 +93,20 @@ function makeButton(direction, index, action, label) {
   button.dataset.action = action;
   button.textContent = label;
   const name = chrome.i18n.getMessage(direction === "back" ? "options_back" : "options_forward");
-  const accessibleLabel = index < 0
+  button.setAttribute("aria-label", index < 0
     ? chrome.i18n.getMessage("options_add_shortcut_label", name)
-    : chrome.i18n.getMessage("options_shortcut_action_label", [name, String(index + 1), label]);
-  button.setAttribute("aria-label", accessibleLabel);
+    : chrome.i18n.getMessage("options_shortcut_action_label", [name, String(index + 1), label]));
   button.setAttribute("aria-describedby", "shortcut-status");
   return button;
 }
 
 function renderShortcuts(shortcuts) {
+  if (currentShortcuts && ["back", "forward"].every((direction) =>
+    currentShortcuts[direction].length === shortcuts[direction].length
+      && currentShortcuts[direction].every((item, index) =>
+        sameShortcut(item, shortcuts[direction][index]) && item.key === shortcuts[direction][index].key))) {
+    return;
+  }
   currentShortcuts = shortcuts;
   for (const direction of ["back", "forward"]) {
     const container = document.querySelector(`#${direction}-bindings`);
@@ -127,48 +154,38 @@ function startCapture(direction, index) {
 async function changeShortcut(target, binding = null) {
   saving = true;
   refreshVersion += 1;
+  refreshPending = true;
   capture = null;
   updateControls();
   try {
     await navigator.locks.request("mru-shortcut-settings", async () => {
       const [platform, stored] = await Promise.all([
-        chrome.runtime.getPlatformInfo(),
+        getPlatform(chrome),
         chrome.storage.local.get("mruShortcuts"),
       ]);
-      const latest = normalizeShortcuts(stored.mruShortcuts, platform.os);
-      const { direction } = target;
-      const index = target.index < 0 ? -1
-        : latest[direction].findIndex((item) => sameShortcut(item, target.binding));
-      if (target.index >= 0 && index < 0) {
+      const latest = normalizeShortcuts(stored.mruShortcuts, platform);
+      const result = applyShortcutChange(latest, target, binding);
+      if (!result.ok) {
+        const messages = {
+          "stale-shortcut": "options_settings_changed",
+          "duplicate-shortcut": "options_duplicate_shortcut",
+          "last-shortcut": "options_shortcut_required",
+          "invalid-shortcut": "options_shortcut_change_invalid",
+        };
         renderShortcuts(latest);
-        showShortcutStatus(chrome.i18n.getMessage("options_settings_changed"), "error");
+        showShortcutStatus(chrome.i18n.getMessage(messages[result.error]), "error");
         return;
       }
-      if (binding) {
-        const duplicate = Object.entries(latest).some(([name, bindings]) => bindings.some((item, itemIndex) =>
-          (name !== direction || itemIndex !== index) && sameShortcut(item, binding)));
-        if (duplicate) {
-          showShortcutStatus(chrome.i18n.getMessage("options_duplicate_shortcut"), "error");
-          return;
-        }
-        if (index < 0) latest[direction].push(binding);
-        else latest[direction][index] = binding;
-      } else {
-        if (latest[direction].length === 1) {
-          showShortcutStatus(chrome.i18n.getMessage("options_shortcut_required"), "error");
-          return;
-        }
-        latest[direction].splice(index, 1);
-      }
-      await chrome.storage.local.set({ mruShortcuts: latest });
-      renderShortcuts(latest);
-      showShortcutStatus(chrome.i18n.getMessage(binding ? "options_shortcut_saved" : "options_shortcut_deleted"));
+      await chrome.storage.local.set({ mruShortcuts: result.shortcuts });
+      renderShortcuts(result.shortcuts);
+      showShortcutStatus(binding ? chrome.i18n.getMessage("options_shortcut_saved") : chrome.i18n.getMessage("options_shortcut_deleted"));
     });
   } catch {
     showShortcutStatus(chrome.i18n.getMessage("options_shortcut_save_error"), "error");
   } finally {
     saving = false;
     updateControls();
+    await refreshSettings();
   }
 }
 
@@ -199,47 +216,84 @@ function captureKey(event) {
 
 async function refreshShortcuts(version) {
   try {
-    const [platform, stored] = await Promise.all([
-      chrome.runtime.getPlatformInfo(),
-      chrome.storage.local.get(["mruShortcuts", "mruSettings"]),
-    ]);
+    const settings = await readSettings(chrome, { strict: true });
     if (version !== refreshVersion || saving) return;
-    renderShortcuts(normalizeShortcuts(stored.mruShortcuts, platform.os));
-    const settings = normalizeSettings(stored.mruSettings);
+    renderShortcuts(settings.shortcuts);
     if (!settingsDirty) {
       holdDelayInput.value = String(settings.holdDelayMs / 1000);
       maxPastTabsInput.value = String(settings.maxPastTabs);
       skipUnavailableTabsInput.checked = settings.skipUnavailableTabs;
+      searchMatchModeInput.value = settings.searchMatchMode;
     }
     holdDelayInput.disabled = false;
     maxPastTabsInput.disabled = false;
     skipUnavailableTabsInput.disabled = false;
-    if (!capture) showShortcutStatus(chrome.i18n.getMessage("options_shortcut_ready"));
+    searchMatchModeInput.disabled = false;
+    if (!capture && (!shortcutStatus.textContent || settingsReadFailed)) {
+      showShortcutStatus(chrome.i18n.getMessage("options_shortcut_ready"));
+    }
+    settingsReadFailed = false;
   } catch {
     if (version !== refreshVersion || saving) return;
+    settingsReadFailed = true;
     showShortcutStatus(chrome.i18n.getMessage("options_settings_load_error"), "error");
   }
 }
 
-async function refreshPermissions(version) {
+async function readPermissions(version) {
   try {
     const allowed = await chrome.permissions.contains({ origins: websiteOrigins });
-    if (version !== refreshVersion) return;
-    permissionStatus.textContent = chrome.i18n.getMessage(allowed ? "options_permission_allowed" : "options_permission_limited");
+    if (version !== permissionsVersion) return;
+    permissionStatus.textContent = allowed
+      ? chrome.i18n.getMessage("options_permission_allowed")
+      : chrome.i18n.getMessage("options_permission_limited");
     permissionIndicator.dataset.state = allowed ? "ready" : "attention";
     grantPermissionButton.hidden = allowed;
   } catch {
-    if (version !== refreshVersion) return;
+    if (version !== permissionsVersion) return;
     permissionStatus.textContent = chrome.i18n.getMessage("options_permission_error");
     permissionIndicator.dataset.state = "error";
     grantPermissionButton.hidden = true;
   }
 }
 
-async function refreshSettings() {
-  if (saving) return;
-  const version = ++refreshVersion;
-  await Promise.all([refreshShortcuts(version), refreshPermissions(version)]);
+function refreshSettings() {
+  refreshPending = true;
+  refreshVersion += 1;
+  if (saving) return Promise.resolve();
+  if (!refreshTask) {
+    refreshTask = Promise.resolve().then(async () => {
+      while (refreshPending && !saving) {
+        refreshPending = false;
+        await refreshShortcuts(refreshVersion);
+      }
+    }).finally(() => {
+      refreshTask = null;
+      if (refreshPending && !saving) void refreshSettings();
+    });
+  }
+  return refreshTask;
+}
+
+function refreshPermissions() {
+  permissionsPending = true;
+  permissionsVersion += 1;
+  if (!permissionsTask) {
+    permissionsTask = Promise.resolve().then(async () => {
+      while (permissionsPending) {
+        permissionsPending = false;
+        await readPermissions(permissionsVersion);
+      }
+    }).finally(() => {
+      permissionsTask = null;
+      if (permissionsPending) void refreshPermissions();
+    });
+  }
+  return permissionsTask;
+}
+
+function refreshAll() {
+  return Promise.all([refreshSettings(), refreshPermissions()]);
 }
 
 shortcutList.addEventListener("click", (event) => {
@@ -255,16 +309,23 @@ behaviorForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   if (saving || !currentShortcuts || !behaviorForm.reportValidity()) return;
   cancelCapture();
-  saving = true;
-  refreshVersion += 1;
-  updateControls();
-  const settings = {
-    holdDelayMs: Math.round(Number(holdDelayInput.value) * 1000),
+  const result = validateSettings({
+    holdDelayMs: Number(holdDelayInput.value) * 1000,
     maxPastTabs: Number(maxPastTabsInput.value),
     skipUnavailableTabs: skipUnavailableTabsInput.checked,
-  };
+    searchMatchMode: searchMatchModeInput.value,
+  });
+  if (!result.ok) {
+    settingsStatus.textContent = chrome.i18n.getMessage("options_settings_invalid");
+    settingsStatus.dataset.state = "error";
+    return;
+  }
+  saving = true;
+  refreshVersion += 1;
+  refreshPending = true;
+  updateControls();
   try {
-    await chrome.storage.local.set({ mruSettings: settings });
+    await chrome.storage.local.set({ mruSettings: result.settings });
     settingsDirty = false;
     settingsStatus.textContent = chrome.i18n.getMessage("options_settings_saved");
     settingsStatus.dataset.state = "ready";
@@ -274,15 +335,15 @@ behaviorForm.addEventListener("submit", async (event) => {
   } finally {
     saving = false;
     updateControls();
+    await refreshSettings();
   }
 });
 window.addEventListener("keydown", captureKey, true);
 window.addEventListener("blur", cancelCapture);
-window.addEventListener("focus", refreshSettings);
+window.addEventListener("focus", refreshAll);
 chrome.tabs.onActivated.addListener(async ({ tabId }) => {
   try {
-    const currentTab = await chrome.tabs.getCurrent();
-    if (currentTab?.id === tabId) await refreshSettings();
+    if ((await currentTab)?.id === tabId) await refreshAll();
   } catch {
     showShortcutStatus(chrome.i18n.getMessage("options_settings_refresh_error"), "error");
   }
@@ -290,13 +351,13 @@ chrome.tabs.onActivated.addListener(async ({ tabId }) => {
 chrome.storage.onChanged.addListener((changes, areaName) => {
   if (areaName === "local" && (changes.mruShortcuts || changes.mruSettings)) void refreshSettings();
 });
-chrome.permissions.onAdded.addListener(refreshSettings);
-chrome.permissions.onRemoved.addListener(refreshSettings);
+chrome.permissions.onAdded.addListener(refreshPermissions);
+chrome.permissions.onRemoved.addListener(refreshPermissions);
 grantPermissionButton.addEventListener("click", async () => {
   grantPermissionButton.disabled = true;
   try {
     const granted = await chrome.permissions.request({ origins: websiteOrigins });
-    await refreshSettings();
+    await refreshPermissions();
     if (!granted) permissionStatus.textContent = chrome.i18n.getMessage("options_permission_denied");
   } catch {
     permissionStatus.textContent = chrome.i18n.getMessage("options_permission_request_error");
@@ -305,4 +366,4 @@ grantPermissionButton.addEventListener("click", async () => {
     grantPermissionButton.disabled = false;
   }
 });
-void refreshSettings();
+void refreshAll();

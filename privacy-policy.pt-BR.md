@@ -25,7 +25,7 @@ Esses dados permitem alternar abas, criar histórico/listas, buscar títulos, in
 
 O histórico e o estado de navegação ficam no armazenamento local de sessão de extensões do Chrome, `storage.session`, principalmente como IDs de abas, ordem e seleção. Atalhos e configurações ficam em `storage.local`.
 
-Títulos, URLs e grupos são obtidos do Chrome durante o processamento. A lista é exibida dentro da página atual, com títulos e nomes de grupos renderizados como texto. Texto de busca e estado das teclas são usados na memória durante o processamento.
+Títulos, URLs e grupos são obtidos do Chrome durante o processamento. A lista é exibida em um quadro da extensão incorporado à página atual, com títulos e nomes de grupos em texto. O conteúdo da lista e o texto da busca são processados dentro da extensão. O texto da busca e o estado das teclas são usados na memória durante o processamento.
 
 ## Solicitações de rede para favicons
 

@@ -20,7 +20,7 @@ Tastaturnavigation zu zuletzt verwendeten oder nach Titel gefundenen Tabs im akt
 | `tabGroups` | Gruppennamen/-farben anzeigen und Hierarchie in der Tab-Reihenfolge bewahren. |
 | `storage` | Kürzel/Einstellungen lokal speichern und Verlauf/Durchlaufzustand während der Browsersitzung halten. |
 | `scripting` | Eingabeerkennung und Liste in offene HTTP(S)-Seiten einfügen, auch nach Installation/Aktualisierung. |
-| `http://*/*` und `https://*/*` | Tastendruck/Loslassen in HTTP(S)-Seiten und iframes erkennen, Liste im obersten Frame anzeigen und Start von beliebigen normalen Seiten ermöglichen. |
+| `http://*/*` und `https://*/*` | Drücken und Loslassen von Tastenkürzeln in HTTP(S)-Seiten und ihren iframes erkennen und die Liste in einem Erweiterungsframe anzeigen, der in die übergeordnete Seite eingebettet ist. So lassen sich Tastenkürzel auf gewöhnlichen Webseiten starten. |
 
 ## Erhebung, Nutzung und Speicherung
 
@@ -32,7 +32,7 @@ Tastaturnavigation zu zuletzt verwendeten oder nach Titel gefundenen Tabs im akt
 | Haltedauer, Limit, Überspringen | Gewähltes Verhalten | `storage.local.mruSettings` |
 | Suchtext | Filtern | Bei geöffneter Liste im Speicher; bei Schließen/Moduswechsel verwerfen |
 
-Titel und Gruppen erscheinen als Text in der eingefügten Liste. Deren Eingabefeld verarbeitet die Suche. Ereignisse dienen Kürzeln, Listenaktionen und Erfassung der Kombinationen.
+Titel und Gruppennamen erscheinen als Text im Frame der Erweiterung. Das Suchfeld desselben Frames verarbeitet den eingegebenen Text. Listeninhalte und Suchtext werden innerhalb der Erweiterung verarbeitet. Eingabeereignisse dienen Tastenkürzeln, Listenaktionen und der Erfassung von Tastenkürzeln.
 
 ## Externe Anfragen und Dritte
 

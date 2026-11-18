@@ -8,9 +8,9 @@ lang: zh-TW
 
 透過鍵盤切換至最近使用分頁的 Chrome 擴充功能。短按快捷鍵可依歷史順序移動，長按可開啟分頁清單。
 
-公開候選版本為 `0.1.0`。發佈檔案、已驗證環境與審查／發佈狀態請參閱[發佈紀錄](releases.zh-TW.md)。
+此套件的版本為 `0.1.0`。提交版本號將在核對 Dashboard 的上傳紀錄後決定。發佈檔案、已驗證環境及審查與發佈狀態請參閱[發佈紀錄](releases.zh-TW.md)。
 
-文件提供英文、日文、簡體中文、繁體中文、巴西葡萄牙文、西班牙文和德文版本。文件語言與介面語言不同：目前 Chrome 顯示語言為日文時，設定與分頁清單使用日文，其他情況使用英文。標題搜尋獨立於介面語言，支援 Unicode 文字，經 NFC 正規化後進行不區分大小寫的子字串比對。
+文件提供英文、日文、簡體中文、繁體中文、巴西葡萄牙文、西班牙文和德文版本。文件語言與介面語言不同：目前 Chrome 顯示語言為日文時，設定與分頁清單使用日文，其他情況使用英文。
 
 ## 主要功能
 
@@ -22,9 +22,9 @@ lang: zh-TW
 
 ## 系統需求
 
-需要支援 Manifest V3 的 Google Chrome。資訊清單宣告最低版本為 Chrome 102。[發佈紀錄](releases.zh-TW.md)區分實際測試的環境與版本。Windows、Linux、舊版 Chrome 及作業系統的日文輸入法尚未驗證。
+需要支援 Manifest V3 的 Google Chrome。資訊清單宣告最低版本為 Chrome 102。[發佈紀錄](releases.zh-TW.md)區分實際測試的環境與版本。Windows、舊版 Chrome 與作業系統原生輸入法尚未驗證。Linux 環境使用 arm64 無頭版 Chrome for Testing 驗證。
 
-快捷鍵必須從一般 HTTP(S) 網頁內觸發，也支援 iframe。無法從 Chrome 內部頁面、Chrome 線上應用程式商店、其他擴充功能頁面、本機檔案頁面或網址列觸發。
+快捷鍵必須從一般 HTTP(S) 網頁內觸發，也支援 iframe。無法從 Chrome 內部頁面、Chrome 線上應用程式商店、其他擴充功能頁面、本機檔案頁面或網址列觸發。Chrome 線上應用程式商店的限制適用於 `chromewebstore.google.com` 與 `chrome.google.com`，包括兩者的子網域。
 
 ## 載入與設定
 
@@ -40,9 +40,11 @@ lang: zh-TW
 
 macOS 使用實體 Control 鍵。在設定中實際按下組合即可登錄。Chrome、作業系統或其他擴充功能可能優先攔截按鍵，使網頁無法接收。
 
-短按會在放開必要按鍵時生效。預設長按時間為 1 秒。放開所有按鍵後清單仍保持顯示：向上／向下選取，Enter 確認，Esc 取消。向左鍵切換最近使用順序與分頁順序。在分頁順序清單輸入文字可篩選標題，Backspace 刪除最後一個字元。日文輸入法組字期間，Enter、向上／向下與 Esc 保留給輸入法操作。
+短按會在放開必要按鍵時生效。預設長按時間為 0.5 秒。放開所有按鍵後清單仍保持顯示：向上／向下選取，Enter 確認，Esc 取消。向左鍵切換最近使用順序與分頁順序。在分頁順序清單輸入文字可篩選標題，Backspace 刪除最後一個字元。日文輸入法組字期間，Enter、向上／向下與 Esc 保留給輸入法操作。
 
-長按時間可設為 0.5–2 秒，間隔 0.1 秒。歷史紀錄保留過去的 10–30 個分頁，預設 10 個。短按預設跳過無法使用快捷鍵的分頁，仍可從清單明確選取這些分頁。
+用空格分隔搜尋詞。部分比對（預設）要求標題包含所有搜尋詞，順序不限。前綴比對要求第一個詞出現在標題開頭，其餘詞依輸入順序出現，詞與詞之間可以有其他字元。兩種方式都採用 Unicode NFC 正規化，且不區分大小寫。
+
+長按時間可設為 0.2–2.0 秒，間隔 0.1 秒，預設為 0.5 秒。歷史紀錄保留過去的 10–30 個分頁，預設為 10 個。短按時預設略過無法使用快捷鍵的分頁。清單會將這些分頁以灰色顯示並維持列高，仍可按 Enter 選取。
 
 ## 資料儲存
 
@@ -50,7 +52,7 @@ macOS 使用實體 Control 鍵。在設定中實際按下組合即可登錄。Ch
 
 ## 重新封裝 ZIP
 
-在本 README 所在資料夾開啟終端機，可使用 macOS 標準的 `zip` 與 `shasum` 將 20 個執行檔案重新封裝。下列指令會取代現有 ZIP 與總和檢查碼檔案。
+在本 README 所在資料夾開啟終端機，可使用 macOS 標準的 `zip` 與 `shasum` 將 29 個執行檔案重新封裝。下列指令會取代現有 ZIP 與總和檢查碼檔案。
 
 ```sh
 mkdir -p dist &&
@@ -58,8 +60,6 @@ tabuchan_package_tmp=$(mktemp -d) &&
 zip -X "$tabuchan_package_tmp/tabuchan-0.1.0.zip" \
   manifest.json \
   options.html \
-  _locales/en/messages.json \
-  _locales/ja/messages.json \
   icons/tab.svg \
   icons/tab-16.png \
   icons/tab-48.png \
@@ -75,7 +75,18 @@ zip -X "$tabuchan_package_tmp/tabuchan-0.1.0.zip" \
   src/press-state.js \
   src/settings.js \
   src/shortcuts.js \
-  src/tab-access.js && \
+  src/tab-access.js \
+  _locales/en/messages.json \
+  _locales/ja/messages.json \
+  picker.html \
+  src/input-protocol.js \
+  src/legacy-command.js \
+  src/picker-model.js \
+  src/picker-view.js \
+  src/picker.css \
+  src/picker.js \
+  src/settings-rules.js \
+  src/shortcut-changes.js && \
   mv "$tabuchan_package_tmp/tabuchan-0.1.0.zip" dist/tabuchan-0.1.0.zip &&
 rmdir "$tabuchan_package_tmp" &&
 (cd dist && shasum -a 256 tabuchan-0.1.0.zip > tabuchan-0.1.0.zip.sha256)

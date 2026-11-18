@@ -12,22 +12,30 @@ Em 11 de novembro de 2026, o README e os documentos públicos existentes foram p
 
 A compilação e a implantação iniciais das [instruções](https://mstksb.github.io/chrome-ext-tabuchan/) e da [política preliminar](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) foram concluídas. Ambas foram acessadas por HTTPS sem autenticação e conferidas no navegador. Responsável, contato e vigência seguem indefinidos; a política não está finalizada para envio. Essa verificação histórica não confirma a implantação das novas traduções.
 
+O registro acima descreve implantações anteriores. A implantação da atualização de 18 de novembro de 2026 ainda não foi verificada.
+
 ## 0.1.0
 
-Candidata pública com alternância por toque, lista por pressionamento prolongado, modos de uso recente/ordem das abas, grupos, busca por título e configurações de atalhos/comportamento.
+Esta versão candidata atualiza a detecção de páginas restritas e a aparência das abas afetadas, reduz os tempos mínimo e padrão de pressionamento e adiciona busca com vários termos por correspondência parcial ou por prefixo. Também corrige problemas na troca de abas e nas configurações.
 
-Configurações e lista usam japonês ou inglês; idiomas do Chrome diferentes do japonês selecionam inglês. A busca independe da interface e usa NFC e correspondência de trechos sem diferenciar maiúsculas/minúsculas. Traduções da documentação não ampliam os idiomas da interface.
+As configurações e a lista usam japonês quando o idioma de exibição do Chrome é japonês, e inglês nos demais casos. Separe os termos de busca com espaços. A correspondência parcial (padrão) encontra títulos que contêm todos os termos em qualquer ordem. A busca por prefixo exige que o título comece com o primeiro termo e contenha os demais na ordem digitada, mesmo com caracteres entre eles. Os dois modos usam normalização Unicode NFC e ignoram diferenças entre maiúsculas e minúsculas.
 
 | Item | Detalhes |
 | --- | --- |
-| Versão | `0.1.0` no SemVer e no manifesto |
-| ZIP | [tabuchan-0.1.0.zip](dist/tabuchan-0.1.0.zip), 20 arquivos de execução e manifesto na raiz |
-| SHA-256 | `ffa1b545cf7974f4a16806d73bad0d95d050118caed7b898b2380b6b3f87c65b` |
+| Versão | Este pacote usa a versão `0.1.0`. A versão a enviar depende do histórico de uploads no Dashboard. |
+| ZIP | [tabuchan-0.1.0.zip](dist/tabuchan-0.1.0.zip), 29 arquivos de execução e manifesto na raiz |
+| SHA-256 | `25a07b0f94b01a9bc9d9ea5ce05d9e258b584a7560ace136fa10716a1e6d9982` |
 | Soma de verificação | [tabuchan-0.1.0.zip.sha256](dist/tabuchan-0.1.0.zip.sha256) |
 | Requisitos | Chrome com Manifest V3; mínimo declarado de Chrome 102 |
-| Loja | Upload/aceitação deste ZIP internacionalizado, revisão/publicação e ID/URL do item não verificados |
+| Loja | Ainda é necessário verificar o pacote, o ID e o URL do item no Dashboard e o estado da revisão e da publicação. |
 
-## Escopo verificado
+## Verificação da versão candidata de 18 de novembro de 2026
+
+A versão candidata passou em 21 grupos de testes de ponta a ponta no Chrome for Testing Stable `158.0.8127.36` (Linux arm64). Outros três grupos verificaram a interface em japonês e em inglês e o uso do inglês com o Chrome em francês, incluindo busca de títulos com Unicode. Os 24 grupos também passaram com a extensão carregada a partir do ZIP de distribuição extraído. A versão exibida nas configurações correspondeu ao manifesto do ZIP.
+
+A [página da loja](store/listing.pt-BR.md#capturas-de-tela) contém imagens japonesas/inglesas das configurações e da lista: PNGs opacos de 1280×800 com abas de exemplo.
+
+## Verificação da versão candidata anterior
 
 Em 10 de novembro de 2026, no macOS e Chrome `156.0.8078.80`, foram verificadas a interface japonesa e as operações principais: toques, pressionamento prolongado, seleção/cancelamento, ordem/grupos, persistência das configurações, iframes, abas restritas, busca e encaminhamento de operações durante composição por IME. A interface japonesa e a busca NFC também foram verificadas em uma extração separada do ZIP.
 
@@ -35,12 +43,9 @@ Em 11 de novembro de 2026, 17 grupos de operações foram verificados com os arq
 
 Verificações de configuração/automatizadas cobrem chaves japonês/inglês, referências do manifesto, caracteres pré-compostos/combinantes NFC e trechos multilíngues/com emojis. O layout inglês foi conferido em uma configuração de captura com o mesmo código e dicionário inglês.
 
-A [página da loja](store/listing.pt-BR.md#capturas-de-tela) contém imagens japonesas/inglesas das configurações e da lista: PNGs opacos de 1280×800 com abas de exemplo.
-
 ## Não verificado ou indefinido
 
-- Windows, Linux, Chrome antigo e IMEs nativos de cada idioma.
-- Pacote bilíngue original em ambiente inglês e retorno ao inglês em idiomas não suportados.
+- Windows, versões antigas do Chrome e IMEs nativos do sistema.
 - Funcionamento após recarregar no Chrome comum.
 - Responsável/contato, licença, visibilidade e países de distribuição.
 - Responsável, contato e vigência da política; conformidade dos dados, inclusive favicons HTTP.

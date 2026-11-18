@@ -93,16 +93,16 @@
     "message": "Untitled"
   },
   "picker_unavailable": {
-    "message": "Shortcuts are unavailable in this tab"
+    "message": "tabuchan shortcuts are unavailable after switching"
   },
   "picker_unavailable_hint": {
-    "message": "You cannot start shortcut-based tab switching after moving to this tab."
+    "message": "You cannot use tabuchan shortcuts on this page. After switching, click a Chrome tab to switch again."
   },
   "picker_no_matches": {
     "message": "No matching tabs"
   },
   "picker_no_history": {
-    "message": "No previous tabs. Press ← to view all tabs."
+    "message": "No recent tabs. Press Left to open the tab list."
   },
   "picker_no_candidates": {
     "message": "No candidates"
@@ -207,7 +207,7 @@
     "message": "seconds"
   },
   "options_hold_range": {
-    "message": "Choose 0.5–2.0 seconds in 0.1-second increments."
+    "message": "Choose 0.2–2.0 seconds in 0.1-second increments."
   },
   "options_history_limit": {
     "message": "MRU tabs to show and keep"
@@ -252,7 +252,7 @@
     "message": "In the list, use Up and Down to select, Enter to switch, and Esc to cancel. Left switches between MRU and tab order. Right has no action."
   },
   "options_usage_search": {
-    "message": "In tab order, type text to filter tab titles. Press Backspace to delete the last character. Search is case-insensitive and uses tab titles."
+    "message": "In tab order, enter text to filter tab titles. Backspace removes a character. Search is case-insensitive and only matches tab titles."
   },
   "options_usage_modifiers": {
     "message": "Holding only the modifier keys after releasing a regular key such as J or K does not count as a long press."
@@ -322,5 +322,29 @@
   },
   "options_settings_refresh_error": {
     "message": "Could not refresh settings. Reload this page."
+  },
+  "controller_operation_failed": {
+    "message": "Could not complete the action"
+  },
+  "picker_title": {
+    "message": "tabuchan tab picker"
+  },
+  "options_search_match_mode": {
+    "message": "Search matching"
+  },
+  "options_search_contains": {
+    "message": "Partial match"
+  },
+  "options_search_prefix": {
+    "message": "Prefix match"
+  },
+  "options_search_match_help": {
+    "message": "Separate search terms with spaces. Partial match finds titles containing every term, in any order. Prefix match requires the first term at the start of the title and later terms in order, with gaps allowed. For example, “A C” matches “ABC” and “AXBYC”."
+  },
+  "options_shortcut_change_invalid": {
+    "message": "The shortcut is invalid. Try configuring it again."
+  },
+  "options_settings_invalid": {
+    "message": "Check the allowed settings range and increments."
   }
 }

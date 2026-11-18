@@ -1,4 +1,6 @@
-import { DEFAULT_MAX_PAST_TABS } from "./settings.js";
+import "./settings-rules.js";
+
+const { DEFAULT_MAX_PAST_TABS } = globalThis.MruSettingsRules;
 
 function moveToFront(tabIds, tabId, maxPastTabs = DEFAULT_MAX_PAST_TABS) {
   return [tabId, ...tabIds.filter((id) => id !== tabId)].slice(0, maxPastTabs + 1);
@@ -11,6 +13,7 @@ export function createWindowState(windowId, activeTabId = null, maxPastTabs = DE
     activeTabId,
     maxPastTabs,
     traversal: null,
+    tabListSnapshot: null,
     generation: 0,
   };
 }
@@ -23,6 +26,7 @@ export function observeActivation(state, tabId, { internal = false } = {}) {
     mruTabIds: moveToFront(state.mruTabIds, tabId, state.maxPastTabs),
     activeTabId: tabId,
     traversal: externalSelection ? null : state.traversal,
+    tabListSnapshot: externalSelection ? null : state.tabListSnapshot,
     generation: externalSelection ? state.generation + 1 : state.generation,
   };
 }
@@ -49,6 +53,7 @@ export function beginOrMove(state, direction) {
     nextState = {
       ...state,
       generation,
+      tabListSnapshot: null,
       traversal: { tabIds, cursor: 0, generation },
     };
   }
@@ -71,6 +76,7 @@ export function confirmMove(state, targetTabId) {
     return {
       ...nextState,
       traversal: null,
+      tabListSnapshot: null,
       generation: state.generation + 1,
     };
   }
@@ -90,6 +96,7 @@ export function removeTab(state, tabId) {
       mruTabIds,
       activeTabId: null,
       traversal: null,
+      tabListSnapshot: null,
       generation: state.generation + 1,
     };
   }
@@ -106,6 +113,7 @@ export function removeTab(state, tabId) {
       ...state,
       mruTabIds,
       traversal: null,
+      tabListSnapshot: null,
       generation: state.generation + 1,
     };
   }

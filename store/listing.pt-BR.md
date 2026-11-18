@@ -6,14 +6,14 @@ lang: pt-BR
 
 [English](listing.md) | [日本語](listing.ja.md) | [简体中文](listing.zh-CN.md) | [繁體中文](listing.zh-TW.md) | Português (Brasil) | [Español](listing.es.md) | [Deutsch](listing.de.md)
 
-Baseado na versão candidata pública `0.1.0`. Valores confirmados e pendências constam no [registro de lançamento](../releases.pt-BR.md).
+Este pacote usa a versão `0.1.0`. A versão a enviar depende do histórico de uploads no Dashboard. Consulte o [registro de lançamento](../releases.pt-BR.md) para arquivos, ambientes verificados e estado da loja.
 
 ## Informações básicas
 
 | Campo | Texto / situação |
 | --- | --- |
 | Nome | tabuchan |
-| Versão | 0.1.0, primeira candidata pública |
+| Versão | `0.1.0` |
 | Idiomas da documentação/loja | Inglês como base; japonês, chinês simplificado/tradicional, português do Brasil, espanhol e alemão. Idiomas salvos no Dashboard não verificados |
 | Idiomas da interface | Japonês quando o Chrome está em japonês, inglês nos demais casos; documentação não amplia a interface |
 | Categoria proposta | Functionality & UI, conforme categoria oficial atual para gerenciamento de abas/atalhos; valor salvo não verificado |
@@ -30,9 +30,9 @@ Toque em Voltar ou Avançar para percorrer uma ordem fixa de uso recente. Por pa
 
 Mantenha toda a combinação pressionada para abrir a lista. Cima/baixo selecionam, Enter alterna e Esc cancela. A lista permanece aberta ao soltar o atalho.
 
-A seta para a esquerda alterna uso recente e ordem das abas. Na ordem das abas, os grupos são preservados e os títulos podem ser filtrados com texto Unicode, independentemente da interface. A busca usa NFC e trechos sem diferenciar maiúsculas/minúsculas.
+Pressione a seta para a esquerda para alternar entre uso recente e ordem das abas. Na ordem das abas, a lista preserva os grupos e filtra títulos independentemente do idioma da interface. Separe os termos de busca com espaços. A correspondência parcial (padrão) encontra títulos que contêm todos os termos em qualquer ordem. A busca por prefixo exige que o título comece com o primeiro termo e contenha os demais na ordem digitada, mesmo com caracteres entre eles. Os dois modos usam normalização Unicode NFC e ignoram diferenças entre maiúsculas e minúsculas.
 
-As configurações permitem vários atalhos por ação, tempo de 0,5–2 segundos e histórico de 10–30 abas anteriores. Padrões: 1 segundo e 10 abas.
+Você pode configurar vários atalhos por ação. O tempo de pressionamento pode variar de 0,2 a 2,0 segundos, em passos de 0,1 segundo, com padrão de 0,5 segundo. O histórico guarda de 10 a 30 abas anteriores, com padrão de 10. Abas sem atalhos disponíveis aparecem em cinza na lista e mantêm a altura da linha. Você ainda pode selecioná-las com Enter.
 
 No macOS: Control + Shift + J para Voltar e Control + Shift + K para Avançar. Outros sistemas: Alt + Shift + J/K. Grave suas combinações nas configurações.
 
@@ -45,19 +45,19 @@ Histórico e configurações são processados e salvos localmente. Favicons pode
 | Arquivo | Conteúdo / preparação |
 | --- | --- |
 | [tab-128.png](../icons/tab-128.png) | Ícone existente convertido para PNG 128×128 |
-| [options-en-1280x800.png](images/options-en-1280x800.png) | Configurações em inglês, 1280×800 |
-| [picker-en-1280x800.png](images/picker-en-1280x800.png) | Lista por ordem das abas e grupo Work, aberta com teclas reais, 1280×800 |
-| [options-1280x800.png](images/options-1280x800.png) | Configurações reais em japonês com atalhos padrão, 1280×800 |
-| [picker-1280x800.png](images/picker-1280x800.png) | Lista recente em japonês com abas de teste e teclas reais, 1280×800 |
+| [options-en-1280x800.png](images/options-en-1280x800.png) | Duração padrão de 0,5 segundo e opções de correspondência da busca em inglês, 1280×800 |
+| [picker-en-1280x800.png](images/picker-en-1280x800.png) | Lista de abas em inglês, com grupos, 1280×800 |
+| [options-1280x800.png](images/options-1280x800.png) | Duração padrão de 0,5 segundo e opções de correspondência da busca em japonês, 1280×800 |
+| [picker-1280x800.png](images/picker-1280x800.png) | Lista de abas em japonês, com grupos, 1280×800 |
 
-As imagens japonesas foram capturadas nos testes Chrome de `0.1.0`. As inglesas vieram do Chrome real com o mesmo código e apenas o dicionário inglês, verificando tradução/layout. A seleção automática de inglês no pacote bilíngue original segue não verificada. Os quatro PNGs são opacos, de 1280×800, e foram conferidos visualmente; a lista usa dados de exemplo. Não há imagens nem tradução da interface para os outros idiomas da documentação.
+As quatro capturas de 1280×800 mostram o mesmo pacote bilíngue no Chrome for Testing Stable `158.0.8127.36` (Linux arm64), com a interface do Chrome em japonês e em inglês. As listas usam abas de exemplo.
 
 ## Instruções para revisão
 
-Não há conta nem login. Abra várias abas HTTP(S) na mesma janela e visite-as em sequência. Teste toques nos atalhos padrão acima; mantenha a combinação por pelo menos 1 segundo e use cima/baixo, Enter e Esc. Alterne os modos com esquerda e busque um título na ordem das abas. Abra configurações pelo ícone e confirme `0.1.0`.
+Não há conta nem login. Abra várias abas HTTP(S) na mesma janela e visite-as em sequência. Teste toques nos atalhos padrão acima; mantenha a combinação por pelo menos 0,5 segundo e use cima/baixo, Enter e Esc. Alterne os modos com esquerda e busque um título na ordem das abas. Abra configurações pelo ícone e confirme `0.1.0`.
 
 ## Base do texto
 
-Implementação atual e testes Chrome da candidata: MRU fixo, toques/pressionamento, grupos/busca, configurações, iframes e abas restritas. IMEs nativos, outros sistemas, Chrome antigo e seleção real de inglês/fallback não verificados; veja o [registro](../releases.pt-BR.md).
+A versão candidata passou em 21 grupos de testes de ponta a ponta no Chrome for Testing Stable `158.0.8127.36` (Linux arm64). Outros três grupos verificaram a interface em japonês e em inglês e o uso do inglês com o Chrome em francês, incluindo busca de títulos com Unicode.
 
 Campos e requisitos de imagens foram conferidos em 9 de novembro de 2026. Confira os campos atuais antes do envio: [Store listing](https://developer.chrome.com/docs/webstore/cws-dashboard-listing), [Supplying Images](https://developer.chrome.com/docs/webstore/images).

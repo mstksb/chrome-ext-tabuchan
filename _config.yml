@@ -9,6 +9,7 @@ theme: jekyll-theme-primer
 exclude:
   - src
   - options.html
+  - picker.html
   - manifest.json
   - .skill-state
   - .skill-logs
