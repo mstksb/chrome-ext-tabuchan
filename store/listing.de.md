@@ -20,7 +20,7 @@ Dieses Paket verwendet die Version `0.2.0`. Die Version für die Einreichung ric
 | Kurzbeschreibung | Kurz drücken für letzte Tabs. Gedrückt halten, um Tabs im aktuellen Fenster aufzulisten, zu suchen und auszuwählen. |
 | Startseite / Support | [Anleitung](https://mstksb.github.io/chrome-ext-tabuchan/README.de.html); Supportweg durch Herausgeber festzulegen |
 | Sichtbarkeit / Länder | Durch Herausgeber festzulegen |
-| Datenschutz | [Öffentliche URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.de.html); Herausgeber/Gültigkeit offen, vor Einreichung abschließen |
+| Datenschutz | [Öffentliche URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.de.html). Vor der Einreichung prüfen, ob die aktualisierte Datenschutzerklärung unter dieser URL abrufbar ist. |
 
 ## Ausführliche Beschreibung
 

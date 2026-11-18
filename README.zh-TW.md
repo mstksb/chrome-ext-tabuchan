@@ -52,7 +52,7 @@ macOS 使用實體 Control 鍵。在設定中實際按下組合即可登錄。Ch
 
 ## 資料儲存
 
-歷史紀錄依視窗儲存在裝置本機的工作階段儲存空間。重新啟動瀏覽器或停用、重新載入、更新擴充功能會清除紀錄，之後從目前分頁重新累積。快捷鍵與行為設定儲存在本機。資料處理與網站圖示請求請參閱[隱私權政策草案](privacy-policy.zh-TW.md)。
+歷史紀錄依視窗儲存在裝置本機的工作階段儲存空間。重新啟動瀏覽器或停用、重新載入、更新擴充功能會清除紀錄，之後從目前分頁重新累積。快捷鍵與行為設定儲存在本機。資料處理與網站圖示請求請參閱[隱私權政策](privacy-policy.zh-TW.md)。
 
 ## 重新封裝 ZIP
 
@@ -103,9 +103,9 @@ ZIP 根目錄包含 `manifest.json`，不含商店文件、擷圖或發佈紀錄
 使用說明與公開文件託管於 GitHub Pages。已驗證的部署狀態請參閱[發佈紀錄](releases.zh-TW.md#github-pages)。
 
 - [使用說明](https://mstksb.github.io/chrome-ext-tabuchan/README.zh-TW.html)
-- [隱私權政策草案](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.zh-TW.html)
+- [GitHub Pages 上的隱私權政策](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.zh-TW.html)
 
-發佈者名稱、聯絡方式與生效日期尚未確定，須在提交商店審查前完成政策定稿。
+更新後的 `0.2.0` 隱私權政策已在此存放庫中，尚未部署至 GitHub Pages。
 
 ## 公開文件
 
@@ -114,5 +114,5 @@ ZIP 根目錄包含 `manifest.json`，不含商店文件、擷圖或發佈紀錄
 | [README](README.zh-TW.md) | 安裝、使用、設定、系統需求及 ZIP 重新封裝 |
 | [商店資訊](store/listing.zh-TW.md) | 商店說明文案與擷圖 |
 | [隱私權申報](store/privacy.zh-TW.md) | 權限用途與隱私權申報草案 |
-| [隱私權政策](privacy-policy.zh-TW.md) | 使用者資料處理政策草案 |
+| [隱私權政策](privacy-policy.zh-TW.md) | 說明擴充功能如何處理資料的隱私權政策 |
 | [發佈紀錄](releases.zh-TW.md) | 版本、發佈檔案、驗證環境與審查／發佈狀態 |

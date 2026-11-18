@@ -25,7 +25,7 @@
       if (/^data:image\/(?:png|gif|jpeg|webp|avif|svg\+xml|x-icon|vnd\.microsoft\.icon)[;,]/i.test(value)) return value;
       try {
         const url = new URL(value);
-        if (["http:", "https:", "chrome-extension:"].includes(url.protocol)) return url.href;
+        if (["https:", "chrome-extension:"].includes(url.protocol)) return url.href;
         if (url.protocol === "chrome:" && url.hostname === "favicon2") return url.href;
       } catch {
         return null;

@@ -52,7 +52,7 @@ O tempo de pressionamento pode variar de 0,2 a 2,0 segundos, em passos de 0,1 se
 
 ## Armazenamento de dados
 
-O histórico é mantido por janela no armazenamento de sessão local. Reiniciar o navegador ou desativar, recarregar ou atualizar a extensão apaga o histórico, que recomeça na aba atual. Atalhos e configurações são salvos localmente. Consulte a [política de privacidade preliminar](privacy-policy.pt-BR.md), inclusive sobre solicitações de favicons.
+O histórico é mantido por janela no armazenamento de sessão local. Reiniciar o navegador ou desativar, recarregar ou atualizar a extensão apaga o histórico, que recomeça na aba atual. Atalhos e configurações são salvos localmente. Consulte a [política de privacidade](privacy-policy.pt-BR.md), inclusive sobre solicitações de favicons.
 
 ## Recriar o ZIP de distribuição
 
@@ -103,9 +103,9 @@ O ZIP contém `manifest.json` na raiz e exclui documentos da loja, imagens e reg
 As instruções e os documentos públicos são hospedados no GitHub Pages. Veja a situação de implantação verificada no [registro](releases.pt-BR.md#github-pages).
 
 - [Instruções de uso](https://mstksb.github.io/chrome-ext-tabuchan/README.pt-BR.html)
-- [Política de privacidade preliminar](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.pt-BR.html)
+- [Política de privacidade no GitHub Pages](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.pt-BR.html)
 
-O nome do responsável pela publicação, o contato e a data de vigência ainda não foram definidos. Finalize a política antes do envio à loja.
+A política atualizada da versão `0.2.0` está neste repositório. A publicação no GitHub Pages está pendente.
 
 ## Documentos públicos
 
@@ -114,5 +114,5 @@ O nome do responsável pela publicação, o contato e a data de vigência ainda 
 | [README](README.pt-BR.md) | Instalação, uso, configurações, requisitos e recriação do ZIP |
 | [Página da loja](store/listing.pt-BR.md) | Textos e capturas de tela |
 | [Declarações de privacidade](store/privacy.pt-BR.md) | Justificativas de permissões e declarações preliminares |
-| [Política de privacidade](privacy-policy.pt-BR.md) | Tratamento de dados explicado ao usuário |
+| [Política de privacidade](privacy-policy.pt-BR.md) | Política que descreve como a extensão trata os dados |
 | [Registro de lançamento](releases.pt-BR.md) | Versão, arquivos, ambientes verificados e revisão/publicação |

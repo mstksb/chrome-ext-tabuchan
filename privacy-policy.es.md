@@ -2,11 +2,11 @@
 lang: es
 ---
 
-# Borrador de política de privacidad de tabuchan
+# Política de privacidad de tabuchan
 
 [English](privacy-policy.md) | [日本語](privacy-policy.ja.md) | [简体中文](privacy-policy.zh-CN.md) | [繁體中文](privacy-policy.zh-TW.md) | [Português (Brasil)](privacy-policy.pt-BR.md) | Español | [Deutsch](privacy-policy.de.md)
 
-Este borrador corresponde a la versión `0.1.0`. El nombre del responsable, el contacto y la fecha de publicación/entrada en vigor no se han definido. Consulta el [registro](releases.es.md).
+Esta política entra en vigor en la fecha de publicación de la versión `0.2.0` de tabuchan en Chrome Web Store. Consulta el [registro](releases.es.md) para ver el estado de publicación.
 
 ## Finalidad
 
@@ -17,7 +17,7 @@ tabuchan permite navegar con el teclado a pestañas recientes o encontradas por 
 - IDs de pestañas/ventanas, títulos, URLs, URLs de favicons e IDs, nombres y colores de grupos obtenidos de Chrome.
 - Orden de selección, orden fijo de recorrido y selección en la lista.
 - Eventos de pulsación/liberación de atajos detectados en páginas, operaciones de la lista y texto de búsqueda.
-- Combinaciones, duración, límite del historial y opción de omitir pestañas configurados por el usuario.
+- Combinaciones de teclas, duración de la pulsación larga, límite del historial, omisión de pestañas sin atajos al pulsar brevemente y modo de coincidencia de búsqueda elegidos por el usuario.
 
 Estos datos se usan para cambiar de pestaña, crear el historial/listas, buscar títulos, indicar la disponibilidad de atajos y aplicar los ajustes.
 
@@ -29,9 +29,9 @@ Los títulos, las URL y los grupos se obtienen de Chrome durante el procesamient
 
 ## Solicitudes de red para favicons
 
-La lista puede usar URLs HTTP(S) de imágenes proporcionadas por Chrome para mostrar favicons, lo que puede generar solicitudes del navegador al servidor de imágenes.
+Para mostrar favicons en la lista de pestañas y en las notificaciones de los comandos de atajos antiguos de Chrome, el navegador puede solicitar imágenes a las URL HTTPS que facilita Chrome. Si Chrome facilita una URL HTTP para un favicon, la extensión muestra un icono alternativo sin solicitar esa URL.
 
-Los proveedores pueden recibir la dirección IP y datos habituales de la solicitud. La extensión especifica `no-referrer`. Cookies, caché y contenido mixto dependen de los ajustes/políticas de Chrome y del destino. La conservación de registros de acceso y otros tratamientos siguen las reglas de cada proveedor.
+Los proveedores de imágenes pueden recibir la dirección IP del usuario y los datos habituales de la solicitud. La extensión especifica `no-referrer` para las solicitudes de favicons. El tratamiento de las cookies y la caché depende de los ajustes y las políticas de Chrome y del servidor de destino. Cada proveedor aplica sus reglas para conservar registros de acceso y realizar otros tratamientos.
 
 ## Conservación y eliminación
 
@@ -47,4 +47,6 @@ La información se usa para el cambio de pestañas, listas, búsqueda y ajustes 
 
 ## Responsable y contacto
 
-La URL pública está [aquí](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.es.html). El responsable, el canal de contacto y la fecha de entrada en vigor deben definirse antes del envío a la tienda. Los cambios deben reflejarse en la ficha, indicando versión aplicable y tratamiento actualizado.
+Responsable de la publicación: `mstksb`. Contacto: [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com).
+
+La URL pública está [aquí](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.es.html). Los cambios de la política deben reflejarse en la ficha de la tienda con la versión aplicable y el tratamiento actualizado de los datos.

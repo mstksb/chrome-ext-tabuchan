@@ -20,7 +20,7 @@ This package uses version `0.2.0`. The submission version depends on the Dashboa
 | Summary | Switch to recent tabs with a tap. Hold to browse, search, and select tabs in the current window. |
 | Homepage / support | [Usage instructions](https://mstksb.github.io/chrome-ext-tabuchan/). The publisher must decide the support channel |
 | Visibility / target countries | To be decided by the publisher |
-| Privacy policy URL | [Public URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html). Draft pending publisher details and effective date; finalize before submission |
+| Privacy policy URL | [Public URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html). Verify that the updated policy is available at this URL before submission. |
 
 ## Detailed description
 

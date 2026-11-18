@@ -20,7 +20,7 @@ Este pacote usa a versão `0.2.0`. A versão a enviar depende do histórico de u
 | Resumo | Alterne entre abas recentes com um toque. Mantenha o atalho pressionado para listar, buscar e escolher abas na janela atual. |
 | Página inicial / suporte | [Instruções](https://mstksb.github.io/chrome-ext-tabuchan/README.pt-BR.html); canal de suporte a definir pelo responsável |
 | Visibilidade / países | A definir pelo responsável |
-| Política | [URL pública](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.pt-BR.html); responsável e vigência pendentes, finalizar antes do envio |
+| Política | [URL pública](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.pt-BR.html). Antes do envio, confira se a política atualizada está disponível neste URL. |
 
 ## Descrição detalhada
 

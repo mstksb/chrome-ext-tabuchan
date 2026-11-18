@@ -6,7 +6,7 @@ lang: en
 
 English | [日本語](privacy.ja.md) | [简体中文](privacy.zh-CN.md) | [繁體中文](privacy.zh-TW.md) | [Português (Brasil)](privacy.pt-BR.md) | [Español](privacy.es.md) | [Deutsch](privacy.de.md)
 
-This draft covers public release candidate `0.1.0` and reflects current code behavior. Publisher verification, legal status, and contact details must be finalized before publication. Open items and verification/submission status are tracked in the [release record](../releases.md).
+This draft covers tabuchan `0.2.0` and reflects the extension’s code. See the [release record](../releases.md) for open items and verification and submission status.
 
 ## Single purpose
 
@@ -29,16 +29,16 @@ Provide keyboard navigation to recently used tabs and tabs found by title in the
 | Tab/window IDs, recent-use order, traversal state | Recent-use navigation and history consistency | `storage.session.mruState`, retained during the browser session |
 | Tab titles, URLs, favicon URLs, group IDs/names/colors | List display, title search, shortcut-availability detection | Obtained from Chrome APIs and used in memory/list display state |
 | Key-down/key-up events and combinations recorded in settings | Shortcut detection, hold/list operations, shortcut configuration | Key state in memory; confirmed combinations in `storage.local.mruShortcuts` |
-| Hold duration, history limit, skip-unavailable-on-tap setting | Apply the user's selected behavior | `storage.local.mruSettings` |
+| Hold duration, history limit, skip-unavailable-on-tap setting, and search matching mode | Apply the user's selected behavior | `storage.local.mruSettings` |
 | Title-search text entered in the list | Filter displayed tabs | In memory while the list is open; discarded on mode changes or closure |
 
 The extension renders titles and group names as text inside its own frame. The search field handles title queries within that frame. The extension keeps list contents and search text within the extension. Input events support shortcuts, list operations, and shortcut recording.
 
 ## External requests and third-party processing
 
-Setting an HTTP(S) favicon URL as a list image may cause the browser to request that image from its server. The destination is the server for the favicon URL provided by Chrome's tab information. The implementation sets `referrerPolicy="no-referrer"`.
+For the tab list and notifications for legacy Chrome shortcut commands, the browser may request favicons from servers at HTTPS URLs supplied by Chrome. When Chrome supplies an HTTP favicon URL, the extension displays a fallback icon without requesting that URL. HTTPS favicon requests use `referrerPolicy="no-referrer"`.
 
-Image providers may receive the IP address and ordinary browser request information. Cookie, cache, and mixed-content behavior depends on Chrome settings/policies and the destination. Third-party access-log retention follows each provider's rules. Behavior involving HTTP image URLs and compliance with secure-data-handling requirements must be checked before submission.
+Image providers may receive the IP address and ordinary browser request information. Cookie and cache behavior depends on Chrome settings and policies and the destination. Providers retain access logs according to their own rules. Verify the data-use disclosures before submission.
 
 Executable code references JavaScript packaged with the extension. Favicons are display images. The existing runtime-code audit did not detect fetching/executing external JavaScript or WASM, or dynamic evaluation.
 
@@ -52,14 +52,16 @@ Executable code references JavaScript packaged with the extension. Favicons are 
 | Other data types | Publisher to compare the current Dashboard definitions with the implementation |
 | Remote code | Draft answer: “No, I am not using remote code,” based on the packaged-code audit |
 | Limited Use certification | Publisher to verify and certify the purposes/data use in this draft and the implementation |
-| Policy URL | Use the [draft policy](../privacy-policy.md) at a public HTTPS URL requiring no login, after adding publisher/contact information |
+| Policy URL | Confirm that GitHub Pages serves the updated [privacy policy](../privacy-policy.md) over HTTPS without a login before entering its URL in the Dashboard. |
 
 Disclose handling even when data remains local. Finalize categories and certifications using the Dashboard's current definitions: [Privacy fields](https://developer.chrome.com/docs/webstore/cws-dashboard-privacy), [User Data FAQ](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq).
 
 ## Retention and deletion
 
-Session history is cleared on browser restart or extension disable/reload/update. Closed tabs and history entries beyond a reduced limit are removed. Settings remain local until changed; uninstalling the extension removes its Chrome extension storage. Search text is discarded on list closure or mode changes. Browser-managed image caches can be managed through Chrome's browsing-data controls. See the [draft policy](../privacy-policy.md).
+Session history is cleared on browser restart or extension disable/reload/update. Closed tabs and history entries beyond a reduced limit are removed. Settings remain local until changed; uninstalling the extension removes its Chrome extension storage. Search text is discarded on list closure or mode changes. Browser-managed image caches can be managed through Chrome's browsing-data controls. See the [privacy policy](../privacy-policy.md).
 
 ## Items requiring publisher confirmation
 
-The [policy URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) is confirmed and was verified accessible without authentication. Publisher display details, contact channel, effective date, Trader / Non-Trader status, account verification, and distribution destinations remain undecided. Keep the policy as a draft until finalized before store submission, and track the status in the [release record](../releases.md).
+Publisher: `mstksb`. Contact: [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com). This policy takes effect on the date tabuchan version `0.2.0` is published in the Chrome Web Store.
+
+The existing [policy URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) was verified over HTTPS without a login. The updated policy is ready in this repository and is pending deployment to GitHub Pages. Trader / Non-Trader status, account verification, and distribution destinations remain pending. See the [release record](../releases.md) for current status.

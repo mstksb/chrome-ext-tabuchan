@@ -52,7 +52,7 @@ La duración de la pulsación larga admite valores de 0,2 a 2,0 segundos en paso
 
 ## Almacenamiento de datos
 
-El historial se conserva por ventana en el almacenamiento local de sesión. Reiniciar el navegador o desactivar, recargar o actualizar la extensión borra el historial, que comienza de nuevo desde la pestaña actual. Atajos y ajustes se guardan localmente. Consulta el [borrador de política de privacidad](privacy-policy.es.md), incluidas las solicitudes de favicons.
+El historial se conserva por ventana en el almacenamiento local de sesión. Reiniciar el navegador o desactivar, recargar o actualizar la extensión borra el historial, que comienza de nuevo desde la pestaña actual. Atajos y ajustes se guardan localmente. Consulta el [política de privacidad](privacy-policy.es.md), incluidas las solicitudes de favicons.
 
 ## Volver a empaquetar el ZIP
 
@@ -103,9 +103,9 @@ El ZIP contiene `manifest.json` en la raíz y excluye documentos de la tienda, c
 Las instrucciones y los documentos públicos se alojan en GitHub Pages. Consulta el estado verificado del despliegue en el [registro](releases.es.md#github-pages).
 
 - [Instrucciones](https://mstksb.github.io/chrome-ext-tabuchan/README.es.html)
-- [Borrador de política](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.es.html)
+- [Política de privacidad en GitHub Pages](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.es.html)
 
-El nombre del responsable, el contacto y la fecha de entrada en vigor siguen pendientes. Finaliza la política antes del envío a la tienda.
+La política actualizada de la versión `0.2.0` está en este repositorio. Su despliegue en GitHub Pages queda pendiente.
 
 ## Documentos públicos
 
@@ -114,5 +114,5 @@ El nombre del responsable, el contacto y la fecha de entrada en vigor siguen pen
 | [README](README.es.md) | Instalación, uso, ajustes, requisitos y empaquetado |
 | [Ficha de la tienda](store/listing.es.md) | Textos y capturas |
 | [Declaraciones de privacidad](store/privacy.es.md) | Justificación de permisos y declaraciones preliminares |
-| [Política de privacidad](privacy-policy.es.md) | Borrador de tratamiento de datos para usuarios |
+| [Política de privacidad](privacy-policy.es.md) | Política que describe cómo trata los datos la extensión |
 | [Registro de publicación](releases.es.md) | Versión, archivos, entornos verificados y revisión/publicación |

@@ -54,7 +54,7 @@ macOSでは物理的なControlキーを使います。設定画面では、実�
 
 ## データの保存
 
-履歴はウィンドウごとに端末内のセッション領域へ保持します。ブラウザー再起動、拡張の無効化・再読み込み・更新で履歴は消去され、現在タブから再び蓄積します。キーと動作設定は端末内に保存します。データの取扱いは[プライバシーポリシー草案](privacy-policy.ja.md)を参照してください。
+履歴はウィンドウごとに端末内のセッション領域へ保持します。ブラウザー再起動、拡張の無効化・再読み込み・更新で履歴は消去され、現在タブから再び蓄積します。キーと動作設定は端末内に保存します。データの取扱いは[プライバシーポリシー](privacy-policy.ja.md)を参照してください。
 
 ## 配布ZIPの再梱包
 
@@ -105,9 +105,9 @@ ZIPの直下に `manifest.json` が入り、掲載資料・画像・公開記録
 使い方と公開資料をGitHub Pagesで公開しています。URLは次のとおりです。公開状況は[公開記録](releases.ja.md#github-pages)を参照してください。
 
 - [使い方](https://mstksb.github.io/chrome-ext-tabuchan/README.ja.html)
-- [プライバシーポリシー草案](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.ja.html)
+- [GitHub Pagesのプライバシーポリシー](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.ja.html)
 
-プライバシーポリシーは、公開者名・連絡先・施行日が未確定の草案です。ストア提出前に内容を確定します。
+更新後の `0.2.0` のプライバシーポリシーは、このリポジトリーにあります。GitHub Pagesへの反映は未実施です。
 
 ## 公開資料
 
@@ -116,5 +116,5 @@ ZIPの直下に `manifest.json` が入り、掲載資料・画像・公開記録
 | [README.md](README.ja.md) | 導入、使い方、設定、動作条件、配布ZIPの再梱包 |
 | [store/listing.md](store/listing.ja.md) | ストア掲載原稿と掲載画像 |
 | [store/privacy.md](store/privacy.ja.md) | 権限理由とプライバシー申告原稿 |
-| [privacy-policy.md](privacy-policy.ja.md) | 利用者向けデータ取扱いの草案 |
+| [privacy-policy.md](privacy-policy.ja.md) | データの取扱いを説明するプライバシーポリシー |
 | [releases.md](releases.ja.md) | 対象版、配布物、確認済みの環境、審査・公開状態 |

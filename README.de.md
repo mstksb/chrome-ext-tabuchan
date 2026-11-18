@@ -52,7 +52,7 @@ Die Haltedauer lässt sich in Schritten von 0,1 Sekunden auf 0,2 bis 2,0 Sekunde
 
 ## Datenspeicherung
 
-Der Verlauf wird je Fenster lokal im Sitzungsspeicher gehalten. Browserneustart oder Deaktivieren, Neuladen bzw. Aktualisieren der Erweiterung löscht ihn; danach beginnt er beim aktuellen Tab neu. Tastenkürzel und Einstellungen bleiben lokal gespeichert. Siehe den [Datenschutzentwurf](privacy-policy.de.md), auch zu Favicon-Anfragen.
+Der Verlauf wird je Fenster lokal im Sitzungsspeicher gehalten. Browserneustart oder Deaktivieren, Neuladen bzw. Aktualisieren der Erweiterung löscht ihn; danach beginnt er beim aktuellen Tab neu. Tastenkürzel und Einstellungen bleiben lokal gespeichert. Siehe den [Datenschutzrichtlinie](privacy-policy.de.md), auch zu Favicon-Anfragen.
 
 ## ZIP neu erstellen
 
@@ -103,9 +103,9 @@ rmdir "$tabuchan_package_tmp" &&
 Anleitung und öffentliche Dokumente liegen auf GitHub Pages. Den geprüften Bereitstellungsstatus enthält das [Protokoll](releases.de.md#github-pages).
 
 - [Anleitung](https://mstksb.github.io/chrome-ext-tabuchan/README.de.html)
-- [Datenschutzentwurf](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.de.html)
+- [Datenschutzrichtlinie auf GitHub Pages](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.de.html)
 
-Herausgebername, Kontakt und Gültigkeitsdatum sind offen. Die Richtlinie vor Einreichung beim Store abschließen.
+Die aktualisierte Richtlinie für Version `0.2.0` liegt in diesem Repository. Die Bereitstellung auf GitHub Pages steht noch aus.
 
 ## Öffentliche Dokumente
 
@@ -114,5 +114,5 @@ Herausgebername, Kontakt und Gültigkeitsdatum sind offen. Die Richtlinie vor Ei
 | [README](README.de.md) | Installation, Nutzung, Einstellungen, Voraussetzungen und ZIP-Erstellung |
 | [Store-Eintrag](store/listing.de.md) | Texte und Bildschirmaufnahmen |
 | [Datenschutzangaben](store/privacy.de.md) | Berechtigungsbegründungen und Entwürfe |
-| [Datenschutzrichtlinie](privacy-policy.de.md) | Datenverarbeitung für Nutzer |
+| [Datenschutzrichtlinie](privacy-policy.de.md) | Datenschutzrichtlinie zur Verarbeitung von Nutzerdaten |
 | [Veröffentlichungsprotokoll](releases.de.md) | Version, Dateien, geprüfte Umgebungen und Status |

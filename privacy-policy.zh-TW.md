@@ -2,11 +2,11 @@
 lang: zh-TW
 ---
 
-# tabuchan 隱私權政策草案
+# tabuchan 隱私權政策
 
 [English](privacy-policy.md) | [日本語](privacy-policy.ja.md) | [简体中文](privacy-policy.zh-CN.md) | 繁體中文 | [Português (Brasil)](privacy-policy.pt-BR.md) | [Español](privacy-policy.es.md) | [Deutsch](privacy-policy.de.md)
 
-適用版本為 `0.1.0`。發佈者名稱、聯絡方式與發佈／生效日期尚未確定。最新狀態請參閱[發佈紀錄](releases.zh-TW.md)。
+本政策自 tabuchan `0.2.0` 在 Chrome 線上應用程式商店發佈之日起生效。發佈狀態請參閱[發佈紀錄](releases.zh-TW.md)。
 
 ## 用途
 
@@ -17,7 +17,7 @@ tabuchan 提供鍵盤操作，切換至目前視窗中最近使用的分頁，�
 - 從 Chrome 取得的分頁 ID、視窗 ID、標題、網址、網站圖示網址，以及群組 ID、名稱和顏色。
 - 分頁選取順序、固定的巡覽順序及清單選取狀態。
 - 網頁內偵測到的快捷鍵按下／放開事件、清單操作與標題搜尋文字。
-- 使用者設定的快捷鍵組合、長按時間、歷史紀錄數量及短按略過選項。
+- 使用者選擇的快捷鍵組合、長按時間、歷史紀錄上限、短按時略過無法使用快捷鍵的分頁設定，以及搜尋比對方式。
 
 這些資訊用於切換分頁、建立歷史紀錄與清單、搜尋標題、顯示快捷鍵可用性，以及套用使用者設定。
 
@@ -29,9 +29,9 @@ tabuchan 提供鍵盤操作，切換至目前視窗中最近使用的分頁，�
 
 ## 網站圖示的網路請求
 
-清單可能使用 Chrome 提供的 HTTP(S) 圖片網址顯示網站圖示，因此使用者瀏覽器可能向圖片伺服器傳送請求。
+在分頁清單及舊版 Chrome 快捷鍵指令的通知中顯示網站圖示時，瀏覽器可能向 Chrome 提供的 HTTPS 圖片網址傳送請求。如果 Chrome 提供的圖示網址使用 HTTP，擴充功能會顯示替代圖示，且不會向該網址傳送請求。
 
-圖片供應者可能收到 IP 位址和一般請求資訊。擴充功能對圖片請求指定 `no-referrer`。Cookie、快取與混合內容的行為取決於 Chrome 設定、政策和目的伺服器。存取紀錄保留期限與其他處理遵循各圖片供應者的規範。
+圖片供應者可能收到使用者的 IP 位址和一般請求資訊。擴充功能對圖示請求指定 `no-referrer`。Cookie 與快取的處理取決於 Chrome 的設定、政策和目的伺服器。存取紀錄保留期限和其他處理遵循各圖片供應者的規範。
 
 ## 保留期限與刪除
 
@@ -47,4 +47,6 @@ tabuchan 提供鍵盤操作，切換至目前視窗中最近使用的分頁，�
 
 ## 發佈者與聯絡方式
 
-政策公開網址為[此連結](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.zh-TW.html)。發佈者名稱、聯絡管道和生效日期仍待確定，須於提交商店前完成。政策變更時，應在商店資訊反映適用版本及更新後的資料處理方式。
+發佈者為 `mstksb`。聯絡信箱為 [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com)。
+
+政策公開網址為[此連結](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.zh-TW.html)。政策變更時，應在商店資訊反映適用版本及更新後的資料處理方式。

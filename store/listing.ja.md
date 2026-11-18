@@ -20,7 +20,7 @@ lang: ja
 | 概要 | 短押しで最近使ったタブへ移動し、長押しで候補やグループ付きタブ一覧を表示・検索します。|
 | ホームページ・サポート | ホームページは[使い方](https://mstksb.github.io/chrome-ext-tabuchan/README.ja.html)。サポート窓口は公開者が確定後に記入 |
 | 公開範囲・対象国 | 公開者が確定後に記入 |
-| プライバシーポリシーURL | [公開URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.ja.html)。公開者情報・施行日が未確定の草案。ストア提出前に内容を確定する |
+| プライバシーポリシーURL | [公開URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.ja.html)。ストア提出前に更新後のポリシーがこのURLで表示されることを確認する |
 
 ## 詳細説明（日本語）
 

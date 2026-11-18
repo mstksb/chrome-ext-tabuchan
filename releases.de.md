@@ -26,7 +26,7 @@ Enter in einer der beiden Listen, auch in den Suchergebnissen, oder die direkte 
 | --- | --- |
 | Version | Dieses Paket verwendet die Version `0.2.0`. Die Version für die Einreichung richtet sich nach dem Uploadverlauf im Dashboard. |
 | ZIP | [tabuchan-0.2.0.zip](dist/tabuchan-0.2.0.zip), 29 Laufzeitdateien, Manifest im Stamm |
-| SHA-256 | `f7a7b26c5486aa8ee8054c5ca826a33992c8e3d5f3a512a6099e4874b830938e` |
+| SHA-256 | `01327c7caf9eb6a1d59fd6cd2cc9d7fa1eee3f5313bb9b382ac8c8fa776e2173` |
 | Prüfsumme | [tabuchan-0.2.0.zip.sha256](dist/tabuchan-0.2.0.zip.sha256) |
 | Voraussetzungen | Chrome mit Manifest V3; angegebenes Minimum Chrome 102 |
 | Store | Paket, ID und URL des Store-Eintrags sowie Prüfungs- und Veröffentlichungsstatus im Dashboard sind noch zu prüfen. |
@@ -35,7 +35,7 @@ Enter in einer der beiden Listen, auch in den Suchergebnissen, oder die direkte 
 
 Der Kandidat bestand 184 Node-Tests. In Chrome for Testing Stable `158.0.8127.36` (Linux arm64) bestanden 21 Gruppen von End-to-End-Tests für die wichtigsten Funktionen und drei Gruppen für Japanisch, Englisch und Englisch bei französischer Chrome-Oberfläche.
 
-Alle 24 Browser-Testgruppen bestanden auch mit dem entpackten ZIP, einschließlich der Versionsanzeige in den Einstellungen. Der [Listing-Entwurf](store/listing.de.md) verlinkt vier daraus erstellte Screenshots (1280×800) auf Japanisch und Englisch.
+Alle 25 Browsertestgruppen für die aktualisierte ZIP-Datei waren erfolgreich, einschließlich der Versionsanzeige in den Einstellungen. Die Tabliste zeigte für eine HTTP-Favicon-URL das Ersatzsymbol ohne Anfrage an und lud ein HTTPS-Favicon. Der [Listing-Entwurf](store/listing.de.md) verlinkt vier japanische und englische Screenshots (1280×800), die mit der aktualisierten ZIP-Datei überprüft wurden.
 
 
 ## 0.1.0
@@ -71,8 +71,8 @@ Konfigurations-/automatische Prüfungen umfassen japanische/englische Schlüssel
 
 - Windows, ältere Chrome-Versionen und systemeigene IMEs.
 - Betrieb nach Neuladen im normalen Chrome.
-- Herausgeber/Kontakt, Lizenz, Sichtbarkeit und Zielländer.
-- Richtliniendaten/Gültigkeit und regelkonforme Verarbeitung einschließlich HTTP-Favicon-Anfragen.
+- Lizenz, Sichtbarkeit und Zielländer.
+- Veröffentlichung der aktualisierten Datenschutzerklärung auf GitHub Pages und Prüfung der Datenverarbeitung anhand der aktuellen Store-Anforderungen.
 - Gespeicherte Store-/Datenschutzangaben im Dashboard und Prüfungs-/Veröffentlichungsstatus.
 
-Vor Store-Einreichung klären. Die Entwürfe sind Vorbereitungsmaterial und kein Nachweis erfüllter Einreichungsvoraussetzungen.
+Vor der Store-Einreichung klären.

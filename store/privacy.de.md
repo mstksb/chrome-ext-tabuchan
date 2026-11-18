@@ -6,7 +6,7 @@ lang: de
 
 [English](privacy.md) | [日本語](privacy.ja.md) | [简体中文](privacy.zh-CN.md) | [繁體中文](privacy.zh-TW.md) | [Português (Brasil)](privacy.pt-BR.md) | [Español](privacy.es.md) | Deutsch
 
-Für den öffentlichen Kandidaten `0.1.0` nach aktuellem Code. Herausgeberprüfung, Rechtsstatus und Kontakt sind vor Veröffentlichung festzulegen. Offene Punkte und Status: [Protokoll](../releases.de.md).
+Dieser Entwurf beruht auf dem Code von tabuchan `0.2.0`. Offene Punkte sowie Prüf- und Einreichungsstatus finden Sie im [Protokoll](../releases.de.md).
 
 ## Einziger Zweck
 
@@ -29,16 +29,16 @@ Tastaturnavigation zu zuletzt verwendeten oder nach Titel gefundenen Tabs im akt
 | Tab-/Fenster-IDs, letzte Reihenfolge, Durchlaufzustand | Navigation und Konsistenz | `storage.session.mruState`, während der Sitzung |
 | Titel, URLs, Favicons, Gruppen-IDs/-Namen/-Farben | Liste, Suche, Verfügbarkeit | Chrome-APIs; Arbeitsspeicher/Listenstatus |
 | Tastenereignisse und erfasste Kombinationen | Kürzel, Halten/Liste, Konfiguration | Zustand im Speicher; Kombinationen in `storage.local.mruShortcuts` |
-| Haltedauer, Limit, Überspringen | Gewähltes Verhalten | `storage.local.mruSettings` |
+| Haltedauer, Verlaufslimit, Überspringen von Tabs ohne verfügbares Tastenkürzel beim kurzen Drücken und Suchmethode | Gewähltes Verhalten | `storage.local.mruSettings` |
 | Suchtext | Filtern | Bei geöffneter Liste im Speicher; bei Schließen/Moduswechsel verwerfen |
 
 Titel und Gruppennamen erscheinen als Text im Frame der Erweiterung. Das Suchfeld desselben Frames verarbeitet den eingegebenen Text. Listeninhalte und Suchtext werden innerhalb der Erweiterung verarbeitet. Eingabeereignisse dienen Tastenkürzeln, Listenaktionen und der Erfassung von Tastenkürzeln.
 
 ## Externe Anfragen und Dritte
 
-HTTP(S)-Favicon-URLs können Browseranfragen an den von Chrome genannten Bildserver auslösen. Der Code setzt `referrerPolicy="no-referrer"`.
+Für Favicons in der Tab-Liste und in Benachrichtigungen für frühere Chrome-Tastenkürzelbefehle kann der Browser Anfragen an die Server der von Chrome bereitgestellten HTTPS-URLs senden. Wenn Chrome eine HTTP-URL für ein Favicon bereitstellt, zeigt die Erweiterung ein Ersatzsymbol an, ohne diese URL abzurufen. HTTPS-Favicon-Anfragen verwenden `referrerPolicy="no-referrer"`.
 
-Anbieter können IP-Adresse und übliche Anfragedaten erhalten. Cookies, Cache und gemischte Inhalte hängen von Chrome und Ziel ab; Anbieter regeln eigene Protokolle. HTTP-Bilder und sichere Datenverarbeitung müssen vor Einreichung geprüft werden.
+Bildanbieter können die IP-Adresse und übliche Browser-Anfragedaten erhalten. Der Umgang mit Cookies und Cache hängt von den Chrome-Einstellungen und -Richtlinien sowie vom Zielserver ab. Anbieter speichern Zugriffsprotokolle nach ihren eigenen Regeln. Die Angaben zur Datennutzung sind vor der Einreichung zu prüfen.
 
 Ausführbarer Code verweist auf enthaltenes JavaScript; Favicons sind Bilder. Die bestehende Prüfung fand kein Laden/Ausführen externen JavaScripts oder WASMs und keine dynamische Auswertung.
 
@@ -52,14 +52,16 @@ Ausführbarer Code verweist auf enthaltenes JavaScript; Favicons sind Bilder. Di
 | Andere Typen | Herausgeber gleicht aktuelle Definitionen mit Implementierung ab |
 | Remote code | Entwurfsantwort „No, I am not using remote code.“ nach Codeprüfung |
 | Limited Use | Herausgeber prüft und bestätigt Zwecke/Nutzung |
-| Richtlinien-URL | [Entwurf](../privacy-policy.de.md) mit Herausgeber/Kontakt per HTTPS ohne Anmeldung veröffentlichen |
+| Richtlinien-URL | Prüfen Sie, ob die aktualisierte [Datenschutzrichtlinie](../privacy-policy.de.md) auf GitHub Pages ohne Anmeldung per HTTPS erreichbar ist, bevor Sie ihre URL im Dashboard eintragen. |
 
 Auch ausschließlich lokale Verarbeitung offenlegen. Kategorien/Bestätigungen anhand aktueller Definitionen abschließen: [Privacy fields](https://developer.chrome.com/docs/webstore/cws-dashboard-privacy), [User Data FAQ](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq).
 
 ## Aufbewahrung und Löschung
 
-Neustart oder Deaktivieren/Neuladen/Aktualisieren löscht Sitzungsverlauf. Geschlossene Tabs und überzählige Einträge nach Limitverringerung werden entfernt. Einstellungen bleiben bis Änderung; Deinstallation löscht Erweiterungsspeicher. Suchtext wird bei Schließen/Moduswechsel verworfen. Cache über Browserdaten verwalten. Siehe [Richtlinie](../privacy-policy.de.md).
+Neustart oder Deaktivieren/Neuladen/Aktualisieren löscht Sitzungsverlauf. Geschlossene Tabs und überzählige Einträge nach Limitverringerung werden entfernt. Einstellungen bleiben bis Änderung; Deinstallation löscht Erweiterungsspeicher. Suchtext wird bei Schließen/Moduswechsel verworfen. Cache über Browserdaten verwalten. Siehe [Datenschutzrichtlinie](../privacy-policy.de.md).
 
 ## Bestätigung durch Herausgeber
 
-Die [bestehende URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) wurde ohne Anmeldung geprüft; bei Abschluss der Übersetzungsentwürfe war deren Bereitstellung noch nicht bestätigt. Herausgeberdaten, Kontakt, Gültigkeit, Trader-/Non-Trader-Status, Kontoprüfung und Verteilungsziele sind offen. Vor Einreichung abschließen und im [Protokoll](../releases.de.md) festhalten.
+Herausgeber: `mstksb`. Kontakt: [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com). Diese Richtlinie tritt am Tag der Veröffentlichung von tabuchan Version `0.2.0` im Chrome Web Store in Kraft.
+
+Die bisherige [bestehende URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) der Richtlinie war bei der Prüfung ohne Anmeldung erreichbar. Die aktualisierte Richtlinie liegt im Repository und muss noch auf GitHub Pages bereitgestellt werden. Trader-/Non-Trader-Status, Kontoprüfung und Verteilungsziele sind weiterhin offen. Den aktuellen Stand finden Sie im [Protokoll](../releases.de.md).

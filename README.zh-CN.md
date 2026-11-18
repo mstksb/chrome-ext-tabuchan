@@ -52,7 +52,7 @@ macOS 使用实体 Control 键。在设置中实际按下所需组合即可注�
 
 ## 数据存储
 
-历史记录按窗口保存在设备本地的会话存储中。重启浏览器或停用、重新加载、更新扩展时会清空历史记录，之后从当前标签页重新积累。快捷键和行为设置保存在本地。数据处理及网站图标请求见[隐私政策草案](privacy-policy.zh-CN.md)。
+历史记录按窗口保存在设备本地的会话存储中。重启浏览器或停用、重新加载、更新扩展时会清空历史记录，之后从当前标签页重新积累。快捷键和行为设置保存在本地。数据处理及网站图标请求见[隐私政策](privacy-policy.zh-CN.md)。
 
 ## 重新打包分发 ZIP
 
@@ -103,9 +103,9 @@ ZIP 根目录包含 `manifest.json`，不包含商店资料、截图或发布记
 使用说明和公开资料托管在 GitHub Pages。已验证的部署状态见[发布记录](releases.zh-CN.md#github-pages)。
 
 - [使用说明](https://mstksb.github.io/chrome-ext-tabuchan/README.zh-CN.html)
-- [隐私政策草案](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.zh-CN.html)
+- [GitHub Pages 上的隐私政策](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.zh-CN.html)
 
-发布者名称、联系方式和生效日期尚未确定，须在提交商店审核前完善政策。
+更新后的 `0.2.0` 隐私政策已在本代码库中，尚未部署到 GitHub Pages。
 
 ## 公开资料
 
@@ -114,5 +114,5 @@ ZIP 根目录包含 `manifest.json`，不包含商店资料、截图或发布记
 | [README](README.zh-CN.md) | 安装、使用、设置、运行要求和 ZIP 重新打包 |
 | [商店资料](store/listing.zh-CN.md) | 商店展示文案和截图 |
 | [隐私披露](store/privacy.zh-CN.md) | 权限用途和隐私申报草案 |
-| [隐私政策](privacy-policy.zh-CN.md) | 面向用户的数据处理政策草案 |
+| [隐私政策](privacy-policy.zh-CN.md) | 说明扩展如何处理数据的隐私政策 |
 | [发布记录](releases.zh-CN.md) | 版本、分发文件、验证环境以及审核和发布状态 |

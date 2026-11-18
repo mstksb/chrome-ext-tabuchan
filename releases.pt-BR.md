@@ -26,7 +26,7 @@ Pressione Enter em qualquer uma das listas, inclusive nos resultados da busca, o
 | --- | --- |
 | Versão | Este pacote usa a versão `0.2.0`. A versão a enviar depende do histórico de uploads no Dashboard. |
 | ZIP | [tabuchan-0.2.0.zip](dist/tabuchan-0.2.0.zip), 29 arquivos de execução e manifesto na raiz |
-| SHA-256 | `f7a7b26c5486aa8ee8054c5ca826a33992c8e3d5f3a512a6099e4874b830938e` |
+| SHA-256 | `01327c7caf9eb6a1d59fd6cd2cc9d7fa1eee3f5313bb9b382ac8c8fa776e2173` |
 | Soma de verificação | [tabuchan-0.2.0.zip.sha256](dist/tabuchan-0.2.0.zip.sha256) |
 | Requisitos | Chrome com Manifest V3; mínimo declarado de Chrome 102 |
 | Loja | Ainda é necessário verificar o pacote, o ID e o URL do item no Dashboard e o estado da revisão e da publicação. |
@@ -35,7 +35,7 @@ Pressione Enter em qualquer uma das listas, inclusive nos resultados da busca, o
 
 A versão candidata passou em 184 testes de Node. No Chrome for Testing Stable `158.0.8127.36` (Linux arm64), passaram 21 grupos de testes de ponta a ponta das operações principais e outros três grupos para japonês, inglês e inglês com o Chrome em francês.
 
-Os 24 grupos de testes de navegador também passaram com o ZIP extraído, incluindo a versão exibida nas configurações. O [rascunho da página da loja](store/listing.pt-BR.md) tem quatro capturas de 1280×800 feitas a partir do ZIP em japonês e inglês.
+O ZIP atualizado passou nos 25 grupos de testes no navegador, incluindo a versão exibida nas configurações. A lista de abas exibiu o ícone alternativo sem solicitar a URL HTTP do favicon e mostrou um favicon HTTPS. O [rascunho da ficha da loja](store/listing.pt-BR.md) contém links para quatro capturas em japonês e inglês de 1280×800 verificadas com o ZIP atualizado.
 
 
 ## 0.1.0
@@ -71,8 +71,8 @@ Verificações de configuração/automatizadas cobrem chaves japonês/inglês, r
 
 - Windows, versões antigas do Chrome e IMEs nativos do sistema.
 - Funcionamento após recarregar no Chrome comum.
-- Responsável/contato, licença, visibilidade e países de distribuição.
-- Responsável, contato e vigência da política; conformidade dos dados, inclusive favicons HTTP.
+- Licença, visibilidade e países de distribuição.
+- Publicação da política de privacidade atualizada no GitHub Pages e verificação do tratamento de dados segundo os requisitos atuais da loja.
 - Salvamento dos textos/declarações no Dashboard e situação de revisão/publicação.
 
-Finalize esses pontos antes do envio à loja. As declarações e a política preliminares são materiais de preparação, não comprovantes de conclusão dos requisitos.
+Finalize esses pontos antes do envio à loja.

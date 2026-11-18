@@ -53,7 +53,7 @@ The hold duration ranges from 0.2 to 2.0 seconds in 0.1-second steps and default
 
 ## Data storage
 
-History is kept per window in local session storage. Restarting the browser or disabling, reloading, or updating the extension clears history; tracking then starts again from the current tab. Shortcuts and behavior settings are stored locally. See the [draft privacy policy](privacy-policy.md) for data-handling details, including favicon requests.
+History is kept per window in local session storage. Restarting the browser or disabling, reloading, or updating the extension clears history; tracking then starts again from the current tab. Shortcuts and behavior settings are stored locally. See the [privacy policy](privacy-policy.md) for data-handling details, including favicon requests.
 
 ## Repackage the distribution ZIP
 
@@ -104,9 +104,9 @@ The ZIP contains `manifest.json` at its root; listing documents, screenshots, an
 Usage instructions and public documents are hosted on GitHub Pages. See the [publication record](releases.md#github-pages) for the verified deployment status.
 
 - [Usage instructions](https://mstksb.github.io/chrome-ext-tabuchan/)
-- [Draft privacy policy](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)
+- [Privacy policy on GitHub Pages](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)
 
-The publisher name, contact details, and effective date are still undecided. Finalize the policy before store submission.
+The updated `0.2.0` policy is available in this repository. Deployment to GitHub Pages is pending.
 
 ## Public documents
 
@@ -115,5 +115,5 @@ The publisher name, contact details, and effective date are still undecided. Fin
 | [README.md](README.md) | Installation, usage, settings, requirements, and ZIP repackaging |
 | [store/listing.md](store/listing.md) | Store listing drafts and screenshots |
 | [store/privacy.md](store/privacy.md) | Permission justifications and privacy disclosure drafts |
-| [privacy-policy.md](privacy-policy.md) | Draft user-facing data-handling policy |
+| [privacy-policy.md](privacy-policy.md) | Privacy policy describing how the extension handles data |
 | [releases.md](releases.md) | Version, distribution files, verified environments, and review/publication status |

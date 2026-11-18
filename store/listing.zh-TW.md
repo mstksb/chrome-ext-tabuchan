@@ -20,7 +20,7 @@ lang: zh-TW
 | 摘要 | 短按切換最近分頁，長按瀏覽、搜尋並選取目前視窗中的分頁。|
 | 首頁／支援 | [使用說明](https://mstksb.github.io/chrome-ext-tabuchan/README.zh-TW.html)；支援管道由發佈者決定 |
 | 發佈範圍／國家 | 由發佈者決定 |
-| 政策網址 | [公開網址](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.zh-TW.html)，發佈者／生效日期待定，提交前須定稿 |
+| 政策網址 | [公開網址](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.zh-TW.html)。提交前請確認此網址顯示更新後的隱私權政策 |
 
 ## 詳細說明
 

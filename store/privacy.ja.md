@@ -6,7 +6,7 @@ lang: ja
 
 [English](privacy.md) | 日本語 | [简体中文](privacy.zh-CN.md) | [繁體中文](privacy.zh-TW.md) | [Português (Brasil)](privacy.pt-BR.md) | [Español](privacy.es.md) | [Deutsch](privacy.de.md)
 
-対象は公開準備用 `0.1.0` です。現行コードの処理に基づく原稿で、公開者の認証・法的区分・連絡先などの入力は公開前に確定します。未決事項と検証・提出状態は[公開記録](../releases.ja.md)で管理します。
+tabuchan `0.2.0` の実装に基づく申告原稿です。未決事項と検証・提出の状況は[公開記録](../releases.ja.md)を参照してください。
 
 ## 単一目的
 
@@ -29,16 +29,16 @@ lang: ja
 | タブID、ウィンドウID、最近使用順、巡回状態 | 最近使用順の移動と履歴の整合性管理 | `storage.session.mruState`。ブラウザーセッション中に保持 |
 | タブのタイトル、URL、ファビコンURL、グループID・名前・色 | 候補表示、タイトル検索、キー利用可否判定 | Chrome APIから取得し、処理中のメモリ・候補の表示状態で使用 |
 | キーの押下・解放イベント、設定画面で記録した組み合わせ | ショートカット判定、長押し・一覧操作、キー設定 | 押下状態はメモリ。確定したキー設定は `storage.local.mruShortcuts` |
-| 長押し時間、履歴件数、使えないタブの短押しスキップ設定 | 利用者が選んだ動作の実現 | `storage.local.mruSettings` |
+| 長押し時間、履歴件数、短押し時にショートカットを使えないタブをスキップする設定、検索方法 | 利用者が選んだ動作の実現 | `storage.local.mruSettings` |
 | 候補一覧へ入力したタイトル検索文字 | 表示するタブの絞り込み | 一覧の表示中にメモリで使用。モード変更や一覧の終了に応じて破棄 |
 
 候補のタイトルとグループ名は拡張機能のフレーム内にテキストとして表示します。検索文字は同じフレーム内の入力欄で扱います。候補の内容と検索文字は拡張機能内で処理します。入力イベントはショートカット、一覧操作、ショートカットの記録に使用します。
 
 ## 外部要求と第三者の処理
 
-HTTP(S)のファビコンURLを一覧の画像へ設定すると、その画像サーバーへブラウザーから要求が生じる場合があります。要求先はChromeがタブ情報として提供したファビコンURLのサーバーです。実装は `referrerPolicy="no-referrer"` を指定します。
+候補一覧と従来のChromeショートカット操作時の通知にファビコンを表示する際は、Chromeが提供したHTTPSのファビコンURLの画像サーバーへブラウザーがリクエストを送る場合があります。Chromeが提供したファビコンURLがHTTPの場合は、そのURLにリクエストを送らず、代替アイコンを表示します。HTTPSのファビコン取得には `referrerPolicy="no-referrer"` を指定します。
 
-画像の提供元はIPアドレスやブラウザーが付与する通常の要求情報を受け取る場合があります。Cookie、キャッシュ、混在コンテンツなどの扱いは、Chromeの設定・ポリシーと要求先に依存します。第三者が保持するアクセス記録の期間は、各提供元の規定に従います。HTTPの画像URLを含む動作と安全なデータ取扱いの適合性は、提出前の確認事項です。
+画像の提供元は、IPアドレスやブラウザーが付与する通常のリクエスト情報を受け取る場合があります。Cookieとキャッシュの扱いは、Chromeの設定・ポリシーとリクエスト先に依存します。アクセスログの保存期間は、各提供元の規定に従います。提出前にデータ利用の申告内容を確認します。
 
 実行コードの参照先は拡張に同梱したJavaScriptです。ファビコンは表示用の画像として扱います。現行の実行コード監査では、外部JavaScript・WASMの取得実行や動的評価を検出していません。
 
@@ -52,7 +52,7 @@ HTTP(S)のファビコンURLを一覧の画像へ設定すると、その画像�
 | その他の種類 | 現在のDashboardの説明と実装を照合して公開者が確定する |
 | リモートコード | 同梱コードの監査結果に基づき「No, I am not using remote code.」を選ぶ原稿 |
 | Limited Useの認証 | 本原稿と実装の目的・データ利用を公開者が確認して認証する |
-| ポリシーURL | 公開者・窓口を補った[ポリシー原稿](../privacy-policy.ja.md)を、ログイン不要のHTTPS URLへ掲載してから記入する |
+| ポリシーURL | GitHub Pagesで更新後の[プライバシーポリシー](../privacy-policy.ja.md)をログイン不要のHTTPSで閲覧できることを確認してから、URLをDashboardに入力する。 |
 
 端末内処理だけのデータも取扱いを開示します。申告分類と認証はDashboardの現在の説明を基に確定します。[Privacy fields](https://developer.chrome.com/docs/webstore/cws-dashboard-privacy)、[User Data FAQ](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq)
 
@@ -62,4 +62,6 @@ HTTP(S)のファビコンURLを一覧の画像へ設定すると、その画像�
 
 ## 公開者による確定が必要な項目
 
-ポリシーの[公開URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)は確定し、認証なしで閲覧できることを確認しました。公開者の表示情報・窓口・施行日、Trader / Non-Traderの区分、アカウントの認証状態と配布先は未決です。翻訳原稿の作成時点では、翻訳ページのデプロイは未実施でした。ポリシーは草案のまま管理し、ストア提出前に内容を確定します。確定状況は[公開記録](../releases.ja.md)へ対応付けます。
+公開者は `mstksb` です。お問い合わせは [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com) までお願いします。このポリシーは、tabuchan `0.2.0` のChrome Web Storeでの公開日から適用します。
+
+既存のポリシーの[公開URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)は認証なしで閲覧できることを確認済みです。更新後のポリシーはリポジトリーにあり、GitHub Pagesへの反映は未実施です。Trader／Non-Traderの区分、アカウントの認証状態、配布先は未決です。確定状況は[公開記録](../releases.ja.md)を参照してください。

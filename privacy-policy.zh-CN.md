@@ -2,11 +2,11 @@
 lang: zh-CN
 ---
 
-# tabuchan 隐私政策草案
+# tabuchan 隐私政策
 
 [English](privacy-policy.md) | [日本語](privacy-policy.ja.md) | 简体中文 | [繁體中文](privacy-policy.zh-TW.md) | [Português (Brasil)](privacy-policy.pt-BR.md) | [Español](privacy-policy.es.md) | [Deutsch](privacy-policy.de.md)
 
-本草案适用于版本 `0.1.0`。发布者名称、联系方式及发布／生效日期尚未确定。当前状态见[发布记录](releases.zh-CN.md)。
+本政策自 tabuchan `0.2.0` 在 Chrome 应用商店发布之日起生效。发布状态见[发布记录](releases.zh-CN.md)。
 
 ## 用途
 
@@ -17,7 +17,7 @@ tabuchan 通过键盘切换到当前窗口中最近使用的标签页，或通�
 - 从 Chrome 获取的标签页 ID、窗口 ID、标题、网址、网站图标网址，以及分组 ID、名称和颜色。
 - 标签页选择顺序、固定的遍历顺序和列表选择状态。
 - 在网页中检测到的快捷键按下／松开事件、列表操作和标题搜索文本。
-- 用户设置的快捷键组合、长按时间、历史记录数量以及短按跳过选项。
+- 用户选择的快捷键组合、长按时间、历史记录上限、短按时跳过无法使用快捷键的标签页的设置，以及搜索匹配方式。
 
 这些信息用于切换标签页、建立历史记录和列表、搜索标题、提示快捷键是否可用，以及应用用户设置。
 
@@ -29,9 +29,9 @@ tabuchan 通过键盘切换到当前窗口中最近使用的标签页，或通�
 
 ## 网站图标的网络请求
 
-列表可能使用 Chrome 提供的 HTTP(S) 图片网址显示网站图标，因此用户浏览器可能向图片服务器发送请求。
+在标签页列表及旧版 Chrome 快捷键命令的通知中显示网站图标时，浏览器可能向 Chrome 提供的 HTTPS 图片网址发送请求。如果 Chrome 提供的图标网址使用 HTTP，扩展会显示替代图标，并且不会请求该网址。
 
-图片提供者可能收到用户 IP 地址和通常的请求信息。扩展对图片请求指定 `no-referrer`。Cookie、缓存和混合内容的处理取决于 Chrome 设置、策略和目标服务器。访问日志保留期限及其他处理遵循各图片提供者的规则。
+图片提供者可能收到用户的 IP 地址和常规请求信息。扩展对图标请求指定 `no-referrer`。Cookie 和缓存的处理取决于 Chrome 的设置、策略和目标服务器。访问日志保留期限及其他处理遵循各图片提供者的规则。
 
 ## 保留期限和删除
 
@@ -47,4 +47,6 @@ tabuchan 通过键盘切换到当前窗口中最近使用的标签页，或通�
 
 ## 发布者和联系方式
 
-政策公开网址为[此链接](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.zh-CN.html)。发布者名称、联系渠道和生效日期尚未确定，须在提交商店审核前确定。政策变更时，应在商店资料中说明适用版本和更新后的数据处理方式。
+发布者为 `mstksb`。联系邮箱为 [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com)。
+
+政策公开网址为[此链接](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.zh-CN.html)。政策变更时，应在商店资料中说明适用版本和更新后的数据处理方式。

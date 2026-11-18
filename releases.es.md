@@ -26,7 +26,7 @@ Pulsa Enter en cualquiera de las listas, incluidos los resultados de búsqueda, 
 | --- | --- |
 | Versión | Este paquete usa la versión `0.2.0`. La versión que se enviará depende del historial de cargas en el Dashboard. |
 | ZIP | [tabuchan-0.2.0.zip](dist/tabuchan-0.2.0.zip), 29 archivos y manifiesto en la raíz |
-| SHA-256 | `f7a7b26c5486aa8ee8054c5ca826a33992c8e3d5f3a512a6099e4874b830938e` |
+| SHA-256 | `01327c7caf9eb6a1d59fd6cd2cc9d7fa1eee3f5313bb9b382ac8c8fa776e2173` |
 | Suma de comprobación | [tabuchan-0.2.0.zip.sha256](dist/tabuchan-0.2.0.zip.sha256) |
 | Requisitos | Chrome con Manifest V3; mínimo declarado Chrome 102 |
 | Tienda | Queda por comprobar el paquete, el ID y la URL del elemento en el Dashboard, así como su estado de revisión y publicación. |
@@ -35,7 +35,7 @@ Pulsa Enter en cualquiera de las listas, incluidos los resultados de búsqueda, 
 
 La versión candidata superó 184 pruebas de Node. En Chrome for Testing Stable `158.0.8127.36` (Linux arm64) se superaron 21 grupos de pruebas de extremo a extremo para las operaciones principales y tres grupos para japonés, inglés e inglés con Chrome en francés.
 
-Los 24 grupos de pruebas de navegador también se superaron con el ZIP extraído, incluida la versión que muestra la configuración. El [borrador de la ficha](store/listing.es.md) enlaza cuatro capturas de 1280×800 tomadas desde ese ZIP en japonés e inglés.
+El ZIP actualizado superó los 25 grupos de pruebas de navegador, incluida la versión que muestran los ajustes. La lista de pestañas mostró el icono alternativo sin solicitar la URL HTTP del favicon y mostró un favicon HTTPS. El [borrador de la ficha](store/listing.es.md) enlaza cuatro capturas en japonés e inglés de 1280×800 verificadas con el ZIP actualizado.
 
 
 ## 0.1.0
@@ -71,8 +71,8 @@ Las comprobaciones automatizadas/de configuración cubren claves japonés/inglé
 
 - Windows, versiones antiguas de Chrome y los IME nativos del sistema.
 - Funcionamiento tras recargar en Chrome normal.
-- Responsable/contacto, licencia, visibilidad y países de distribución.
-- Datos y vigencia de la política y conformidad del tratamiento, incluidas solicitudes HTTP de favicons.
+- Licencia, visibilidad y países de distribución.
+- Publicación de la política de privacidad actualizada en GitHub Pages y comprobación del tratamiento de los datos según los requisitos actuales de la tienda.
 - Guardado de ficha/declaraciones en Dashboard y revisión/publicación.
 
-Completa estos puntos antes del envío. Los borradores son materiales de preparación y no prueban que se hayan cumplido los requisitos.
+Completa estos puntos antes del envío.

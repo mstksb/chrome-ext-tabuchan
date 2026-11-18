@@ -26,7 +26,7 @@ lang: ja
 | --- | --- |
 | バージョン | このパッケージのバージョンは `0.2.0` です。提出版番号はDashboardのアップロード履歴を確認して決定します。|
 | 配布ZIP | [tabuchan-0.2.0.zip](dist/tabuchan-0.2.0.zip)。manifestを直下に置き、29実行ファイルを収録 |
-| SHA-256 | `f7a7b26c5486aa8ee8054c5ca826a33992c8e3d5f3a512a6099e4874b830938e` |
+| SHA-256 | `01327c7caf9eb6a1d59fd6cd2cc9d7fa1eee3f5313bb9b382ac8c8fa776e2173` |
 | チェックサム | [tabuchan-0.2.0.zip.sha256](dist/tabuchan-0.2.0.zip.sha256) |
 | 動作要件 | Manifest V3対応のGoogle Chrome。manifestの最低バージョン指定は102 |
 | ストア状態 | Dashboardのパッケージ・項目IDとURL、審査・公開状況は確認待ちです。|
@@ -35,7 +35,7 @@ lang: ja
 
 公開候補のNodeテスト184件が合格しました。Linux arm64のChrome for Testing Stable `158.0.8127.36` で、主要操作のE2E 21群と、日本語・英語・フランス語環境での英語フォールバックを確認する3群が合格しました。
 
-配布ZIPの展開先でも、設定画面のバージョン表示を含むブラウザーテスト24群が合格しました。同じZIPから日本語と英語で撮影した1280×800の画像4枚は[掲載原稿](store/listing.ja.md)を参照してください。
+更新した配布ZIPの展開先で、設定画面のバージョン表示を含むブラウザーテスト25群が合格しました。候補一覧ではHTTPのファビコンURLを要求せず代替アイコンを表示し、HTTPSのファビコンを表示できることを確認しました。更新後のZIPで確認した日本語・英語の1280×800画像4枚は[掲載原稿](store/listing.ja.md)を参照してください。
 
 
 ## 0.1.0
@@ -71,8 +71,8 @@ Linux arm64のChrome for Testing Stable `158.0.8127.36`でE2Eの主要操作21�
 
 - Windows、旧Chrome、OSのネイティブIMEでの動作。
 - 通常のChromeで、拡張の再読み込み後に再稼働する動作。
-- 公開者情報・問い合わせ窓口、ライセンス、配布範囲・対象国。
-- ポリシーの公開者名・連絡先・施行日の確定、HTTPファビコン要求を含むデータ取扱いの適合確認。
+- ライセンス、配布範囲・対象国。
+- 更新したプライバシーポリシーのGitHub Pagesへの反映と、現行のストア要件に照らしたデータ取扱いの確認。
 - Dashboardの掲載・プライバシー申告の保存結果と、審査・公開状態。
 
-操作は[使い方](README.ja.md)、データの取扱いは[プライバシーポリシー草案](privacy-policy.ja.md)、掲載・申告の原稿は[掲載原稿](store/listing.ja.md)と[プライバシー申告原稿](store/privacy.ja.md)を参照してください。
+操作は[使い方](README.ja.md)、データの取扱いは[プライバシーポリシー](privacy-policy.ja.md)、掲載・申告の原稿は[掲載原稿](store/listing.ja.md)と[プライバシー申告原稿](store/privacy.ja.md)を参照してください。

@@ -6,7 +6,7 @@ lang: zh-TW
 
 [English](privacy.md) | [日本語](privacy.ja.md) | [简体中文](privacy.zh-CN.md) | 繁體中文 | [Português (Brasil)](privacy.pt-BR.md) | [Español](privacy.es.md) | [Deutsch](privacy.de.md)
 
-適用公開候選版本 `0.1.0`，依目前程式行為編寫。發佈者驗證、法律身分及聯絡資訊須於發佈前確定。待辦與驗證／提交狀態請參閱[發佈紀錄](../releases.zh-TW.md)。
+本申報草案依 tabuchan `0.2.0` 的程式行為編寫。待辦事項與驗證／提交狀態請參閱[發佈紀錄](../releases.zh-TW.md)。
 
 ## 單一用途
 
@@ -29,16 +29,16 @@ lang: zh-TW
 | 分頁／視窗 ID、最近使用順序、巡覽狀態 | 最近使用切換及歷史一致性 | `storage.session.mruState`，瀏覽器工作階段期間 |
 | 標題、網址、網站圖示網址、群組 ID／名稱／顏色 | 清單、標題搜尋、快捷鍵可用性判斷 | Chrome API 取得，在記憶體／清單狀態使用 |
 | 按下／放開事件、設定頁登錄的組合 | 快捷鍵、長按／清單操作、設定 | 按鍵狀態於記憶體；確定的組合在 `storage.local.mruShortcuts` |
-| 長按時間、歷史上限、短按略過設定 | 套用使用者行為設定 | `storage.local.mruSettings` |
+| 長按時間、歷史紀錄上限、短按時略過無法使用快捷鍵的分頁、搜尋比對方式 | 套用使用者行為設定 | `storage.local.mruSettings` |
 | 清單中的標題搜尋文字 | 篩選分頁 | 清單開啟時在記憶體，切換模式／關閉時捨棄 |
 
 標題與群組名稱以純文字顯示於擴充功能的框架內。搜尋文字由同一框架內的輸入欄處理。清單內容與搜尋文字在擴充功能內處理。輸入事件用於快捷鍵、清單操作及記錄快捷鍵。
 
 ## 外部請求與第三方處理
 
-清單圖片使用 HTTP(S) 網站圖示網址時，瀏覽器可能向該伺服器請求圖片。目的地是 Chrome 分頁資訊提供的圖示網址伺服器。實作指定 `referrerPolicy="no-referrer"`。
+在分頁清單及舊版 Chrome 快捷鍵指令的通知中顯示網站圖示時，瀏覽器可能向 Chrome 提供的 HTTPS 圖示網址所指向的伺服器請求圖片。如果 Chrome 提供的圖示網址使用 HTTP，擴充功能會顯示替代圖示，且不會向該網址傳送請求。HTTPS 圖示請求使用 `referrerPolicy="no-referrer"`。
 
-圖片供應者可能收到 IP 位址和一般瀏覽器請求資訊。Cookie、快取、混合內容取決於 Chrome 設定／政策與目的地。第三方存取紀錄保留遵循其規範。HTTP 圖片行為及安全資料處理合規性須於提交前確認。
+圖片供應者可能收到 IP 位址和一般瀏覽器請求資訊。Cookie 與快取的處理取決於 Chrome 的設定、政策和目的伺服器。各供應者依自身規範保留存取紀錄。提交前應核對資料使用申報內容。
 
 執行程式僅參照套件內 JavaScript；網站圖示視為圖片。既有程式稽核未發現外部 JavaScript／WASM 下載執行或動態求值。
 
@@ -52,14 +52,16 @@ lang: zh-TW
 | 其他類型 | 發佈者對照現行定義及實作確定 |
 | Remote code | 依套件程式稽核，草案回答為“No, I am not using remote code.” |
 | Limited Use 驗證 | 發佈者確認並認證草案及實作的資料用途 |
-| 政策網址 | 補充發佈者／聯絡資訊後，將[政策草案](../privacy-policy.zh-TW.md)放至無須登入的 HTTPS 網址 |
+| 政策網址 | 確認可無須登入，透過 HTTPS 存取 GitHub Pages 上更新後的[隱私權政策](../privacy-policy.zh-TW.md)，再於 Dashboard 填寫網址。 |
 
 僅在本機處理的資料也須揭露，依現行 Dashboard 定義確定分類及認證：[Privacy fields](https://developer.chrome.com/docs/webstore/cws-dashboard-privacy)、[User Data FAQ](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq)。
 
 ## 保留與刪除
 
-瀏覽器重啟或停用／重新載入／更新擴充功能會清除工作階段歷史。關閉分頁及超過降低後上限的紀錄會移除。設定保留到使用者變更，解除安裝會刪除 Chrome 擴充功能儲存。搜尋文字於關閉清單或切換模式時捨棄。圖片快取透過 Chrome 瀏覽資料控制管理。見[政策草案](../privacy-policy.zh-TW.md)。
+瀏覽器重啟或停用／重新載入／更新擴充功能會清除工作階段歷史。關閉分頁及超過降低後上限的紀錄會移除。設定保留到使用者變更，解除安裝會刪除 Chrome 擴充功能儲存。搜尋文字於關閉清單或切換模式時捨棄。圖片快取透過 Chrome 瀏覽資料控制管理。見[隱私權政策](../privacy-policy.zh-TW.md)。
 
 ## 發佈者待確認事項
 
-[既有政策網址](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)已確認可無須登入存取；翻譯原稿完成時，新增翻譯尚未確認部署。發佈者資訊、聯絡管道、生效日期、Trader／Non-Trader 身分、帳號驗證與發佈目的地仍待確定。提交商店前須定稿，狀態記錄於[發佈紀錄](../releases.zh-TW.md)。
+發佈者為 `mstksb`。聯絡信箱為 [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com)。本政策自 tabuchan `0.2.0` 在 Chrome 線上應用程式商店發佈之日起生效。
+
+既有政策的[既有政策網址](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)已確認可無須登入存取。更新後的政策已在存放庫中，尚未部署至 GitHub Pages。Trader／Non-Trader 身分、帳號驗證和發佈目的地仍待確定。最新狀態請參閱[發佈紀錄](../releases.zh-TW.md)。

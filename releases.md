@@ -26,7 +26,7 @@ Press Enter in either list, including in search results, or select a tab directl
 | --- | --- |
 | Version | This package uses version `0.2.0`. The submission version depends on the Dashboard’s upload history. |
 | Distribution ZIP | [tabuchan-0.2.0.zip](dist/tabuchan-0.2.0.zip), containing 29 runtime files with the manifest at its root |
-| SHA-256 | `f7a7b26c5486aa8ee8054c5ca826a33992c8e3d5f3a512a6099e4874b830938e` |
+| SHA-256 | `01327c7caf9eb6a1d59fd6cd2cc9d7fa1eee3f5313bb9b382ac8c8fa776e2173` |
 | Checksum file | [tabuchan-0.2.0.zip.sha256](dist/tabuchan-0.2.0.zip.sha256) |
 | Requirements | Google Chrome with Manifest V3 support; the manifest declares a minimum of Chrome 102 |
 | Store status | The Dashboard’s package, item ID/URL, and review and publication status still need verification. |
@@ -35,7 +35,7 @@ Press Enter in either list, including in search results, or select a tab directl
 
 The candidate passed 184 Node tests. Chrome for Testing Stable `158.0.8127.36` (Linux arm64) passed 21 main end-to-end test groups and 3 language groups for Japanese, English, and the English fallback in a French Chrome environment.
 
-All 24 browser test groups also passed from the extracted distribution ZIP, including the version display in settings. The [listing draft](store/listing.md#screenshots) links to four 1280×800 screenshots captured from this ZIP in Japanese and English.
+The updated ZIP passed 25 browser test groups, including the version display in settings. In the tab list, an HTTP favicon URL used the fallback icon without a request, and an HTTPS favicon rendered. The [listing draft](store/listing.md#screenshots) links to four 1280×800 Japanese and English screenshots verified against the updated ZIP.
 
 
 ## 0.1.0
@@ -71,8 +71,8 @@ Configuration/automated checks cover Japanese/English translation keys and manif
 
 - Windows, older Chrome versions, and native operating system IMEs.
 - Operation after extension reload in regular Chrome.
-- Publisher/contact details, license, distribution visibility, and target countries.
-- Final policy publisher/contact/effective date and data-handling compliance, including HTTP favicon requests.
+- License, distribution visibility, and target countries.
+- Deployment of the updated privacy policy to GitHub Pages and confirmation of data handling against the current store requirements.
 - Saved listing/privacy disclosures in the Dashboard and review/publication status.
 
-Finalize these items before store submission. Current disclosure drafts and the draft policy are working materials, not evidence that submission requirements have been completed.
+Finalize these items before store submission.

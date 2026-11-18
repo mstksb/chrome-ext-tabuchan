@@ -2,11 +2,11 @@
 lang: de
 ---
 
-# Entwurf der Datenschutzrichtlinie für tabuchan
+# Datenschutzrichtlinie für tabuchan
 
 [English](privacy-policy.md) | [日本語](privacy-policy.ja.md) | [简体中文](privacy-policy.zh-CN.md) | [繁體中文](privacy-policy.zh-TW.md) | [Português (Brasil)](privacy-policy.pt-BR.md) | [Español](privacy-policy.es.md) | Deutsch
 
-Dieser Entwurf gilt für Version `0.1.0`. Herausgebername, Kontakt sowie Veröffentlichungs-/Gültigkeitsdatum sind noch offen. Siehe das [Protokoll](releases.de.md).
+Diese Richtlinie tritt am Tag der Veröffentlichung von tabuchan Version `0.2.0` im Chrome Web Store in Kraft. Den Veröffentlichungsstatus finden Sie im [Protokoll](releases.de.md).
 
 ## Zweck
 
@@ -17,7 +17,7 @@ tabuchan ermöglicht Tastaturnavigation zu zuletzt verwendeten oder über den Ti
 - Von Chrome gelieferte Tab-/Fenster-IDs, Titel, URLs, Favicon-URLs sowie Gruppen-IDs, -Namen und -Farben.
 - Tab-Auswahlreihenfolge, feste Durchlaufreihenfolge und Auswahlzustand der Liste.
 - In Seiten erkannte Tastendruck-/Loslassereignisse für Tastenkürzel, Listenaktionen und Titelsuchtext.
-- Vom Nutzer festgelegte Tastenkombinationen, Haltedauer, Verlaufslimit und Überspringen beim kurzen Drücken.
+- Vom Nutzer gewählte Tastenkombinationen, Haltedauer, Verlaufslimit, Einstellung zum Überspringen von Tabs ohne verfügbares Tastenkürzel beim kurzen Drücken und Suchmethode.
 
 Diese Informationen dienen dem Tab-Wechsel, Verlauf und Listen, der Titelsuche, der Anzeige verfügbarer Tastenkürzel und den Nutzereinstellungen.
 
@@ -29,9 +29,9 @@ Titel, URLs und Gruppeninformationen werden während der Verarbeitung von Chrome
 
 ## Netzwerkanfragen für Favicons
 
-Die Liste kann Favicons über von Chrome gelieferte HTTP(S)-Bild-URLs anzeigen. Dabei kann der Browser Anfragen an den Bildserver senden.
+Zur Anzeige von Favicons in der Tab-Liste und in Benachrichtigungen für frühere Chrome-Tastenkürzelbefehle kann der Browser Bilder von HTTPS-URLs abrufen, die Chrome bereitstellt. Wenn Chrome eine HTTP-URL für ein Favicon bereitstellt, zeigt die Erweiterung ein Ersatzsymbol an, ohne diese URL abzurufen.
 
-Bildanbieter können die IP-Adresse und übliche Anfragedaten erhalten. Die Erweiterung setzt `no-referrer`. Cookies, Cache und gemischte Inhalte hängen von Chrome-Einstellungen/-Richtlinien und dem Ziel ab. Aufbewahrung von Zugriffsprotokollen und weitere Verarbeitung richten sich nach den Regeln des Anbieters.
+Bildanbieter können die IP-Adresse des Nutzers und übliche Anfragedaten erhalten. Die Erweiterung setzt für Favicon-Anfragen `no-referrer`. Der Umgang mit Cookies und Cache hängt von den Chrome-Einstellungen und -Richtlinien sowie vom Zielserver ab. Für die Aufbewahrung von Zugriffsprotokollen und weitere Verarbeitung gelten die Regeln des jeweiligen Anbieters.
 
 ## Aufbewahrung und Löschung
 
@@ -47,4 +47,6 @@ Die Informationen dienen den beschriebenen Tab-Wechsel-, Listen-, Such- und Eins
 
 ## Herausgeber und Kontakt
 
-Die öffentliche Richtlinien-URL steht [hier](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.de.html). Herausgeber, Kontaktweg und Gültigkeitsdatum müssen vor Store-Einreichung festgelegt werden. Änderungen müssen im Store-Eintrag mit betroffener Version und aktualisierter Verarbeitung dokumentiert werden.
+Herausgeber: `mstksb`. Kontakt: [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com).
+
+Die öffentliche Richtlinien-URL steht [hier](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.de.html). Änderungen der Richtlinie sind im Store-Eintrag mit der betroffenen Version und der aktualisierten Datenverarbeitung zu dokumentieren.

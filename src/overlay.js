@@ -135,7 +135,7 @@
     }
     try {
       const url = new URL(value);
-      if (["http:", "https:", "chrome-extension:"].includes(url.protocol)) {
+      if (["https:", "chrome-extension:"].includes(url.protocol)) {
         return url.href;
       }
       if (url.protocol === "chrome:" && url.hostname === "favicon2") {

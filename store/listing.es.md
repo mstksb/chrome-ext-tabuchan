@@ -20,7 +20,7 @@ Este paquete usa la versión `0.2.0`. La versión que se enviará depende del hi
 | Resumen | Cambia a pestañas recientes con una pulsación. Mantén el atajo para listar, buscar y elegir pestañas en la ventana actual. |
 | Inicio / soporte | [Instrucciones](https://mstksb.github.io/chrome-ext-tabuchan/README.es.html); soporte a definir por el responsable |
 | Visibilidad / países | Pendiente del responsable |
-| Política | [URL pública](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.es.html), datos/vigencia pendientes; finalizar antes del envío |
+| Política | [URL pública](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.es.html). Antes del envío, comprueba que la política actualizada esté disponible en esta URL. |
 
 ## Descripción detallada
 

@@ -20,7 +20,7 @@ lang: zh-CN
 | 简介 | 短按切换最近标签页，长按浏览、搜索并选择当前窗口中的标签页。|
 | 主页／支持 | [使用说明](https://mstksb.github.io/chrome-ext-tabuchan/README.zh-CN.html)；支持渠道由发布者确定 |
 | 分发范围／国家 | 由发布者确定 |
-| 隐私政策网址 | [公开网址](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.zh-CN.html)，发布者信息和生效日期待定，提交前须定稿 |
+| 隐私政策网址 | [公开网址](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.zh-CN.html)。提交前请确认此网址提供更新后的隐私政策 |
 
 ## 详细说明
 
