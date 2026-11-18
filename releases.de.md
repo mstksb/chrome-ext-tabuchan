@@ -14,6 +14,30 @@ Erster Build und erste Bereitstellung von [Anleitung](https://mstksb.github.io/c
 
 Der obige Nachweis betrifft frühere Bereitstellungen. Die Bereitstellung des Updates vom 18. November 2026 ist noch ungeprüft.
 
+## 0.2.0
+
+Version 0.2.0 ändert, wann ein Tabwechsel im Verlauf erfasst wird. Die Verarbeitung der Liste und des Tabwechsels wurde verbessert. Nach dem Schließen einer aus einem Iframe geöffneten Liste wird der Fokus wiederhergestellt.
+
+Die erforderlichen Modifikatortasten gedrückt halten und die Buchstabentaste für Zurück oder Vorwärts kurz drücken und loslassen. So wechselt man jeweils einen Tab in der festen Verlaufsreihenfolge. Sobald eine erforderliche Modifikatortaste losgelassen wird, gilt der angezeigte Tab als zuletzt verwendet.
+
+Enter in einer der beiden Listen, auch in den Suchergebnissen, oder die direkte Auswahl eines Tabs in Chrome macht ihn zum zuletzt verwendeten Tab. War er schon im Verlauf, wird sein alter Eintrag entfernt und die Reihenfolge der anderen Tabs bleibt erhalten.
+
+| Punkt | Angaben |
+| --- | --- |
+| Version | Dieses Paket verwendet die Version `0.2.0`. Die Version für die Einreichung richtet sich nach dem Uploadverlauf im Dashboard. |
+| ZIP | [tabuchan-0.2.0.zip](dist/tabuchan-0.2.0.zip), 29 Laufzeitdateien, Manifest im Stamm |
+| SHA-256 | `f7a7b26c5486aa8ee8054c5ca826a33992c8e3d5f3a512a6099e4874b830938e` |
+| Prüfsumme | [tabuchan-0.2.0.zip.sha256](dist/tabuchan-0.2.0.zip.sha256) |
+| Voraussetzungen | Chrome mit Manifest V3; angegebenes Minimum Chrome 102 |
+| Store | Paket, ID und URL des Store-Eintrags sowie Prüfungs- und Veröffentlichungsstatus im Dashboard sind noch zu prüfen. |
+
+## Prüfung von 0.2.0
+
+Der Kandidat bestand 184 Node-Tests. In Chrome for Testing Stable `158.0.8127.36` (Linux arm64) bestanden 21 Gruppen von End-to-End-Tests für die wichtigsten Funktionen und drei Gruppen für Japanisch, Englisch und Englisch bei französischer Chrome-Oberfläche.
+
+Alle 24 Browser-Testgruppen bestanden auch mit dem entpackten ZIP, einschließlich der Versionsanzeige in den Einstellungen. Der [Listing-Entwurf](store/listing.de.md) verlinkt vier daraus erstellte Screenshots (1280×800) auf Japanisch und Englisch.
+
+
 ## 0.1.0
 
 Dieser Kandidat aktualisiert die Erkennung und Darstellung eingeschränkter Tabs, verkürzt die Mindest- und Standard-Haltedauer und ergänzt Teil- und Präfixsuche mit mehreren Begriffen. Außerdem behebt er Fehler beim Tabwechsel und in den Einstellungen.
@@ -22,14 +46,14 @@ Einstellungen und Liste sind bei japanischer Chrome-Anzeigesprache japanisch, so
 
 | Punkt | Angaben |
 | --- | --- |
-| Version | Dieses Paket verwendet die Version `0.1.0`. Die Version für die Einreichung richtet sich nach dem Uploadverlauf im Dashboard. |
-| ZIP | [tabuchan-0.1.0.zip](dist/tabuchan-0.1.0.zip), 29 Laufzeitdateien, Manifest im Stamm |
+| Version | Das frühere Paket verwendete die Version `0.1.0`. |
+| ZIP | `tabuchan-0.1.0.zip`, 29 Laufzeitdateien, Manifest im Stamm |
 | SHA-256 | `25a07b0f94b01a9bc9d9ea5ce05d9e258b584a7560ace136fa10716a1e6d9982` |
-| Prüfsumme | [tabuchan-0.1.0.zip.sha256](dist/tabuchan-0.1.0.zip.sha256) |
+| Prüfsumme | `tabuchan-0.1.0.zip.sha256` |
 | Voraussetzungen | Chrome mit Manifest V3; angegebenes Minimum Chrome 102 |
 | Store | Paket, ID und URL des Store-Eintrags sowie Prüfungs- und Veröffentlichungsstatus im Dashboard sind noch zu prüfen. |
 
-## Prüfung des Kandidaten vom 18. November 2026
+## Prüfung des Kandidaten 0.1.0 vom 18. November 2026
 
 Der Kandidat bestand 21 End-to-End-Testgruppen in Chrome for Testing Stable `158.0.8127.36` (Linux arm64). Drei weitere Gruppen bestätigten die japanische und englische Oberfläche, die englische Oberfläche bei französischer Chrome-Sprache sowie die Unicode-Titelsuche. Alle 24 Gruppen bestanden auch mit der aus dem Distributions-ZIP geladenen Erweiterung. Die in den Einstellungen angezeigte Version entsprach der Angabe im Manifest des ZIPs.
 

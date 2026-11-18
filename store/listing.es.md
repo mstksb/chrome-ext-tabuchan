@@ -6,14 +6,14 @@ lang: es
 
 [English](listing.md) | [日本語](listing.ja.md) | [简体中文](listing.zh-CN.md) | [繁體中文](listing.zh-TW.md) | [Português (Brasil)](listing.pt-BR.md) | Español | [Deutsch](listing.de.md)
 
-Este paquete usa la versión `0.1.0`. La versión que se enviará depende del historial de cargas en el Dashboard. Consulta el [registro](../releases.es.md) para los archivos, los entornos probados y el estado de la tienda.
+Este paquete usa la versión `0.2.0`. La versión que se enviará depende del historial de cargas en el Dashboard. Consulta el [registro](../releases.es.md) para los archivos, los entornos probados y el estado de la tienda.
 
 ## Datos básicos
 
 | Campo | Texto / situación |
 | --- | --- |
 | Nombre | tabuchan |
-| Versión | `0.1.0` |
+| Versión | `0.2.0` |
 | Idiomas de documentos/ficha | Inglés como base; japonés, chino simplificado/tradicional, portugués de Brasil, español y alemán. Valores guardados en Dashboard sin verificar |
 | Interfaz | Japonés con Chrome en japonés; inglés en otros casos. Los documentos no amplían la interfaz |
 | Categoría propuesta | Functionality & UI, según la categoría oficial actual para pestañas/atajos; valor guardado sin verificar |
@@ -26,7 +26,9 @@ Este paquete usa la versión `0.1.0`. La versión que se enviará depende del hi
 
 tabuchan permite cambiar entre pestañas de la ventana actual con atajos de teclado.
 
-Pulsa brevemente Retroceder o Avanzar para recorrer un orden fijo de uso reciente. Por defecto se omiten las pestañas sin atajos disponibles.
+Mantén pulsadas las teclas modificadoras y pulsa y suelta la tecla normal para Retroceder o Avanzar en un orden fijo. Al soltar un modificador necesario, la pestaña visible pasa a ser la más reciente. Por defecto se omiten las pestañas sin atajos disponibles.
+
+Pulsa Enter en cualquiera de las listas, incluidos los resultados de búsqueda, o selecciona una pestaña directamente en Chrome para que pase a ser la más reciente. Si ya estaba en el historial, se elimina su entrada anterior y se conserva el orden de las demás.
 
 Mantén toda la combinación para abrir la lista. Arriba/Abajo seleccionan, Enter cambia y Esc cancela. La lista permanece al soltar las teclas.
 
@@ -54,7 +56,7 @@ Las cuatro capturas de 1280×800 muestran el mismo paquete bilingüe en Chrome f
 
 ## Instrucciones para revisión
 
-No se requiere cuenta ni inicio de sesión. Abre varias pestañas HTTP(S) en una ventana y visítalas en orden. Comprueba pulsaciones breves con los atajos indicados, luego mantén la combinación al menos 0,5 segundos y usa Arriba/Abajo, Enter y Esc. Cambia de modo con Izquierda y busca un título en orden de pestañas. Abre ajustes desde el icono y confirma `0.1.0`.
+No se requiere una cuenta ni iniciar sesión. Visita varias pestañas HTTP(S) en una ventana. Mantén pulsadas las teclas modificadoras y pulsa y suelta las teclas normales de Retroceder y Avanzar. Suelta un modificador necesario y verifica que la pestaña visible pasa a ser la más reciente. Mantén pulsada toda la combinación al menos 0,5 segundos, pasa al orden de pestañas con la flecha izquierda, filtra por título y confirma con Enter. Abre la configuración desde el icono y comprueba la versión `0.2.0`.
 
 ## Base del borrador
 

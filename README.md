@@ -9,7 +9,7 @@ English | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [繁體�
 
 A Chrome extension for switching to recently used tabs with the keyboard. Tap a shortcut to move through your history; hold it to open a tab list.
 
-This package uses version `0.1.0`. The submission version depends on the Dashboard’s upload history. See the [release record](releases.md) for tested environments and store status.
+This package uses version `0.2.0`. The submission version depends on the Dashboard’s upload history. See the [release record](releases.md) for tested environments and store status.
 
 Documentation languages: English, Japanese, Simplified Chinese, Traditional Chinese, Brazilian Portuguese, Spanish, and German. Documentation translations are separate from extension UI support: settings and the tab list currently use Japanese when Chrome's display language is Japanese, and English otherwise.
 
@@ -18,7 +18,7 @@ Documentation languages: English, Japanese, Simplified Chinese, Traditional Chin
 - Move backward and forward through a fixed recent-use order in the current window.
 - Hold a shortcut to open the list; select with Up/Down and switch with Enter.
 - Press Left to switch between recent-use order and actual tab order, and search titles in the tab-order list.
-- See tab group names/colors and whether shortcuts are available in the destination tab.
+- See tab group names and whether shortcuts are available in the destination tab.
 - Assign multiple shortcuts per direction and configure the hold duration and history limit.
 
 ## Requirements
@@ -41,11 +41,15 @@ Start shortcuts inside a regular HTTP(S) page, including an iframe. Shortcuts ca
 
 On macOS, use the physical Control key. In settings, press the actual combination to register it for a direction. Chrome, the operating system, or other extensions may intercept combinations before they reach the page.
 
-A tap takes effect when a required key is released. The default hold duration is 0.5 seconds. The list stays open after you release all keys: Up/Down selects, Enter confirms, and Esc cancels. Left switches between recent-use order and tab order. In tab order, type to filter titles and use Backspace to delete the last character. During Japanese IME composition, Enter, Up/Down, and Esc are reserved for the IME.
+Keep the required modifier keys held and press and release the regular key for Back or Forward to switch one tab at a time in fixed history order. Release any required modifier to make the displayed tab the most recent.
+
+The default hold duration is 0.5 seconds. The list stays open after you release all keys: Up/Down selects, Enter confirms, and Esc cancels. Left switches between recent-use order and tab order. In tab order, type to filter titles and use Backspace to delete the last character. During Japanese IME composition, Enter, Up/Down, and Esc are reserved for the IME.
+
+Press Enter in either list, including in search results, or select a tab directly in Chrome to make it the most recent. If it was already in the history, its old entry is removed and the other tabs stay in the same order.
 
 Separate search terms with spaces. Partial match (the default) finds titles containing every term in any order. Prefix match starts with the first term and finds the others in order, with gaps allowed. Both modes ignore letter case and use Unicode NFC normalization.
 
-The hold duration ranges from 0.2 to 2.0 seconds in 0.1-second steps and defaults to 0.5 seconds. The history limit is 10–30 past tabs, with a default of 10. A tap skips tabs with unavailable shortcuts by default. The list dims those tabs without changing row height, and you can select them with Enter.
+The hold duration ranges from 0.2 to 2.0 seconds in 0.1-second steps and defaults to 0.5 seconds. The history limit is 10–30 past tabs, with a default of 10. A tap skips tabs with unavailable shortcuts by default. The list dims those tabs without changing row height, and you can select them with Enter. If you turn off skipping and switch to a tab where the extension cannot receive key input, that tab becomes the most recent as soon as it opens.
 
 ## Data storage
 
@@ -58,7 +62,7 @@ You can repackage the 29 runtime files in this folder using macOS's standard `zi
 ```sh
 mkdir -p dist &&
 tabuchan_package_tmp=$(mktemp -d) &&
-zip -X "$tabuchan_package_tmp/tabuchan-0.1.0.zip" \
+zip -X "$tabuchan_package_tmp/tabuchan-0.2.0.zip" \
   manifest.json \
   options.html \
   icons/tab.svg \
@@ -88,9 +92,9 @@ zip -X "$tabuchan_package_tmp/tabuchan-0.1.0.zip" \
   src/picker.js \
   src/settings-rules.js \
   src/shortcut-changes.js && \
-  mv "$tabuchan_package_tmp/tabuchan-0.1.0.zip" dist/tabuchan-0.1.0.zip &&
+  mv "$tabuchan_package_tmp/tabuchan-0.2.0.zip" dist/tabuchan-0.2.0.zip &&
 rmdir "$tabuchan_package_tmp" &&
-(cd dist && shasum -a 256 tabuchan-0.1.0.zip > tabuchan-0.1.0.zip.sha256)
+(cd dist && shasum -a 256 tabuchan-0.2.0.zip > tabuchan-0.2.0.zip.sha256)
 ```
 
 The ZIP contains `manifest.json` at its root; listing documents, screenshots, and release records are excluded. Repackaging may change its SHA-256. Match the actual ZIP checksum to the [release record](releases.md) before distribution.

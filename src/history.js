@@ -18,16 +18,26 @@ export function createWindowState(windowId, activeTabId = null, maxPastTabs = DE
   };
 }
 
-export function observeActivation(state, tabId, { internal = false } = {}) {
-  const externalSelection = !internal && state.activeTabId !== tabId;
+export function commitActivation(state, tabId, { keepTraversal = false } = {}) {
+  const nextState = {
+    ...state,
+    mruTabIds: moveToFront(state.mruTabIds, tabId, state.maxPastTabs),
+    activeTabId: tabId,
+  };
+  if (keepTraversal && state.traversal) {
+    const { shortcut, ...traversal } = state.traversal;
+    return { ...nextState, traversal: { ...traversal, committed: true } };
+  }
+  return { ...nextState, traversal: null, tabListSnapshot: null, generation: state.generation + 1 };
+}
 
+export function observeActivation(state, tabId, { internal = false } = {}) {
+  if (!internal && state.activeTabId !== tabId) return commitActivation(state, tabId);
+  if (state.activeTabId === tabId && (state.traversal?.shortcut || state.mruTabIds[0] === tabId)) return state;
   return {
     ...state,
     mruTabIds: moveToFront(state.mruTabIds, tabId, state.maxPastTabs),
     activeTabId: tabId,
-    traversal: externalSelection ? null : state.traversal,
-    tabListSnapshot: externalSelection ? null : state.tabListSnapshot,
-    generation: externalSelection ? state.generation + 1 : state.generation,
   };
 }
 
@@ -87,6 +97,19 @@ export function confirmMove(state, targetTabId) {
   };
 }
 
+export function previewMove(state, targetTabId, modifiers) {
+  const cursor = state.traversal.tabIds.indexOf(targetTabId);
+  return {
+    ...state,
+    activeTabId: targetTabId,
+    traversal: {
+      ...state.traversal,
+      cursor,
+      shortcut: { modifiers, sourceTabId: state.activeTabId },
+    },
+  };
+}
+
 export function removeTab(state, tabId) {
   const mruTabIds = state.mruTabIds.filter((id) => id !== tabId);
 
@@ -127,10 +150,13 @@ export function removeTab(state, tabId) {
 
 export function setHistoryLimit(state, maxPastTabs) {
   if ((state.maxPastTabs ?? DEFAULT_MAX_PAST_TABS) === maxPastTabs) return state;
+  const mruTabIds = state.traversal?.shortcut
+    ? moveToFront(state.mruTabIds, state.activeTabId, maxPastTabs)
+    : state.mruTabIds.slice(0, maxPastTabs + 1);
   return {
     ...state,
     maxPastTabs,
-    mruTabIds: state.mruTabIds.slice(0, maxPastTabs + 1),
+    mruTabIds,
     traversal: null,
     tabListSnapshot: null,
     pendingSwitch: null,

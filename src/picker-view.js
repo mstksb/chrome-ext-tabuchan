@@ -4,9 +4,20 @@
     function ensureExtensionContext() { return ensureContext(); }
     function sendPickerControl(ui, action, details = {}) {
       if ((ui.closing && action !== "cancel") || pickerUi !== ui || !ensureExtensionContext()) return;
+      const queuedSearch = ui.queuedSearch;
+      // Narrowing retains the same selection or falls back to the first final result.
+      // Keep broadened/edited queries and never merge across key or cancel actions.
+      if (action === "search" && queuedSearch
+        && details.query.toLowerCase().startsWith(queuedSearch.details.query.toLowerCase())) {
+        queuedSearch.details = details;
+        return;
+      }
+      const control = { details };
+      ui.queuedSearch = action === "search" ? control : null;
       ui.controlQueue = ui.controlQueue.then(async () => {
+        if (ui.queuedSearch === control) ui.queuedSearch = null;
         if ((ui.closing && action !== "cancel") || pickerUi !== ui || !ensureExtensionContext()) return;
-        await sendControl(action, details);
+        await sendControl(action, control.details);
       }).catch(() => {});
     }
     function iconUrl(value) {
@@ -95,8 +106,11 @@
     document.body.append(card);
     const ui = {
       card, label, search, searchInput, list, rows: [], counter, announcement,
+      rowsByTabId: new Map(),
+      groupTitles: {},
       itemRevision: null, selectedIndex: -1, mode: null, composing: false, ownsFocus: false,
       closing: false, pendingQuery: null,
+      queuedSearch: null,
       controlQueue: Promise.resolve(),
     };
     function submitQuery() {
@@ -127,13 +141,41 @@
       sendPickerControl(ui, "cancel");
     });
     pickerUi = ui;
+    function createRow(item) {
+      const row = document.createElement("div");
+      row.className = "row";
+      row.id = `mru-picker-option-${item.tabId}`;
+      row.dataset.tabId = String(item.tabId);
+      row.dataset.inputAvailable = String(item.inputAvailable !== false);
+      row.setAttribute("role", "option");
+      row.setAttribute("aria-selected", "false");
+      const title = document.createElement("span");
+      title.className = "item-title";
+      title.textContent = typeof item.title === "string" && item.title.trim() ? item.title : translate("picker_untitled");
+      title.title = title.textContent;
+      const body = document.createElement("span");
+      body.className = "item-body";
+      body.append(title);
+      row.append(createIcon(item.favIconUrl), body);
+      if (item.inputAvailable === false) {
+        const marker = document.createElement("span");
+        marker.className = "unavailable";
+        marker.textContent = translate("picker_unavailable");
+        marker.title = translate("picker_unavailable_hint");
+        body.append(marker);
+      }
+      return row;
+    }
+
     function renderPickerItems(items, mode) {
       const { list } = pickerUi;
+      pickerUi.rows[pickerUi.selectedIndex]?.setAttribute("aria-selected", "false");
       list.replaceChildren();
       let previousGroupId = null;
       let groupContainer = null;
       const rows = [];
-      for (const [index, item] of items.entries()) {
+      const rowsByTabId = new Map();
+      for (const item of items) {
         let container = list;
         const grouped = mode === "tabs" && Number.isInteger(item.groupId) && item.groupId >= 0;
         if (grouped) {
@@ -142,8 +184,8 @@
             groupContainer.className = "group";
             groupContainer.dataset.groupId = String(item.groupId);
             groupContainer.setAttribute("role", "group");
-            const groupTitle = typeof item.group?.title === "string" && item.group.title.trim()
-              ? item.group.title : translate("picker_unnamed_group");
+            const title = pickerUi.groupTitles[item.groupId];
+            const groupTitle = typeof title === "string" && title.trim() ? title : translate("picker_unnamed_group");
             groupContainer.setAttribute("aria-label", groupTitle);
             const heading = document.createElement("div");
             heading.className = "group-title";
@@ -154,28 +196,11 @@
           container = groupContainer;
         }
         previousGroupId = grouped ? item.groupId : null;
-        const row = document.createElement("div");
-        row.className = "row";
-        row.id = `mru-picker-option-${index}`;
-        row.dataset.tabId = String(item.tabId);
-        row.dataset.inputAvailable = String(item.inputAvailable !== false);
-        row.setAttribute("role", "option");
-        row.setAttribute("aria-selected", "false");
-        const title = document.createElement("span");
-        title.className = "item-title";
-        title.textContent = typeof item.title === "string" && item.title.trim() ? item.title : translate("picker_untitled");
-        title.title = title.textContent;
-        const body = document.createElement("span");
-        body.className = "item-body";
-        body.append(title);
-        row.append(createIcon(item.favIconUrl), body);
-        if (item.inputAvailable === false) {
-          const marker = document.createElement("span");
-          marker.className = "unavailable";
-          marker.textContent = translate("picker_unavailable");
-          marker.title = translate("picker_unavailable_hint");
-          body.append(marker);
-        }
+        const previous = pickerUi.rowsByTabId.get(item.tabId);
+        const row = previous && previous.title === item.title && previous.favIconUrl === item.favIconUrl
+          && previous.inputAvailable === item.inputAvailable ? previous.row : createRow(item);
+        rowsByTabId.set(item.tabId, { row, title: item.title, favIconUrl: item.favIconUrl,
+          inputAvailable: item.inputAvailable });
         container.append(row);
         rows.push(row);
       }
@@ -186,12 +211,14 @@
         list.append(empty);
       }
       pickerUi.rows = rows;
+      pickerUi.rowsByTabId = rowsByTabId;
     }
 
     function updatePickerUi(message) {
       const mode = message.mode === "tabs" ? "tabs" : "mru";
       const query = mode === "tabs" && typeof message.query === "string" ? message.query : "";
       const modeChanged = pickerUi.mode !== mode;
+      if (message.groupTitles) pickerUi.groupTitles = message.groupTitles;
       const rebuilt = Array.isArray(message.items) && (pickerUi.itemRevision !== message.itemRevision || modeChanged);
       if (rebuilt) {
         renderPickerItems(message.items, mode);
@@ -235,9 +262,14 @@
       list.setAttribute("aria-activedescendant", selected.id);
       pickerUi.counter.textContent = translate("picker_position", [String(message.selectedIndex + 1), String(rows.length)]);
       pickerUi.announcement.textContent = selected.textContent;
-      if (selected.offsetTop < list.scrollTop) list.scrollTop = selected.offsetTop;
-      else if (selected.offsetTop + selected.offsetHeight > list.scrollTop + list.clientHeight) {
-        list.scrollTop = selected.offsetTop + selected.offsetHeight - list.clientHeight;
+      const scrollTop = list.scrollTop;
+      const rowTop = selected.offsetTop;
+      if (rowTop < scrollTop) {
+        list.scrollTop = rowTop;
+      } else {
+        const rowBottom = rowTop + selected.offsetHeight;
+        const listHeight = list.clientHeight;
+        if (rowBottom > scrollTop + listHeight) list.scrollTop = rowBottom - listHeight;
       }
     }
 

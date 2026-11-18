@@ -8,7 +8,7 @@ lang: es
 
 Extensión de Chrome para cambiar a pestañas recientes con el teclado. Pulsa brevemente un atajo para recorrer el historial o mantenlo pulsado para abrir la lista.
 
-Este paquete usa la versión `0.1.0`. La versión que se enviará depende del historial de cargas en el Dashboard. Consulta el [registro de publicación](releases.es.md) para los archivos, los entornos probados y el estado de la tienda.
+Este paquete usa la versión `0.2.0`. La versión que se enviará depende del historial de cargas en el Dashboard. Consulta el [registro de publicación](releases.es.md) para los archivos, los entornos probados y el estado de la tienda.
 
 La documentación está disponible en inglés, japonés, chino simplificado, chino tradicional, portugués de Brasil, español y alemán. Los idiomas de documentación son independientes de la interfaz: los ajustes y la lista usan japonés cuando Chrome se muestra en japonés e inglés en los demás casos.
 
@@ -17,7 +17,7 @@ La documentación está disponible en inglés, japonés, chino simplificado, chi
 - Retroceder y avanzar por un orden fijo de uso reciente en la ventana actual.
 - Mantener pulsado para abrir la lista; seleccionar con Arriba/Abajo y cambiar con Enter.
 - Pulsar Izquierda para alternar entre uso reciente y orden real de pestañas; buscar títulos en este último modo.
-- Ver nombres/colores de grupos y si los atajos están disponibles en la pestaña de destino.
+- Ver nombres de grupos y si los atajos están disponibles en la pestaña de destino.
 - Asignar varios atajos por dirección y ajustar la duración y el límite del historial.
 
 ## Requisitos
@@ -40,11 +40,15 @@ Los atajos se inician dentro de páginas HTTP(S) normales, incluidos iframes. No
 
 En macOS se usa la tecla física Control. Registra combinaciones pulsándolas en los ajustes. Chrome, el sistema u otras extensiones pueden interceptarlas antes de que lleguen a la página.
 
-Una pulsación breve se aplica al soltar una tecla necesaria. La duración predeterminada para abrir la lista es 0,5 segundos. La lista permanece al soltar todas las teclas: Arriba/Abajo seleccionan, Enter confirma y Esc cancela. Izquierda alterna los modos. En orden de pestañas, escribe para filtrar títulos y usa Backspace para borrar el último carácter. Durante la composición del IME japonés, Enter, Arriba/Abajo y Esc se reservan para el IME.
+Mantén pulsadas las teclas modificadoras necesarias y pulsa brevemente la tecla normal para Retroceder o Avanzar. Cada vez que sueltes la tecla normal, se mostrará una pestaña siguiendo el orden fijo del historial. Al soltar un modificador necesario, la pestaña visible pasa a ser la más reciente.
+
+La duración predeterminada para abrir la lista es 0,5 segundos. La lista permanece al soltar todas las teclas: Arriba/Abajo seleccionan, Enter confirma y Esc cancela. Izquierda alterna los modos. En orden de pestañas, escribe para filtrar títulos y usa Backspace para borrar el último carácter. Durante la composición del IME japonés, Enter, Arriba/Abajo y Esc se reservan para el IME.
+
+Pulsa Enter en cualquiera de las listas, incluidos los resultados de búsqueda, o selecciona una pestaña directamente en Chrome para que pase a ser la más reciente. Si ya estaba en el historial, se elimina su entrada anterior y se conserva el orden de las demás.
 
 Separa los términos de búsqueda con espacios. La coincidencia parcial (predeterminada) busca títulos que contienen todos los términos en cualquier orden. La coincidencia por prefijo exige que el título empiece por el primer término y que los demás aparezcan en el orden introducido, con caracteres intermedios si los hay. Ambos modos usan normalización Unicode NFC e ignoran las diferencias entre mayúsculas y minúsculas.
 
-La duración de la pulsación larga admite valores de 0,2 a 2,0 segundos en pasos de 0,1 segundos y su valor predeterminado es de 0,5 segundos. El historial conserva de 10 a 30 pestañas anteriores, con 10 por defecto. Por defecto, las pulsaciones breves omiten las pestañas sin atajos disponibles. Estas aparecen atenuadas en la lista, conservan la altura de la fila y pueden seleccionarse con Enter.
+La duración de la pulsación larga admite valores de 0,2 a 2,0 segundos en pasos de 0,1 segundos y su valor predeterminado es de 0,5 segundos. El historial conserva de 10 a 30 pestañas anteriores, con 10 por defecto. Por defecto, las pulsaciones breves omiten las pestañas sin atajos disponibles. Estas aparecen atenuadas en la lista, conservan la altura de la fila y pueden seleccionarse con Enter. Si desactivas la opción de omitir pestañas y cambias a una pestaña en la que la extensión no puede recibir pulsaciones de teclas, esa pestaña pasa a ser la más reciente al abrirse.
 
 ## Almacenamiento de datos
 
@@ -57,7 +61,7 @@ Abre una terminal en la carpeta de este README. Los comandos usan `zip` y `shasu
 ```sh
 mkdir -p dist &&
 tabuchan_package_tmp=$(mktemp -d) &&
-zip -X "$tabuchan_package_tmp/tabuchan-0.1.0.zip" \
+zip -X "$tabuchan_package_tmp/tabuchan-0.2.0.zip" \
   manifest.json \
   options.html \
   icons/tab.svg \
@@ -87,9 +91,9 @@ zip -X "$tabuchan_package_tmp/tabuchan-0.1.0.zip" \
   src/picker.js \
   src/settings-rules.js \
   src/shortcut-changes.js && \
-  mv "$tabuchan_package_tmp/tabuchan-0.1.0.zip" dist/tabuchan-0.1.0.zip &&
+  mv "$tabuchan_package_tmp/tabuchan-0.2.0.zip" dist/tabuchan-0.2.0.zip &&
 rmdir "$tabuchan_package_tmp" &&
-(cd dist && shasum -a 256 tabuchan-0.1.0.zip > tabuchan-0.1.0.zip.sha256)
+(cd dist && shasum -a 256 tabuchan-0.2.0.zip > tabuchan-0.2.0.zip.sha256)
 ```
 
 El ZIP contiene `manifest.json` en la raíz y excluye documentos de la tienda, capturas y registros. El SHA-256 puede cambiar al volver a empaquetar; relaciona la suma del ZIP real con el [registro](releases.es.md) antes de distribuirlo.

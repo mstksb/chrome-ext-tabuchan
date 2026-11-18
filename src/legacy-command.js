@@ -5,11 +5,13 @@ import { readSettings } from "./settings.js";
 export function createLegacyCommands(browser, { reportFailure, getRevision }) {
   async function showStatus(tab, unavailable = false, message = browser.i18n.getMessage("controller_display_unavailable")) {
     const title = tab.title || browser.i18n.getMessage("controller_untitled");
+    const extensionName = browser.runtime.getManifest().name;
+    const actionTitle = `${extensionName}\n${title}`;
     await Promise.allSettled([
       browser.action.setBadgeText({ tabId: tab.id, text: unavailable ? "!" : "" }),
       browser.action.setTitle({
         tabId: tab.id,
-        title: unavailable ? `tabuchan\n${title}\n${message}` : `tabuchan\n${title}`,
+        title: unavailable ? `${actionTitle}\n${message}` : actionTitle,
       }),
     ]);
   }

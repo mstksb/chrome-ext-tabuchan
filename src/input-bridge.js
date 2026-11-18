@@ -2,16 +2,24 @@ import { readSettings } from "./settings.js";
 import { canUsePageInput, createPageInputAccessCheck } from "./tab-access.js";
 import "./input-protocol.js";
 
-const { INPUT_FILES, MESSAGE_TYPES, isPressId, isControl, isDisplay } = globalThis.MruInputProtocol;
+const { INPUT_FILES, MESSAGE_TYPES, isModifierMask, isPressId, isControl, isDisplay } = globalThis.MruInputProtocol;
 
 export function createInputBridge(browser, controller) {
   let started = false;
   let configRead = null;
+  let shortcutQueue = Promise.resolve();
   const sessions = new Map();
   const showRequests = new Map();
   const pendingFrames = new Map();
+  const closingPickerPorts = new WeakSet();
   const inputLifetimes = new Set();
   const pickerUrl = () => `chrome-extension://${browser.runtime.id}/picker.html`;
+
+  function queueShortcut(handle) {
+    const request = shortcutQueue.then(handle);
+    shortcutQueue = request.catch(() => {});
+    return request;
+  }
 
   function readInputSettings() {
     if (!configRead) {
@@ -58,11 +66,14 @@ export function createInputBridge(browser, controller) {
     if (sessions.get(tabId) !== session) return;
     sessions.delete(tabId);
     discardShowRequest(tabId, session.showRequest);
-    if (session.port) {
-      post(session.port, { type: "close" });
-      session.port.disconnect();
-    }
+    const { port } = session;
+    if (port) closingPickerPorts.add(port);
+    // Let the host check focus while the picker is still present.
     const response = await sendHost(tabId, { action: "hide", pressId: session.pressId, restoreFocus });
+    if (port) {
+      post(port, { type: "close" });
+      port.disconnect();
+    }
     if (cancelSource) {
       try {
         await browser.tabs.sendMessage(tabId, {
@@ -109,21 +120,28 @@ export function createInputBridge(browser, controller) {
       if (session) await closeSession(tab.id, session, { restoreFocus: false, cancelSource: true });
       if (showRequests.get(tab.id) !== showRequest) return { ok: false, error: "stale-picker" };
       session = { pressId: message.pressId, sourceFrameId: sender.frameId ?? 0,
-        sourceDocumentId: sender.documentId, showRequest, model: null, port: null, maxListHeight: 480 };
+        sourceDocumentId: sender.documentId, showRequest, itemRevision: null,
+        unboundDisplay: null, port: null, maxListHeight: 480 };
       sessions.set(tab.id, session);
     } else if (!session || session.pressId !== message.pressId || !sameSource(session, sender)) {
       return { ok: false, error: "stale-picker" };
     }
-    if (!message.items && message.itemRevision !== session.model?.itemRevision) return { ok: false, error: "missing-items" };
-    session.model = {
-      mode: message.mode, query: message.query, selectedIndex: message.selectedIndex,
-      itemRevision: message.itemRevision, items: message.items ?? session.model.items,
-    };
+    if (!message.items && message.itemRevision !== session.itemRevision) return { ok: false, error: "missing-items" };
     if (session.port) {
-      // Selection and unchanged-result search updates never retransmit candidate metadata.
-      post(session.port, { ...message, type: "display", items: message.items, maxListHeight: session.maxListHeight });
+      if (!post(session.port, { ...message, type: "display", maxListHeight: session.maxListHeight })) {
+        await closeSession(tab.id, session, { cancelSource: true });
+        return { ok: false, error: "picker-unavailable" };
+      }
+      session.itemRevision = message.itemRevision;
       return { ok: true };
     }
+    const pendingDisplay = session.unboundDisplay;
+    session.itemRevision = message.itemRevision;
+    session.unboundDisplay = {
+      mode: message.mode, query: message.query, selectedIndex: message.selectedIndex,
+      itemRevision: message.itemRevision, items: message.items ?? pendingDisplay?.items,
+      groupTitles: message.groupTitles ?? pendingDisplay?.groupTitles,
+    };
     if (message.action === "show") {
       const response = await sendHost(tab.id, { action: "show", pressId: message.pressId });
       if (!response?.ok) await closeSession(tab.id, session, { cancelSource: true });
@@ -139,13 +157,18 @@ export function createInputBridge(browser, controller) {
     const tab = await getSource(sender);
     const session = tab && sessions.get(tab.id);
     const pending = pendingFrames.get(message.nonce);
-    if (!session || session.pressId !== message.pressId || session.port || !pending || pending.tabId !== tab.id) {
+    if (!session?.unboundDisplay || session.pressId !== message.pressId || session.port || !pending || pending.tabId !== tab.id) {
       return { ok: false, error: "stale-picker-binding" };
     }
     pendingFrames.delete(message.nonce);
     session.port = pending.port;
     session.maxListHeight = Math.max(100, Math.min(480, Number.isFinite(message.viewportHeight) ? message.viewportHeight * 0.6 : 480));
-    post(session.port, { type: "display", ...session.model, maxListHeight: session.maxListHeight });
+    if (!post(session.port, { type: "display", ...session.unboundDisplay, maxListHeight: session.maxListHeight })) {
+      await closeSession(tab.id, session, { cancelSource: true });
+      return { ok: false, error: "picker-unavailable" };
+    }
+    // A disconnected picker ends the session, so this snapshot cannot be used again.
+    session.unboundDisplay = null;
     return { ok: true };
   }
 
@@ -157,6 +180,7 @@ export function createInputBridge(browser, controller) {
       await closeSession(tabId, session, { restoreFocus: false, cancelSource: true });
       return { ok: false, error: "page-unavailable" };
     }
+    if (sessions.get(tabId) !== session) return { ok: false, error: "invalid-picker-input" };
     return browser.tabs.sendMessage(tabId, {
       type: "mru-picker-control", pressId: session.pressId, action: message.action,
       query: message.query, code: message.code, repeat: message.repeat === true,
@@ -190,12 +214,17 @@ export function createInputBridge(browser, controller) {
         pendingFrames.set(nonce, { tabId, port });
         post(port, { type: "ready" });
       } else if (message?.type === "control" && Number.isSafeInteger(message.requestId)) {
+        const sendResult = (result) => {
+          // Rejecting a pending input while closing would make the picker remove itself early.
+          if (!closingPickerPorts.has(port)) post(port, { type: "result", requestId: message.requestId, ...result });
+        };
         controls = controls.then(async () => {
-          const result = await relayControl(tabId, port, message);
-          post(port, { type: "result", requestId: message.requestId, ...result });
+          if (!closingPickerPorts.has(port)) sendResult(await relayControl(tabId, port, message));
         }).catch(() => {
-          post(port, { type: "result", requestId: message.requestId, ok: false, error: "input-unavailable" });
+          sendResult({ ok: false, error: "input-unavailable" });
         });
+      } else if (message?.type === "modifiers" && isModifierMask(message.modifiers) && sessions.get(tabId)?.port === port) {
+        void queueShortcut(() => controller.finishShortcut(sender.tab, message.modifiers, { keepTraversal: true })).catch(() => {});
       } else if (message?.type === "resize" && Number.isInteger(message.height)) {
         const session = sessions.get(tabId);
         if (session?.port === port) {
@@ -218,6 +247,29 @@ export function createInputBridge(browser, controller) {
     if (!MESSAGE_TYPES.has(message?.type)) return { ok: false, error: "unknown-message" };
     if (message.type === "mru-picker-display") return displayPicker(message, sender);
     if (message.type === "mru-picker-bind") return bindPicker(message, sender);
+    if (message.type === "mru-finish") {
+      const tab = sender.tab;
+      if (sender.id !== browser.runtime.id || !Number.isInteger(tab?.id) || !Number.isInteger(tab.windowId)
+        || !isModifierMask(message.modifiers)
+        || (message.pickerOpen !== undefined && typeof message.pickerOpen !== "boolean")) {
+        return { ok: false, error: "invalid-shortcut" };
+      }
+      return queueShortcut(() => controller.finishShortcut(tab, message.modifiers, {
+        keepTraversal: message.pickerOpen === true || sessions.has(tab.id),
+      }));
+    }
+    if (message.type === "mru-move") {
+      if (message.direction !== "back" && message.direction !== "forward") return { ok: false, error: "invalid-direction" };
+      const { modifiers = 0, commit = true } = message;
+      if (!isModifierMask(modifiers) || typeof commit !== "boolean" || (!commit && modifiers === 0)) {
+        return { ok: false, error: "invalid-shortcut" };
+      }
+      return queueShortcut(async () => {
+        const tab = await getSource(sender);
+        if (!tab) return { ok: false, error: "page-unavailable" };
+        return controller.handleMove(message.direction, tab, { modifiers, commit });
+      });
+    }
     const tab = await getSource(sender, { requireActive: message.type !== "mru-config" });
     if (!tab) return { ok: false, error: "page-unavailable" };
     if (message.type === "mru-config") return { ok: true, ...await readInputSettings() };
@@ -231,12 +283,11 @@ export function createInputBridge(browser, controller) {
       return controller.selectCandidate(selection, tab);
     }
     if (message.direction !== "back" && message.direction !== "forward") return { ok: false, error: "invalid-direction" };
-    if (message.type === "mru-list") {
-      const mode = message.mode ?? "mru";
-      if (mode !== "mru" && mode !== "tabs") return { ok: false, error: "invalid-mode" };
-      return controller.getCandidates(message.direction, tab, mode);
-    }
-    return controller.handleMove(message.direction, tab);
+    const mode = message.mode ?? "mru";
+    if (mode !== "mru" && mode !== "tabs") return { ok: false, error: "invalid-mode" };
+    return controller.getCandidates(message.direction, tab, mode, {
+      fresh: isPressId(message.pressId) && sessions.get(tab.id)?.pressId !== message.pressId,
+    });
   }
 
   async function refreshExistingPages(inject) {

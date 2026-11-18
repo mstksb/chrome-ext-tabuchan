@@ -6,14 +6,14 @@ lang: de
 
 [English](listing.md) | [日本語](listing.ja.md) | [简体中文](listing.zh-CN.md) | [繁體中文](listing.zh-TW.md) | [Português (Brasil)](listing.pt-BR.md) | [Español](listing.es.md) | Deutsch
 
-Dieses Paket verwendet die Version `0.1.0`. Die Version für die Einreichung richtet sich nach dem Uploadverlauf im Dashboard. Dateien, geprüfte Umgebungen und Store-Status stehen im [Protokoll](../releases.de.md).
+Dieses Paket verwendet die Version `0.2.0`. Die Version für die Einreichung richtet sich nach dem Uploadverlauf im Dashboard. Dateien, geprüfte Umgebungen und Store-Status stehen im [Protokoll](../releases.de.md).
 
 ## Grunddaten
 
 | Feld | Entwurf / Status |
 | --- | --- |
 | Name | tabuchan |
-| Version | `0.1.0` |
+| Version | `0.2.0` |
 | Dokument-/Eintragssprachen | Englisch als Basis; Japanisch, vereinfachtes/traditionelles Chinesisch, brasilianisches Portugiesisch, Spanisch, Deutsch. Gespeicherte Dashboard-Sprachen ungeprüft |
 | Oberfläche | Japanisch bei japanischer Chrome-Anzeigesprache, sonst Englisch; Dokumentsprachen erweitern sie nicht |
 | Kategorie-Vorschlag | Functionality & UI gemäß aktueller offizieller Kategorie für Tabs/Tastenkürzel; gespeicherter Wert ungeprüft |
@@ -26,7 +26,9 @@ Dieses Paket verwendet die Version `0.1.0`. Die Version für die Einreichung ric
 
 tabuchan wechselt per Tastenkürzel zwischen Tabs im aktuellen Fenster.
 
-Zurück oder Vorwärts kurz drücken, um eine feste Reihenfolge letzter Verwendung zu durchlaufen. Tabs ohne verfügbare Tastenkürzel werden standardmäßig übersprungen.
+Die erforderlichen Modifikatortasten gedrückt halten und die Buchstabentaste für Zurück oder Vorwärts kurz drücken und loslassen, um einer festen Reihenfolge zu folgen. Wird eine erforderliche Modifikatortaste losgelassen, gilt der angezeigte Tab als zuletzt verwendet. Tabs ohne verfügbare Tastenkürzel werden standardmäßig übersprungen.
+
+Enter in einer der beiden Listen, auch in den Suchergebnissen, oder die direkte Auswahl eines Tabs in Chrome macht ihn zum zuletzt verwendeten Tab. War er schon im Verlauf, wird sein alter Eintrag entfernt und die Reihenfolge der anderen Tabs bleibt erhalten.
 
 Die gesamte Kombination gedrückt halten, um die Liste zu öffnen. Auf/Ab wählt, Enter wechselt, Esc bricht ab. Die Liste bleibt nach dem Loslassen offen.
 
@@ -54,7 +56,7 @@ Die vier Aufnahmen mit 1280×800 Pixeln zeigen dasselbe zweisprachige Paket in C
 
 ## Prüfanleitung
 
-Kein Konto/Anmelden nötig. Mehrere normale HTTP(S)-Tabs in einem Fenster öffnen und nacheinander besuchen. Kurze Betätigung der genannten Kürzel prüfen, dann mindestens 0,5 Sekunden halten und Auf/Ab, Enter, Esc verwenden. Mit Links Modus wechseln und in Tab-Reihenfolge Titel suchen. Einstellungen über das Symbol öffnen und `0.1.0` prüfen.
+Ein Konto oder eine Anmeldung ist nicht erforderlich. Mehrere gewöhnliche HTTP(S)-Tabs in einem Fenster öffnen und nacheinander besuchen. Die Modifikatortasten gedrückt halten und die Buchstabentasten für Zurück und Vorwärts kurz betätigen. Eine erforderliche Modifikatortaste loslassen und prüfen, ob der angezeigte Tab als zuletzt verwendet erscheint. Die ganze Kombination mindestens 0,5 Sekunden halten. Mit Links die Tab-Reihenfolge öffnen, nach Titel filtern und mit Enter bestätigen. Über das Symbol in der Symbolleiste die Einstellungen öffnen und Version `0.2.0` prüfen.
 
 ## Grundlage
 

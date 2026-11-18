@@ -3,6 +3,7 @@
   function create(response, mode, itemRevision) {
     return {
       mode, query: "", allItems: response.items, items: response.items,
+      groupTitles: response.groupTitles ?? {},
       selectedIndex: response.selectedIndex, generation: response.generation,
       sourceTabId: response.sourceTabId, itemRevision, searchTitles: null,
       searchKeywords: null, searchMatchMode: null,
@@ -10,10 +11,11 @@
   }
   function matchesTitle(title, keywords, matchMode) {
     if (matchMode !== "prefix") return keywords.every((keyword) => title.includes(keyword));
-    let offset = 0;
-    for (let index = 0; index < keywords.length; index += 1) {
+    if (!title.startsWith(keywords[0])) return false;
+    let offset = keywords[0].length;
+    for (let index = 1; index < keywords.length; index += 1) {
       const found = title.indexOf(keywords[index], offset);
-      if (found < 0 || (index === 0 && found !== 0)) return false;
+      if (found < 0) return false;
       offset = found + keywords[index].length;
     }
     return true;

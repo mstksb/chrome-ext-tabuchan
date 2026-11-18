@@ -1,8 +1,10 @@
 import {
   beginOrMove,
+  commitActivation,
   confirmMove,
   createWindowState,
   observeActivation,
+  previewMove,
   removeTab,
   setHistoryLimit,
 } from "./history.js";
@@ -56,25 +58,32 @@ function endTraversal(state) {
   };
 }
 
-function reconcileTabs(state, tabs, internalTarget = null) {
-  const liveIds = new Set(tabs.map((tab) => tab.id));
+function indexWindowTabs(allTabs) {
+  const tabs = [];
+  const tabsById = new Map();
+  let activeTab = null;
+  for (const tab of allTabs) {
+    if (!isTabId(tab.id)) continue;
+    tabs.push(tab);
+    tabsById.set(tab.id, tab);
+    if (tab.active && !activeTab) activeTab = tab;
+  }
+  return { tabs, tabsById, activeTab };
+}
+
+function reconcileTabs(state, { tabsById, activeTab }, internalTarget = null) {
   const trackedIds = new Set([...state.mruTabIds, ...(state.traversal?.tabIds ?? [])]);
   let nextState = state;
 
   for (const tabId of trackedIds) {
-    if (!liveIds.has(tabId)) {
+    if (!tabsById.has(tabId)) {
       nextState = removeTab(nextState, tabId);
     }
   }
 
-  const activeTab = tabs.find((tab) => tab.active);
   if (activeTab) {
-    if (nextState.activeTabId === activeTab.id && nextState.mruTabIds[0] === activeTab.id) {
-      return nextState;
-    }
-    return observeActivation(nextState, activeTab.id, {
-      internal: activeTab.id === internalTarget,
-    });
+    if (activeTab.id === internalTarget) return nextState;
+    return observeActivation(nextState, activeTab.id);
   }
 
   if (nextState.activeTabId !== null) {
@@ -83,8 +92,8 @@ function reconcileTabs(state, tabs, internalTarget = null) {
   return nextState;
 }
 
-function restoreWindow(windowId, saved, tabs, maxPastTabs) {
-  const activeTabId = tabs.find((tab) => tab.active)?.id ?? null;
+function restoreWindow(windowId, saved, snapshot, maxPastTabs) {
+  const activeTabId = snapshot.activeTab?.id ?? null;
   if (!isSavedWindow(saved, windowId)) {
     return createWindowState(windowId, activeTabId, maxPastTabs);
   }
@@ -103,17 +112,17 @@ function restoreWindow(windowId, saved, tabs, maxPastTabs) {
     tabListSnapshot: null,
   };
 
-  const snapshot = saved.tabListSnapshot;
-  if (snapshot?.sourceTabId === state.activeTabId && snapshot.generation === state.generation
-    && Array.isArray(snapshot.tabIds) && snapshot.tabIds.every(isTabId)
-    && new Set(snapshot.tabIds).size === snapshot.tabIds.length) {
-    state.tabListSnapshot = { ...snapshot, tabIds: [...snapshot.tabIds] };
+  const savedTabList = saved.tabListSnapshot;
+  if (savedTabList?.sourceTabId === state.activeTabId && savedTabList.generation === state.generation
+    && Array.isArray(savedTabList.tabIds) && savedTabList.tabIds.every(isTabId)
+    && new Set(savedTabList.tabIds).size === savedTabList.tabIds.length) {
+    state.tabListSnapshot = { ...savedTabList, tabIds: [...savedTabList.tabIds] };
   }
 
   if (saved.pendingSwitch) {
     state = endTraversal(state);
   }
-  return reconcileTabs(setHistoryLimit(state, maxPastTabs), tabs);
+  return reconcileTabs(setHistoryLimit(state, maxPastTabs), snapshot);
 }
 
 export function createController(browser) {
@@ -154,20 +163,20 @@ export function createController(browser) {
   }
 
   async function synchronizeWindow(windowId, internalTarget = null, observedTabId = null) {
-    const tabs = (await browser.tabs.query({ windowId })).filter((tab) => isTabId(tab.id));
-    if (tabs.length === 0) {
+    const snapshot = indexWindowTabs(await browser.tabs.query({ windowId }));
+    if (snapshot.tabs.length === 0) {
       delete session.windows[windowId];
-      return { tabs, state: null, activeTab: null };
+      return { ...snapshot, state: null };
     }
 
     let state = session.windows[windowId] ?? createWindowState(windowId, null, maxPastTabs);
     if (observedTabId !== null && state.activeTabId !== observedTabId
-      && tabs.some((tab) => tab.id === observedTabId)) {
+      && snapshot.tabsById.has(observedTabId)) {
       state = observeActivation(state, observedTabId);
     }
-    const updated = reconcileTabs(state, tabs, internalTarget);
+    const updated = reconcileTabs(state, snapshot, internalTarget);
     session.windows[windowId] = updated;
-    return { tabs, state: updated, activeTab: tabs.find((tab) => tab.active) ?? null };
+    return { ...snapshot, state: updated };
   }
 
   async function initialize() {
@@ -181,16 +190,23 @@ export function createController(browser) {
         }),
     ]);
     maxPastTabs = settings.maxPastTabs;
-    const tabs = allTabs.filter((tab) => isTabId(tab.id));
+    const tabsByWindow = new Map();
+    for (const tab of allTabs) {
+      const tabs = tabsByWindow.get(tab.windowId);
+      if (tabs) tabs.push(tab);
+      else tabsByWindow.set(tab.windowId, [tab]);
+    }
 
     const savedWindows = stored?.schemaVersion === 1 && stored.windows
       && typeof stored.windows === "object" && !Array.isArray(stored.windows) ? stored.windows : {};
     const windows = {};
-    for (const windowId of new Set(tabs.map((tab) => tab.windowId))) {
+    for (const [windowId, tabs] of tabsByWindow) {
+      const snapshot = indexWindowTabs(tabs);
+      if (snapshot.tabs.length === 0) continue;
       windows[windowId] = restoreWindow(
         windowId,
         savedWindows[windowId],
-        tabs.filter((tab) => tab.windowId === windowId),
+        snapshot,
         maxPastTabs,
       );
     }
@@ -206,12 +222,12 @@ export function createController(browser) {
     }
   }
 
-  async function findAvailableMove(request, tabs, direction, canUsePageInput) {
+  async function findAvailableMove(request, tabsById, direction, canUsePageInput) {
     if (request.targetTabId === null) return request;
     const { tabIds, cursor } = request.state.traversal;
     const step = direction === "back" ? 1 : -1;
     for (let index = cursor + step; index >= 0 && index < tabIds.length; index += step) {
-      const candidate = tabs.find((tab) => tab.id === tabIds[index]);
+      const candidate = tabsById.get(tabIds[index]);
       if (candidate && await canUsePageInput(candidate)) {
         return { ...request, targetTabId: candidate.id };
       }
@@ -223,48 +239,61 @@ export function createController(browser) {
     const { kind, direction } = switchRequest;
     const selection = kind === "select" ? switchRequest.selection : null;
     const input = kind === "move" ? switchRequest.input : null;
-  if (!current.state) {
-    return { ok: false, error: browser.i18n.getMessage("controller_window_missing") };
-  }
-  if (input && (current.activeTab?.id !== input.sourceTabId
-    || (inputRevisions.get(windowId) ?? 0) !== input.revision)) {
-    return { ok: false, error: browser.i18n.getMessage("controller_move_cancelled") };
-  }
-  const tabListSelection = selection?.mode === "tabs";
-  const snapshot = tabListSelection ? current.state.tabListSnapshot : current.state.traversal;
-  if (selection && (current.activeTab?.id !== selection.sourceTabId
-    || current.state.generation !== selection.generation
-    || !snapshot?.tabIds.includes(selection.targetTabId)
-    || (tabListSelection && (snapshot.sourceTabId !== selection.sourceTabId
-      || snapshot.generation !== selection.generation))
-    || (!tabListSelection && selection.targetTabId === selection.sourceTabId)
-    || !current.tabs.some((tab) => tab.id === selection.targetTabId))) {
-    return { ok: false, error: browser.i18n.getMessage("controller_candidates_updated") };
-  }
-  if (tabListSelection && selection.targetTabId === selection.sourceTabId) return { ok: true };
-  const requestState = tabListSelection ? endTraversal(current.state) : current.state;
-  let request = selection
-    ? { state: requestState, targetTabId: selection.targetTabId }
-    : beginOrMove(current.state, direction);
-  if (input?.skipUnavailableTabs) {
-    request = await findAvailableMove(request, current.tabs, direction, canUsePageInput);
-  }
-  if (input) {
-    const refreshed = await synchronizeWindow(windowId);
-    if (!refreshed.state || refreshed.activeTab?.id !== input.sourceTabId
-      || refreshed.state.generation !== current.state.generation
-      || (inputRevisions.get(windowId) ?? 0) !== input.revision) {
-      await save();
+    if (!current.state) {
+      return { ok: false, error: browser.i18n.getMessage("controller_window_missing") };
+    }
+    if (input && (current.activeTab?.id !== input.sourceTabId
+      || (inputRevisions.get(windowId) ?? 0) !== input.revision)) {
       return { ok: false, error: browser.i18n.getMessage("controller_move_cancelled") };
     }
-    if (request.targetTabId !== null && !refreshed.tabs.some((tab) => tab.id === request.targetTabId)) {
-      return { retry: true };
+    const tabListSelection = selection?.mode === "tabs";
+    const snapshot = tabListSelection ? current.state.tabListSnapshot : current.state.traversal;
+    if (selection && (current.activeTab?.id !== selection.sourceTabId
+      || current.state.generation !== selection.generation
+      || !snapshot?.tabIds.includes(selection.targetTabId)
+      || (tabListSelection && (snapshot.sourceTabId !== selection.sourceTabId
+        || snapshot.generation !== selection.generation))
+      || (!tabListSelection && selection.targetTabId === selection.sourceTabId)
+      || !current.tabsById.has(selection.targetTabId))) {
+      return { ok: false, error: browser.i18n.getMessage("controller_candidates_updated") };
     }
-    if (refreshed.state !== current.state) {
-      request = { ...request, state: request.state === current.state
-        ? refreshed.state : reconcileTabs(request.state, refreshed.tabs) };
+    if (tabListSelection && selection.targetTabId === selection.sourceTabId) {
+      const state = commitActivation(current.state, selection.targetTabId);
+      return { request: { state, targetTabId: null } };
     }
-  }
+    const traversal = current.state.traversal;
+    let requestState = current.state;
+    if (input && traversal && traversal.shortcut?.modifiers !== input.modifiers) {
+      requestState = traversal.shortcut
+        ? commitActivation(requestState, requestState.activeTabId) : endTraversal(requestState);
+    }
+    let request = selection
+      ? { state: requestState, targetTabId: selection.targetTabId }
+      : beginOrMove(requestState, direction);
+    if (input?.skipUnavailableTabs) {
+      request = await findAvailableMove(request, current.tabsById, direction, canUsePageInput);
+    }
+    if (input) {
+      const refreshed = await synchronizeWindow(windowId);
+      if (!refreshed.state || refreshed.activeTab?.id !== input.sourceTabId
+        || refreshed.state.generation !== current.state.generation
+        || (inputRevisions.get(windowId) ?? 0) !== input.revision) {
+        await save();
+        return { ok: false, error: browser.i18n.getMessage("controller_move_cancelled") };
+      }
+      if (request.targetTabId !== null && !refreshed.tabsById.has(request.targetTabId)) {
+        return { retry: true };
+      }
+      if (refreshed.state !== current.state) {
+        const state = request.state === requestState ? null : reconcileTabs(request.state, refreshed);
+        requestState = requestState === current.state ? refreshed.state : reconcileTabs(requestState, refreshed);
+        request = { ...request, state: state ?? requestState };
+      }
+    }
+    if (input?.commit && request.targetTabId === null) {
+      request.state = requestState.traversal?.shortcut
+        ? commitActivation(requestState, requestState.activeTabId) : requestState;
+    }
     return { request };
   }
 
@@ -318,8 +347,10 @@ export function createController(browser) {
       && result.activeTab?.id === operation.targetTabId
       && result.state.generation === operation.generation;
     let updated = result.state;
-    if (succeeded) {
-      updated = confirmMove(updated, operation.targetTabId);
+    if (result.activeTab?.id === internalTarget) {
+      if (!succeeded || operation.commit) updated = commitActivation(updated, internalTarget);
+      else if (operation.modifiers) updated = previewMove(updated, internalTarget, operation.modifiers);
+      else updated = confirmMove(updated, internalTarget);
     }
     session.windows[windowId] = { ...updated, pendingSwitch: null };
 
@@ -332,6 +363,7 @@ export function createController(browser) {
     }
 
     operation.confirmed = succeeded && saved;
+    if (operation.confirmed) operation.generation = updated.generation;
     return { result, succeeded, saved };
   }
 
@@ -367,11 +399,14 @@ export function createController(browser) {
         return { ok: true };
       }
 
+      const preview = input && !input.commit && await canUsePageInput(current.tabsById.get(request.targetTabId));
       nextRevision();
       const operation = {
         targetTabId: request.targetTabId,
         generation: request.state.generation,
         interrupted: false,
+        commit: Boolean(selection || (input && !preview)),
+        modifiers: preview ? input.modifiers : 0,
       };
       inFlight.set(windowId, operation);
       try {
@@ -400,7 +435,7 @@ export function createController(browser) {
         }
         const { result, succeeded, saved } = await reconcileSwitch(windowId, operation, updateFailed);
         if (!result.state) return { ok: false, error: browser.i18n.getMessage("controller_window_missing") };
-        const targetDisappeared = !result.tabs.some((tab) => tab.id === request.targetTabId);
+        const targetDisappeared = !result.tabsById.has(request.targetTabId);
         if (!selection && updateFailed && targetDisappeared && !operation.interrupted && saved) {
           continue;
         }
@@ -440,7 +475,7 @@ export function createController(browser) {
     }));
   }
 
-  function handleMove(direction, tab) {
+  function handleMove(direction, tab, { modifiers = 0, commit = true } = {}) {
     if ((direction !== "back" && direction !== "forward")
       || !isTabId(tab?.id) || !isTabId(tab?.windowId)) {
       return Promise.resolve({ ok: false, error: browser.i18n.getMessage("controller_source_missing") });
@@ -451,38 +486,55 @@ export function createController(browser) {
       const { skipUnavailableTabs } = await readBehaviorSettings(browser);
       return executeSwitch({
         kind: "move", direction, windowId: tab.windowId,
-        input: { sourceTabId: tab.id, skipUnavailableTabs, revision },
+        input: { sourceTabId: tab.id, skipUnavailableTabs, revision, modifiers, commit },
       });
     });
   }
 
-  async function candidateItems(tabs, mode) {
+  function finishShortcut(tab, modifiers, { keepTraversal = false } = {}) {
+    if (!started) start();
+    return enqueue(async () => {
+      const windowId = tab.windowId;
+      const previous = session.windows[windowId];
+      const shortcut = previous?.traversal?.shortcut;
+      if (!shortcut || (modifiers & shortcut.modifiers) === shortcut.modifiers
+        || (tab.id !== previous.activeTabId && tab.id !== shortcut.sourceTabId)) return { ok: true };
+      const { state } = await synchronizeWindow(windowId);
+      if (state?.traversal?.shortcut === shortcut) {
+        session.windows[windowId] = commitActivation(state, state.activeTabId, { keepTraversal });
+      }
+      if (session.windows[windowId] !== previous || saveRequired) await save();
+      return { ok: true };
+    });
+  }
+
+  async function describeCandidates(tabs, mode) {
     const canUsePageInput = createPageInputAccessCheck(browser);
     const availabilityRequest = Promise.all(tabs.map((tab) => canUsePageInput(tab)));
-    let groups;
+    let groupTitles = {};
     if (mode === "tabs") {
       const groupIds = [...new Set(tabs.map((tab) => tab.groupId).filter(isTabId))];
-      groups = new Map(await Promise.all(groupIds.map(async (groupId) => {
+      groupTitles = Object.fromEntries(await Promise.all(groupIds.map(async (groupId) => {
         try {
           const group = await browser.tabGroups.get(groupId);
-          return [groupId, { title: group.title || browser.i18n.getMessage("controller_group"), color: group.color }];
+          return [groupId, group.title || browser.i18n.getMessage("controller_group")];
         } catch {
-          return [groupId, { title: browser.i18n.getMessage("controller_group"), color: "grey" }];
+          return [groupId, browser.i18n.getMessage("controller_group")];
         }
       })));
     }
     const availability = await availabilityRequest;
-    return tabs.map((candidate, index) => ({
+    const items = tabs.map((candidate, index) => ({
       tabId: candidate.id,
       title: candidate.title || browser.i18n.getMessage("controller_untitled"),
       favIconUrl: candidate.favIconUrl || "",
       groupId: isTabId(candidate.groupId) ? candidate.groupId : -1,
-      group: groups?.get(candidate.groupId),
       inputAvailable: availability[index],
     }));
+    return { items, groupTitles };
   }
 
-  function getCandidates(direction, tab, mode = "mru") {
+  function getCandidates(direction, tab, mode = "mru", { fresh = false } = {}) {
     if ((direction !== "back" && direction !== "forward")
       || (mode !== "mru" && mode !== "tabs")
       || !isTabId(tab?.id) || !isTabId(tab?.windowId)) {
@@ -499,17 +551,18 @@ export function createController(browser) {
         return { ok: false, error: browser.i18n.getMessage("controller_list_cancelled") };
       }
 
+      const state = fresh && current.state.traversal?.committed ? endTraversal(current.state) : current.state;
       const request = mode === "tabs"
-        ? { state: current.state, targetTabId: sourceTabId }
-        : beginOrMove(current.state, direction);
+        ? { state, targetTabId: sourceTabId }
+        : beginOrMove(state, direction);
       session.windows[windowId] = request.state;
       const candidateTabs = mode === "tabs"
         ? [...current.tabs].sort((first, second) => first.index - second.index)
         : (request.state.traversal?.tabIds ?? [])
           .filter((tabId) => tabId !== sourceTabId)
-          .map((tabId) => current.tabs.find((candidate) => candidate.id === tabId))
+          .map((tabId) => current.tabsById.get(tabId))
           .filter(Boolean);
-      const items = await candidateItems(candidateTabs, mode);
+      const { items, groupTitles } = await describeCandidates(candidateTabs, mode);
       if (mode === "tabs") {
         session.windows[windowId] = {
           ...request.state,
@@ -529,6 +582,7 @@ export function createController(browser) {
         ok: true,
         mode,
         items,
+        groupTitles,
         selectedIndex,
         generation: request.state.generation,
         sourceTabId,
@@ -712,5 +766,5 @@ export function createController(browser) {
     } while (pending !== queue);
   }
 
-  return { start, handleCommand, handleMove, getCandidates, selectCandidate, idle };
+  return { start, handleCommand, handleMove, finishShortcut, getCandidates, selectCandidate, idle };
 }

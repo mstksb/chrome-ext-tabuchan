@@ -5,6 +5,7 @@
   globalThis.__mruPageInput = guard;
   let pressState = globalThis.MruPressState.create();
   const modifiers = ["ctrlKey", "altKey", "shiftKey", "metaKey"];
+  const { PICKER_KEYS, MODIFIER_CODES, modifierMask } = globalThis.MruInputProtocol;
   const frameId = globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`;
   const closedPressIds = new Set();
   const closedHostFocus = new Map();
@@ -12,6 +13,7 @@
     DEFAULT_SEARCH_MATCH_MODE } = globalThis.MruSettingsRules;
   const pickerModel = globalThis.MruPickerModel;
   let shortcuts = null;
+  let shortcutModifiers = 0;
   let holdDelayMs = DEFAULT_HOLD_DELAY_MS;
   let maxPastTabs = DEFAULT_MAX_PAST_TABS;
   let searchMatchMode = DEFAULT_SEARCH_MATCH_MODE;
@@ -40,8 +42,11 @@
       itemRevision: picker?.itemRevision ?? 1,
       restoreFocus: press.restoreFocus !== false,
     };
-    if (action !== "hide" && picker && (action === "show" || press.sentItemRevision !== picker.itemRevision)) {
+    if (action !== "hide" && picker && (action === "show" || press.lastDisplay?.itemRevision !== picker.itemRevision)) {
       message.items = picker.items;
+    }
+    if (action !== "hide" && picker && (action === "show" || press.lastDisplay?.groupTitles !== picker.groupTitles)) {
+      message.groupTitles = picker.groupTitles;
     }
     return message;
   }
@@ -89,6 +94,7 @@
 
   function isBinding(value) {
     return value && typeof value.code === "string" && value.code.length > 0
+      && (value.ctrlKey || value.altKey || value.metaKey)
       && modifiers.every((modifier) => typeof value[modifier] === "boolean");
   }
 
@@ -111,6 +117,8 @@
           if (version !== configVersion || !ensureExtensionContext()) continue;
           if (response?.ok && isBindingList(response.shortcuts?.back) && isBindingList(response.shortcuts?.forward)) {
             shortcuts = response.shortcuts;
+          shortcutModifiers = [...shortcuts.back, ...shortcuts.forward]
+            .reduce((mask, binding) => mask | modifierMask(binding), 0);
             const settings = normalizeSettings(response);
             holdDelayMs = settings.holdDelayMs;
             maxPastTabs = settings.maxPastTabs;
@@ -142,9 +150,16 @@
       if (currentPress !== press || press.phase === "cancelled") return;
       if (!ensureExtensionContext()) return;
       const message = displayMessage(action, press);
+      const { mode, query, selectedIndex, itemRevision } = message;
+      const previous = press.lastDisplay;
+      if (action !== "show" && previous?.itemRevision === itemRevision
+        && previous.mode === mode && previous.query === query && previous.selectedIndex === selectedIndex) return;
       const response = await send(message);
-      if (response?.ok && message.items) press.sentItemRevision = message.itemRevision;
-      if (!response?.ok && currentPress === press) disableInput();
+      if (response?.ok) {
+        press.lastDisplay = {
+          mode, query, selectedIndex, itemRevision, groupTitles: message.groupTitles ?? previous?.groupTitles,
+        };
+      } else if (currentPress === press) disableInput();
     });
   }
 
@@ -189,18 +204,18 @@
     press.hostRequested = true;
   }
 
-  async function moveOnce(direction) {
-    const response = await send({ type: "mru-move", direction });
+  async function moveOnce(direction, binding, commit) {
+    const response = await send({ type: "mru-move", direction, modifiers: modifierMask(binding), commit });
     if (response === null) disableInput();
   }
 
-  function applyPressAction(action, press) {
+  function applyPressAction(action, press, commit = false) {
     if (!action || currentPress !== press) return;
     if (action.type === "list") {
       void openPicker(press);
     } else if (action.type === "tap") {
       currentPress = null;
-      void moveOnce(action.direction);
+      void moveOnce(action.direction, press.binding, commit);
     }
   }
 
@@ -219,7 +234,7 @@
       previousFocus: document.activeElement,
       picker: null,
       displayQueue: Promise.resolve(),
-      sentItemRevision: 0,
+      lastDisplay: null,
       connection: null,
     };
     currentPress = press;
@@ -250,7 +265,7 @@
   function handlePickerKey(event) {
     const press = currentPress;
     if (!press || press.phase === "held") return false;
-    if (!["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Enter", "Escape"].includes(event.code)) {
+    if (!PICKER_KEYS.has(event.code)) {
       if (press.mode === "tabs") {
         consume(event);
         return true;
@@ -304,25 +319,39 @@
     if (!ensureExtensionContext()) return;
     if (!guard.ready || event.isComposing) return;
     if (handlePickerKey(event)) return;
-    const direction = shortcuts.back.some((binding) => matches(event, binding)) ? "back"
-      : shortcuts.forward.some((binding) => matches(event, binding)) ? "forward" : null;
-    if (!direction) return;
+    const modifier = MODIFIER_CODES[event.code];
+    if (modifier & shortcutModifiers) {
+      if (!event.repeat) void send({ type: "mru-finish", modifiers: modifierMask(event) & ~modifier });
+      return;
+    }
+    if (!event.ctrlKey && !event.altKey && !event.metaKey) return;
+    const backBinding = shortcuts.back.find((binding) => matches(event, binding));
+    const binding = backBinding ?? shortcuts.forward.find((binding) => matches(event, binding));
+    if (!binding) return;
     consume(event);
     if (!event.repeat && currentPress === null) {
-      startPress(direction, shortcuts[direction].find((binding) => matches(event, binding)));
+      startPress(backBinding ? "back" : "forward", binding);
     }
   }, true);
 
   window.addEventListener("keyup", (event) => {
     if (!event.isTrusted || !ensureExtensionContext()) return;
-    if (!currentPress) return;
     const press = currentPress;
-    const requiredReleased = event.code === press.binding.code
-      || modifiers.some((modifier) => press.binding[modifier] && !event[modifier]);
-    if (!requiredReleased) return;
-    consume(event);
-    clearTimeout(holdTimer);
-    applyPressAction(pressState.release(performance.now()), press);
+    let action;
+    if (press) {
+      const required = modifierMask(press.binding);
+      const commit = (modifierMask(event) & required) !== required;
+      if (event.code === press.binding.code || commit) {
+        consume(event);
+        clearTimeout(holdTimer);
+        action = pressState.release(performance.now());
+        applyPressAction(action, press, commit);
+      }
+    }
+    if (MODIFIER_CODES[event.code] && action?.type !== "tap") {
+      const pickerOpen = Boolean(press && press.phase !== "held");
+      void send({ type: "mru-finish", modifiers: modifierMask(event), pickerOpen });
+    }
   }, true);
 
   window.addEventListener("blur", () => {

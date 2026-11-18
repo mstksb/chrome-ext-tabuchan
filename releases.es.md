@@ -14,6 +14,30 @@ La compilación y el despliegue iniciales de las [instrucciones](https://mstksb.
 
 El registro anterior corresponde a despliegues previos. El despliegue de la actualización del 18 de noviembre de 2026 queda por verificar.
 
+## 0.2.0
+
+La versión 0.2.0 cambia el momento en que se registra un cambio de pestaña en el historial. También mejora el funcionamiento de la lista y el cambio de pestañas, y corrige la restauración del foco tras cerrar una lista abierta desde un iframe.
+
+Mantén pulsadas las teclas modificadoras necesarias y pulsa brevemente la tecla normal para Retroceder o Avanzar. Cada vez que sueltes la tecla normal, se mostrará una pestaña siguiendo el orden fijo del historial. Al soltar un modificador necesario, la pestaña visible pasa a ser la más reciente.
+
+Pulsa Enter en cualquiera de las listas, incluidos los resultados de búsqueda, o selecciona una pestaña directamente en Chrome para que pase a ser la más reciente. Si ya estaba en el historial, se elimina su entrada anterior y se conserva el orden de las demás.
+
+| Elemento | Detalles |
+| --- | --- |
+| Versión | Este paquete usa la versión `0.2.0`. La versión que se enviará depende del historial de cargas en el Dashboard. |
+| ZIP | [tabuchan-0.2.0.zip](dist/tabuchan-0.2.0.zip), 29 archivos y manifiesto en la raíz |
+| SHA-256 | `f7a7b26c5486aa8ee8054c5ca826a33992c8e3d5f3a512a6099e4874b830938e` |
+| Suma de comprobación | [tabuchan-0.2.0.zip.sha256](dist/tabuchan-0.2.0.zip.sha256) |
+| Requisitos | Chrome con Manifest V3; mínimo declarado Chrome 102 |
+| Tienda | Queda por comprobar el paquete, el ID y la URL del elemento en el Dashboard, así como su estado de revisión y publicación. |
+
+## Verificación de 0.2.0
+
+La versión candidata superó 184 pruebas de Node. En Chrome for Testing Stable `158.0.8127.36` (Linux arm64) se superaron 21 grupos de pruebas de extremo a extremo para las operaciones principales y tres grupos para japonés, inglés e inglés con Chrome en francés.
+
+Los 24 grupos de pruebas de navegador también se superaron con el ZIP extraído, incluida la versión que muestra la configuración. El [borrador de la ficha](store/listing.es.md) enlaza cuatro capturas de 1280×800 tomadas desde ese ZIP en japonés e inglés.
+
+
 ## 0.1.0
 
 Esta versión candidata actualiza la detección y la presentación de las pestañas restringidas, reduce la duración mínima y predeterminada de la pulsación larga y añade coincidencia parcial o por prefijo para búsquedas con varios términos. También corrige problemas de cambio de pestaña y ajustes.
@@ -22,14 +46,14 @@ Los ajustes y la lista usan japonés cuando Chrome se muestra en japonés, e ing
 
 | Elemento | Detalles |
 | --- | --- |
-| Versión | Este paquete usa la versión `0.1.0`. La versión que se enviará depende del historial de cargas en el Dashboard. |
-| ZIP | [tabuchan-0.1.0.zip](dist/tabuchan-0.1.0.zip), 29 archivos y manifiesto en la raíz |
+| Versión | El paquete anterior usaba la versión `0.1.0`. |
+| ZIP | `tabuchan-0.1.0.zip`, 29 archivos y manifiesto en la raíz |
 | SHA-256 | `25a07b0f94b01a9bc9d9ea5ce05d9e258b584a7560ace136fa10716a1e6d9982` |
-| Suma de comprobación | [tabuchan-0.1.0.zip.sha256](dist/tabuchan-0.1.0.zip.sha256) |
+| Suma de comprobación | `tabuchan-0.1.0.zip.sha256` |
 | Requisitos | Chrome con Manifest V3; mínimo declarado Chrome 102 |
 | Tienda | Queda por comprobar el paquete, el ID y la URL del elemento en el Dashboard, así como su estado de revisión y publicación. |
 
-## Verificación de la versión candidata del 18 de noviembre de 2026
+## Verificación de la versión candidata 0.1.0 del 18 de noviembre de 2026
 
 La versión candidata superó 21 grupos de pruebas de extremo a extremo en Chrome for Testing Stable `158.0.8127.36` (Linux arm64). Otros tres grupos verificaron la interfaz en japonés y en inglés, el uso del inglés con Chrome en francés y la búsqueda de títulos con Unicode. Los 24 grupos también se superaron al cargar la extensión desde el ZIP de distribución descomprimido. La versión mostrada en los ajustes coincidió con la del manifiesto del ZIP.
 

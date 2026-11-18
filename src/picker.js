@@ -7,6 +7,8 @@
   const port = chrome.runtime.connect({ name: "mru-picker" });
   let closed = false;
   let sequence = 0;
+  let maxListHeight;
+  let reportedHeight;
   const pending = new Map();
   function close() {
     if (closed) return;
@@ -39,7 +41,10 @@
     if (message.type === "ready") {
       window.parent.postMessage({ type: "mru-picker-ready", nonce }, "*");
     } else if (message.type === "display") {
-      if (Number.isFinite(message.maxListHeight)) document.documentElement.style.setProperty("--picker-list-height", `${message.maxListHeight}px`);
+      if (Number.isFinite(message.maxListHeight) && message.maxListHeight !== maxListHeight) {
+        maxListHeight = message.maxListHeight;
+        document.documentElement.style.setProperty("--picker-list-height", `${maxListHeight}px`);
+      }
       view.update(message);
     } else if (message.type === "result") {
       pending.get(message.requestId)?.(message);
@@ -49,7 +54,13 @@
   });
   port.onDisconnect.addListener(close);
   window.addEventListener("keydown", (event) => { view.handleKey(event); }, true);
-  window.addEventListener("keyup", (event) => { event.stopImmediatePropagation(); }, true);
+  window.addEventListener("keyup", (event) => {
+    event.stopImmediatePropagation();
+    if (event.isTrusted && !closed) {
+      const { MODIFIER_CODES, modifierMask } = globalThis.MruInputProtocol;
+      if (MODIFIER_CODES[event.code]) post({ type: "modifiers", modifiers: modifierMask(event) });
+    }
+  }, true);
   window.addEventListener("blur", () => {
     if (!closed) post({ type: "control", requestId: ++sequence, action: "cancel" });
   });
@@ -57,7 +68,11 @@
     if (document.visibilityState === "hidden" && !closed) post({ type: "control", requestId: ++sequence, action: "cancel" });
   });
   new ResizeObserver(() => {
-    if (!closed && view.root) post({ type: "resize", height: Math.ceil(view.root.getBoundingClientRect().height) });
+    if (closed || !view.root) return;
+    const height = Math.ceil(view.root.getBoundingClientRect().height);
+    if (height === reportedHeight) return;
+    reportedHeight = height;
+    post({ type: "resize", height });
   }).observe(document.body);
   post({ type: "hello", nonce });
 })();

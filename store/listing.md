@@ -6,14 +6,14 @@ lang: en
 
 English | [日本語](listing.ja.md) | [简体中文](listing.zh-CN.md) | [繁體中文](listing.zh-TW.md) | [Português (Brasil)](listing.pt-BR.md) | [Español](listing.es.md) | [Deutsch](listing.de.md)
 
-This package uses version `0.1.0`. The submission version depends on the Dashboard’s upload history. See the [release record](../releases.md) for tested environments and store status.
+This package uses version `0.2.0`. The submission version depends on the Dashboard’s upload history. See the [release record](../releases.md) for tested environments and store status.
 
 ## Basic information
 
 | Field | Draft / current status |
 | --- | --- |
 | Listing name | tabuchan |
-| Version | `0.1.0` |
+| Version | `0.2.0` |
 | Documentation / listing languages | English, Japanese, Simplified Chinese, Traditional Chinese, Brazilian Portuguese, Spanish, and German. English is the base language. Saved Dashboard languages remain unverified |
 | Extension UI languages | Japanese when Chrome's display language is Japanese; English otherwise. Documentation languages do not expand UI support |
 | Proposed category | Functionality & UI, based on the current official category covering tab/shortcut management. The saved Dashboard value remains unverified |
@@ -26,7 +26,9 @@ This package uses version `0.1.0`. The submission version depends on the Dashboa
 
 tabuchan lets you switch between tabs in the current window using keyboard shortcuts.
 
-Tap Back or Forward to move through a fixed recent-use order. By default, short presses skip tabs where the shortcuts are unavailable.
+With the required modifiers held, tap Back or Forward to switch through a fixed recent-use order. Release a required modifier to make the displayed tab the most recent. Tabs without available shortcuts are skipped by default.
+
+Press Enter in either list, including in search results, or select a tab directly in Chrome to make it the most recent. If it was already in the history, its old entry is removed and the other tabs stay in the same order.
 
 Hold the entire shortcut combination to open a tab list. Use Up and Down to select, Enter to switch, and Esc to cancel. The list stays open after you release the shortcut.
 
@@ -54,7 +56,7 @@ The four 1280×800 screenshots show the same bilingual package on Chrome for Tes
 
 ## Reviewer testing instructions
 
-No account or login is required. Open several regular HTTP(S) tabs in one window and visit them in order. Use the default Back/Forward shortcuts listed above to check tap navigation. Hold the entire shortcut for at least 0.5 seconds to open the list, then use Up/Down, Enter, and Esc to select or cancel. Press Left to switch list modes and type a title query in tab-order mode. Use the toolbar icon to open settings and confirm version `0.1.0`.
+No account or login is required. Visit several regular HTTP(S) tabs in one window. Keep the modifiers held and tap the regular keys for Back and Forward. Release a required modifier and verify that the displayed tab becomes the most recent. Hold the whole shortcut for at least 0.5 seconds to open the list. Press Left to switch to tab order, filter by title, and confirm with Enter. Use the toolbar icon to open settings and check version `0.2.0`.
 
 ## Basis of this draft
 

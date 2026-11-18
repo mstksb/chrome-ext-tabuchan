@@ -14,6 +14,30 @@ The public URLs are [usage instructions](https://mstksb.github.io/chrome-ext-tab
 
 The dates above describe earlier deployments. Deployment of the November 18, 2026 update remains unverified.
 
+## 0.2.0
+
+Version 0.2.0 updates how tab switches are recorded in the history. It also improves picker and tab switching internals and fixes focus restoration after closing the picker from an iframe.
+
+Keep the required modifier keys held and press and release the regular key for Back or Forward to switch one tab at a time in fixed history order. Release any required modifier to make the displayed tab the most recent.
+
+Press Enter in either list, including in search results, or select a tab directly in Chrome to make it the most recent. If it was already in the history, its old entry is removed and the other tabs stay in the same order.
+
+| Item | Details |
+| --- | --- |
+| Version | This package uses version `0.2.0`. The submission version depends on the Dashboard’s upload history. |
+| Distribution ZIP | [tabuchan-0.2.0.zip](dist/tabuchan-0.2.0.zip), containing 29 runtime files with the manifest at its root |
+| SHA-256 | `f7a7b26c5486aa8ee8054c5ca826a33992c8e3d5f3a512a6099e4874b830938e` |
+| Checksum file | [tabuchan-0.2.0.zip.sha256](dist/tabuchan-0.2.0.zip.sha256) |
+| Requirements | Google Chrome with Manifest V3 support; the manifest declares a minimum of Chrome 102 |
+| Store status | The Dashboard’s package, item ID/URL, and review and publication status still need verification. |
+
+## Verification of 0.2.0
+
+The candidate passed 184 Node tests. Chrome for Testing Stable `158.0.8127.36` (Linux arm64) passed 21 main end-to-end test groups and 3 language groups for Japanese, English, and the English fallback in a French Chrome environment.
+
+All 24 browser test groups also passed from the extracted distribution ZIP, including the version display in settings. The [listing draft](store/listing.md#screenshots) links to four 1280×800 screenshots captured from this ZIP in Japanese and English.
+
+
 ## 0.1.0
 
 This candidate updates restricted-page detection and the appearance of affected tabs, reduces the minimum and default hold durations, and adds a choice of partial or prefix matching for multiple search terms. It also includes fixes to tab switching and settings.
@@ -22,14 +46,14 @@ Settings and the tab list use Japanese when Chrome uses Japanese, and English ot
 
 | Item | Details |
 | --- | --- |
-| Version | This package uses version `0.1.0`. The submission version depends on the Dashboard’s upload history. |
-| Distribution ZIP | [tabuchan-0.1.0.zip](dist/tabuchan-0.1.0.zip), containing 29 runtime files with the manifest at its root |
+| Version | The earlier package used version `0.1.0`. |
+| Distribution ZIP | `tabuchan-0.1.0.zip`, containing 29 runtime files with the manifest at its root |
 | SHA-256 | `25a07b0f94b01a9bc9d9ea5ce05d9e258b584a7560ace136fa10716a1e6d9982` |
-| Checksum file | [tabuchan-0.1.0.zip.sha256](dist/tabuchan-0.1.0.zip.sha256) |
+| Checksum file | `tabuchan-0.1.0.zip.sha256` |
 | Requirements | Google Chrome with Manifest V3 support; the manifest declares a minimum of Chrome 102 |
 | Store status | The Dashboard’s package, item ID/URL, and review and publication status still need verification. |
 
-## Verification of the November 18, 2026 candidate
+## Verification of the 0.1.0 candidate on November 18, 2026
 
 The candidate passed 21 groups of end-to-end tests on Chrome for Testing Stable `158.0.8127.36` (Linux arm64). Three additional groups verified Japanese, English, and the English fallback with a French Chrome UI, including Unicode title search. All 24 groups also passed with the extension loaded from the extracted distribution ZIP. The settings page displayed the version declared by that ZIP’s manifest.
 

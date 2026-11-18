@@ -243,7 +243,7 @@
     "message": "How it works"
   },
   "options_usage_short_press": {
-    "message": "Press and release before the hold duration to move one tab Back or Forward. Navigation stops at the ends of the history."
+    "message": "While holding the modifiers, tap the regular key to move one tab back or forward at a time. Release a required modifier to make the displayed tab the most recent."
   },
   "options_usage_hold": {
     "message": "Hold the modifier keys and the assigned regular key together to show MRU candidates."
@@ -261,7 +261,7 @@
     "message": "Each tab appears once, ordered by recent use."
   },
   "options_usage_reset": {
-    "message": "Selecting another tab normally ends the current traversal."
+    "message": "Press Enter in a list or select a tab directly in Chrome to make the chosen tab the most recent."
   },
   "options_capture_cancelled": {
     "message": "Shortcut change cancelled."

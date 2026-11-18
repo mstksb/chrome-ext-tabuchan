@@ -6,14 +6,14 @@ lang: pt-BR
 
 [English](listing.md) | [日本語](listing.ja.md) | [简体中文](listing.zh-CN.md) | [繁體中文](listing.zh-TW.md) | Português (Brasil) | [Español](listing.es.md) | [Deutsch](listing.de.md)
 
-Este pacote usa a versão `0.1.0`. A versão a enviar depende do histórico de uploads no Dashboard. Consulte o [registro de lançamento](../releases.pt-BR.md) para arquivos, ambientes verificados e estado da loja.
+Este pacote usa a versão `0.2.0`. A versão a enviar depende do histórico de uploads no Dashboard. Consulte o [registro de lançamento](../releases.pt-BR.md) para arquivos, ambientes verificados e estado da loja.
 
 ## Informações básicas
 
 | Campo | Texto / situação |
 | --- | --- |
 | Nome | tabuchan |
-| Versão | `0.1.0` |
+| Versão | `0.2.0` |
 | Idiomas da documentação/loja | Inglês como base; japonês, chinês simplificado/tradicional, português do Brasil, espanhol e alemão. Idiomas salvos no Dashboard não verificados |
 | Idiomas da interface | Japonês quando o Chrome está em japonês, inglês nos demais casos; documentação não amplia a interface |
 | Categoria proposta | Functionality & UI, conforme categoria oficial atual para gerenciamento de abas/atalhos; valor salvo não verificado |
@@ -26,7 +26,9 @@ Este pacote usa a versão `0.1.0`. A versão a enviar depende do histórico de u
 
 tabuchan permite alternar entre abas da janela atual com atalhos de teclado.
 
-Toque em Voltar ou Avançar para percorrer uma ordem fixa de uso recente. Por padrão, abas onde os atalhos não estão disponíveis são puladas.
+Mantenha as teclas modificadoras pressionadas e pressione e solte a tecla comum para Voltar ou Avançar em uma ordem fixa. Ao soltar um modificador necessário, a aba exibida passa a ser a mais recente. Abas sem atalhos disponíveis são puladas por padrão.
+
+Pressione Enter em qualquer uma das listas, inclusive nos resultados da busca, ou selecione uma aba diretamente no Chrome para torná-la a mais recente. Se ela já estava no histórico, sua entrada anterior é removida e as demais abas mantêm a ordem.
 
 Mantenha toda a combinação pressionada para abrir a lista. Cima/baixo selecionam, Enter alterna e Esc cancela. A lista permanece aberta ao soltar o atalho.
 
@@ -54,7 +56,7 @@ As quatro capturas de 1280×800 mostram o mesmo pacote bilíngue no Chrome for T
 
 ## Instruções para revisão
 
-Não há conta nem login. Abra várias abas HTTP(S) na mesma janela e visite-as em sequência. Teste toques nos atalhos padrão acima; mantenha a combinação por pelo menos 0,5 segundo e use cima/baixo, Enter e Esc. Alterne os modos com esquerda e busque um título na ordem das abas. Abra configurações pelo ícone e confirme `0.1.0`.
+Não é necessário criar conta nem fazer login. Visite várias abas HTTP(S) em uma janela. Mantenha as teclas modificadoras pressionadas e pressione e solte as teclas comuns de Voltar e Avançar. Solte um modificador necessário e confira se a aba exibida se torna a mais recente. Mantenha a combinação completa pressionada por pelo menos 0,5 segundo para abrir a lista. Use a seta para a esquerda para ver a ordem das abas, filtre pelo título e confirme com Enter. Abra as configurações pelo ícone da barra e confirme a versão `0.2.0`.
 
 ## Base do texto
 
