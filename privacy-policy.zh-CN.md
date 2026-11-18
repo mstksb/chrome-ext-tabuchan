@@ -6,7 +6,7 @@ lang: zh-CN
 
 [English](privacy-policy.md) | [日本語](privacy-policy.ja.md) | 简体中文 | [繁體中文](privacy-policy.zh-TW.md) | [Português (Brasil)](privacy-policy.pt-BR.md) | [Español](privacy-policy.es.md) | [Deutsch](privacy-policy.de.md)
 
-本政策自 tabuchan `0.2.0` 在 Chrome 应用商店发布之日起生效。发布状态见[发布记录](releases.zh-CN.md)。
+本政策适用于 tabuchan `0.2.0` 和 `0.2.1`，自这两个版本中第一个在 Chrome 应用商店发布的版本上线之日起生效。发布状态见[发布记录](releases.zh-CN.md)。
 
 ## 用途
 

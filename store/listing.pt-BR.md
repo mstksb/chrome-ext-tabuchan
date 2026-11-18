@@ -6,14 +6,14 @@ lang: pt-BR
 
 [English](listing.md) | [日本語](listing.ja.md) | [简体中文](listing.zh-CN.md) | [繁體中文](listing.zh-TW.md) | Português (Brasil) | [Español](listing.es.md) | [Deutsch](listing.de.md)
 
-Este pacote usa a versão `0.2.0`. A versão a enviar depende do histórico de uploads no Dashboard. Consulte o [registro de lançamento](../releases.pt-BR.md) para arquivos, ambientes verificados e estado da loja.
+Este pacote usa a versão `0.2.1`. Consulte o [registro de lançamento](../releases.pt-BR.md) para arquivos, ambientes verificados e estado da loja.
 
 ## Informações básicas
 
 | Campo | Texto / situação |
 | --- | --- |
 | Nome | tabuchan |
-| Versão | `0.2.0` |
+| Versão | `0.2.1` |
 | Idiomas da documentação/loja | Inglês como base; japonês, chinês simplificado/tradicional, português do Brasil, espanhol e alemão. Idiomas salvos no Dashboard não verificados |
 | Idiomas da interface | Japonês quando o Chrome está em japonês, inglês nos demais casos; documentação não amplia a interface |
 | Categoria proposta | Functionality & UI, conforme categoria oficial atual para gerenciamento de abas/atalhos; valor salvo não verificado |
@@ -46,7 +46,7 @@ Histórico e configurações são processados e salvos localmente. Favicons pode
 
 | Arquivo | Conteúdo / preparação |
 | --- | --- |
-| [tab-128.png](../icons/tab-128.png) | Ícone existente convertido para PNG 128×128 |
+| [tab-128.png](../icons/tab-128.png), Ícone do mascote do tabuchan (PNG de 128×128) |
 | [options-en-1280x800.png](images/options-en-1280x800.png) | Duração padrão de 0,5 segundo e opções de correspondência da busca em inglês, 1280×800 |
 | [picker-en-1280x800.png](images/picker-en-1280x800.png) | Lista de abas em inglês, com grupos, 1280×800 |
 | [options-1280x800.png](images/options-1280x800.png) | Duração padrão de 0,5 segundo e opções de correspondência da busca em japonês, 1280×800 |
@@ -56,10 +56,10 @@ As quatro capturas de 1280×800 mostram o mesmo pacote bilíngue no Chrome for T
 
 ## Instruções para revisão
 
-Não é necessário criar conta nem fazer login. Visite várias abas HTTP(S) em uma janela. Mantenha as teclas modificadoras pressionadas e pressione e solte as teclas comuns de Voltar e Avançar. Solte um modificador necessário e confira se a aba exibida se torna a mais recente. Mantenha a combinação completa pressionada por pelo menos 0,5 segundo para abrir a lista. Use a seta para a esquerda para ver a ordem das abas, filtre pelo título e confirme com Enter. Abra as configurações pelo ícone da barra e confirme a versão `0.2.0`.
+Não é necessário criar conta nem fazer login. Visite várias abas HTTP(S) em uma janela. Mantenha as teclas modificadoras pressionadas e pressione e solte as teclas comuns de Voltar e Avançar. Solte um modificador necessário e confira se a aba exibida se torna a mais recente. Mantenha a combinação completa pressionada por pelo menos 0,5 segundo para abrir a lista. Use a seta para a esquerda para ver a ordem das abas, filtre pelo título e confirme com Enter. Abra as configurações pelo ícone da barra e confirme a versão `0.2.1`.
 
 ## Base do texto
 
-A versão candidata passou em 21 grupos de testes de ponta a ponta no Chrome for Testing Stable `158.0.8127.36` (Linux arm64). Outros três grupos verificaram a interface em japonês e em inglês e o uso do inglês com o Chrome em francês, incluindo busca de títulos com Unicode.
+Consulte o [registro de lançamento](../releases.pt-BR.md) para conferir a verificação do pacote de distribuição atual.
 
 Campos e requisitos de imagens foram conferidos em 9 de novembro de 2026. Confira os campos atuais antes do envio: [Store listing](https://developer.chrome.com/docs/webstore/cws-dashboard-listing), [Supplying Images](https://developer.chrome.com/docs/webstore/images).

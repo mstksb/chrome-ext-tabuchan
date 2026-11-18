@@ -6,7 +6,7 @@ lang: zh-TW
 
 [English](privacy.md) | [日本語](privacy.ja.md) | [简体中文](privacy.zh-CN.md) | 繁體中文 | [Português (Brasil)](privacy.pt-BR.md) | [Español](privacy.es.md) | [Deutsch](privacy.de.md)
 
-本申報草案依 tabuchan `0.2.0` 的程式行為編寫。待辦事項與驗證／提交狀態請參閱[發佈紀錄](../releases.zh-TW.md)。
+本申報草案依 tabuchan `0.2.1` 的程式行為編寫。待辦事項與驗證／提交狀態請參閱[發佈紀錄](../releases.zh-TW.md)。
 
 ## 單一用途
 
@@ -62,6 +62,6 @@ lang: zh-TW
 
 ## 發佈者待確認事項
 
-發佈者為 `mstksb`。聯絡信箱為 [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com)。本政策自 tabuchan `0.2.0` 在 Chrome 線上應用程式商店發佈之日起生效。
+發佈者為 `mstksb`。聯絡信箱為 [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com)。本政策適用於 tabuchan `0.2.0` 和 `0.2.1`，自這兩個版本中第一個在 Chrome 線上應用程式商店發佈的版本上架日起生效。
 
-既有政策的[既有政策網址](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)已確認可無須登入存取。更新後的政策已在存放庫中，尚未部署至 GitHub Pages。Trader／Non-Trader 身分、帳號驗證和發佈目的地仍待確定。最新狀態請參閱[發佈紀錄](../releases.zh-TW.md)。
+已確認可透過 HTTPS 無須登入存取隱私權政策的[既有政策網址](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)。Trader／Non-Trader 身分、帳號驗證和發佈目的地仍待確定。最新狀態請參閱[發佈紀錄](../releases.zh-TW.md)。

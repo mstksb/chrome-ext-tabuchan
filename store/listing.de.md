@@ -6,14 +6,14 @@ lang: de
 
 [English](listing.md) | [日本語](listing.ja.md) | [简体中文](listing.zh-CN.md) | [繁體中文](listing.zh-TW.md) | [Português (Brasil)](listing.pt-BR.md) | [Español](listing.es.md) | Deutsch
 
-Dieses Paket verwendet die Version `0.2.0`. Die Version für die Einreichung richtet sich nach dem Uploadverlauf im Dashboard. Dateien, geprüfte Umgebungen und Store-Status stehen im [Protokoll](../releases.de.md).
+Dieses Paket verwendet die Version `0.2.1`. Dateien, geprüfte Umgebungen und Store-Status stehen im [Protokoll](../releases.de.md).
 
 ## Grunddaten
 
 | Feld | Entwurf / Status |
 | --- | --- |
 | Name | tabuchan |
-| Version | `0.2.0` |
+| Version | `0.2.1` |
 | Dokument-/Eintragssprachen | Englisch als Basis; Japanisch, vereinfachtes/traditionelles Chinesisch, brasilianisches Portugiesisch, Spanisch, Deutsch. Gespeicherte Dashboard-Sprachen ungeprüft |
 | Oberfläche | Japanisch bei japanischer Chrome-Anzeigesprache, sonst Englisch; Dokumentsprachen erweitern sie nicht |
 | Kategorie-Vorschlag | Functionality & UI gemäß aktueller offizieller Kategorie für Tabs/Tastenkürzel; gespeicherter Wert ungeprüft |
@@ -46,7 +46,7 @@ Verlauf und Einstellungen werden lokal verarbeitet/gespeichert. Favicons können
 
 | Datei | Inhalt / Vorbereitung |
 | --- | --- |
-| [tab-128.png](../icons/tab-128.png) | Bestehendes Symbol als PNG 128×128 |
+| [tab-128.png](../icons/tab-128.png), Tabuchan-Maskottchensymbol (128×128-PNG) |
 | [options-en-1280x800.png](images/options-en-1280x800.png) | Standard-Haltedauer von 0,5 Sekunden und Einstellungen zur Suchmethode auf Englisch, 1280×800 |
 | [picker-en-1280x800.png](images/picker-en-1280x800.png) | Englische Liste in Tab-Reihenfolge mit Gruppen, 1280×800 |
 | [options-1280x800.png](images/options-1280x800.png) | Standard-Haltedauer von 0,5 Sekunden und Einstellungen zur Suchmethode auf Japanisch, 1280×800 |
@@ -56,10 +56,10 @@ Die vier Aufnahmen mit 1280×800 Pixeln zeigen dasselbe zweisprachige Paket in C
 
 ## Prüfanleitung
 
-Ein Konto oder eine Anmeldung ist nicht erforderlich. Mehrere gewöhnliche HTTP(S)-Tabs in einem Fenster öffnen und nacheinander besuchen. Die Modifikatortasten gedrückt halten und die Buchstabentasten für Zurück und Vorwärts kurz betätigen. Eine erforderliche Modifikatortaste loslassen und prüfen, ob der angezeigte Tab als zuletzt verwendet erscheint. Die ganze Kombination mindestens 0,5 Sekunden halten. Mit Links die Tab-Reihenfolge öffnen, nach Titel filtern und mit Enter bestätigen. Über das Symbol in der Symbolleiste die Einstellungen öffnen und Version `0.2.0` prüfen.
+Ein Konto oder eine Anmeldung ist nicht erforderlich. Mehrere gewöhnliche HTTP(S)-Tabs in einem Fenster öffnen und nacheinander besuchen. Die Modifikatortasten gedrückt halten und die Buchstabentasten für Zurück und Vorwärts kurz betätigen. Eine erforderliche Modifikatortaste loslassen und prüfen, ob der angezeigte Tab als zuletzt verwendet erscheint. Die ganze Kombination mindestens 0,5 Sekunden halten. Mit Links die Tab-Reihenfolge öffnen, nach Titel filtern und mit Enter bestätigen. Über das Symbol in der Symbolleiste die Einstellungen öffnen und Version `0.2.1` prüfen.
 
 ## Grundlage
 
-Der Kandidat bestand 21 End-to-End-Testgruppen in Chrome for Testing Stable `158.0.8127.36` (Linux arm64). Drei weitere Gruppen bestätigten die japanische und englische Oberfläche, die englische Oberfläche bei französischer Chrome-Sprache sowie die Unicode-Titelsuche.
+Die Prüfung des aktuellen Distributionspakets finden Sie im [Protokoll](../releases.de.md).
 
 Felder und Bildanforderungen wurden am 9. November 2026 mit offiziellen Dokumenten abgeglichen. Aktuelle Pflichtfelder vor Einreichung prüfen: [Store listing](https://developer.chrome.com/docs/webstore/cws-dashboard-listing), [Supplying Images](https://developer.chrome.com/docs/webstore/images).

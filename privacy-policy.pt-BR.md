@@ -6,7 +6,7 @@ lang: pt-BR
 
 [English](privacy-policy.md) | [日本語](privacy-policy.ja.md) | [简体中文](privacy-policy.zh-CN.md) | [繁體中文](privacy-policy.zh-TW.md) | Português (Brasil) | [Español](privacy-policy.es.md) | [Deutsch](privacy-policy.de.md)
 
-Esta política entra em vigor na data de publicação da versão `0.2.0` do tabuchan na Chrome Web Store. Consulte o [registro de lançamento](releases.pt-BR.md) para acompanhar a publicação.
+Esta política se aplica às versões `0.2.0` e `0.2.1` do tabuchan e entra em vigor quando a primeira delas for publicada na Chrome Web Store. Consulte o [registro de lançamento](releases.pt-BR.md) para acompanhar a publicação.
 
 ## Finalidade
 

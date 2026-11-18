@@ -8,7 +8,7 @@ lang: ja
 
 最近使ったタブへキーボードで移動するChrome拡張です。短押しで履歴をたどり、長押しで候補を表示します。
 
-このパッケージのバージョンは `0.2.0` です。提出版番号はDashboardのアップロード履歴を確認して決定します。配布物と確認済みの環境、審査・公開状態は[公開記録](releases.ja.md)を参照してください。
+このパッケージのバージョンは `0.2.1` です。配布物と確認済みの環境、審査・公開状態は[公開記録](releases.ja.md)を参照してください。
 
 設定画面と候補一覧はChromeの表示言語に合わせて自動選択します。日本語環境では日本語、それ以外では英語を表示します。
 
@@ -58,15 +58,14 @@ macOSでは物理的なControlキーを使います。設定画面では、実�
 
 ## 配布ZIPの再梱包
 
-このフォルダーの29実行ファイルだけを使い、macOS標準の `zip` と `shasum` で再梱包できます。ターミナルでこのREADMEがあるフォルダーを開き、次を実行します。既存の配布ZIPとチェックサムを更新します。
+このフォルダーの28実行ファイルだけを使い、macOS標準の `zip` と `shasum` で再梱包できます。ターミナルでこのREADMEがあるフォルダーを開き、次を実行します。既存の配布ZIPとチェックサムを更新します。
 
 ```sh
 mkdir -p dist &&
 tabuchan_package_tmp=$(mktemp -d) &&
-zip -X "$tabuchan_package_tmp/tabuchan-0.2.0.zip" \
+zip -X "$tabuchan_package_tmp/tabuchan-0.2.1.zip" \
   manifest.json \
   options.html \
-  icons/tab.svg \
   icons/tab-16.png \
   icons/tab-48.png \
   icons/tab-128.png \
@@ -93,9 +92,9 @@ zip -X "$tabuchan_package_tmp/tabuchan-0.2.0.zip" \
   src/picker.js \
   src/settings-rules.js \
   src/shortcut-changes.js && \
-  mv "$tabuchan_package_tmp/tabuchan-0.2.0.zip" dist/tabuchan-0.2.0.zip &&
+  mv "$tabuchan_package_tmp/tabuchan-0.2.1.zip" dist/tabuchan-0.2.1.zip &&
 rmdir "$tabuchan_package_tmp" &&
-(cd dist && shasum -a 256 tabuchan-0.2.0.zip > tabuchan-0.2.0.zip.sha256)
+(cd dist && shasum -a 256 tabuchan-0.2.1.zip > tabuchan-0.2.1.zip.sha256)
 ```
 
 ZIPの直下に `manifest.json` が入り、掲載資料・画像・公開記録は収録されません。再梱包ではZIPのSHA-256が変わる場合があります。配布時は実際のZIPのチェックサムと[公開記録](releases.ja.md)を対応させてください。
@@ -107,7 +106,7 @@ ZIPの直下に `manifest.json` が入り、掲載資料・画像・公開記録
 - [使い方](https://mstksb.github.io/chrome-ext-tabuchan/README.ja.html)
 - [GitHub Pagesのプライバシーポリシー](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.ja.html)
 
-更新後の `0.2.0` のプライバシーポリシーは、このリポジトリーにあります。GitHub Pagesへの反映は未実施です。
+GitHub Pagesのプライバシーポリシーは、7言語すべてでログインせずにHTTPSで閲覧できることを確認しました。
 
 ## 公開資料
 

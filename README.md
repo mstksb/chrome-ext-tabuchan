@@ -9,7 +9,7 @@ English | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [繁體�
 
 A Chrome extension for switching to recently used tabs with the keyboard. Tap a shortcut to move through your history; hold it to open a tab list.
 
-This package uses version `0.2.0`. The submission version depends on the Dashboard’s upload history. See the [release record](releases.md) for tested environments and store status.
+This package uses version `0.2.1`. See the [release record](releases.md) for tested environments and store status.
 
 Documentation languages: English, Japanese, Simplified Chinese, Traditional Chinese, Brazilian Portuguese, Spanish, and German. Documentation translations are separate from extension UI support: settings and the tab list currently use Japanese when Chrome's display language is Japanese, and English otherwise.
 
@@ -57,15 +57,14 @@ History is kept per window in local session storage. Restarting the browser or d
 
 ## Repackage the distribution ZIP
 
-You can repackage the 29 runtime files in this folder using macOS's standard `zip` and `shasum` tools. Open a terminal in the folder containing this README and run the following. This replaces the existing distribution ZIP and checksum.
+You can repackage the 28 runtime files in this folder using macOS's standard `zip` and `shasum` tools. Open a terminal in the folder containing this README and run the following. This replaces the existing distribution ZIP and checksum.
 
 ```sh
 mkdir -p dist &&
 tabuchan_package_tmp=$(mktemp -d) &&
-zip -X "$tabuchan_package_tmp/tabuchan-0.2.0.zip" \
+zip -X "$tabuchan_package_tmp/tabuchan-0.2.1.zip" \
   manifest.json \
   options.html \
-  icons/tab.svg \
   icons/tab-16.png \
   icons/tab-48.png \
   icons/tab-128.png \
@@ -92,9 +91,9 @@ zip -X "$tabuchan_package_tmp/tabuchan-0.2.0.zip" \
   src/picker.js \
   src/settings-rules.js \
   src/shortcut-changes.js && \
-  mv "$tabuchan_package_tmp/tabuchan-0.2.0.zip" dist/tabuchan-0.2.0.zip &&
+  mv "$tabuchan_package_tmp/tabuchan-0.2.1.zip" dist/tabuchan-0.2.1.zip &&
 rmdir "$tabuchan_package_tmp" &&
-(cd dist && shasum -a 256 tabuchan-0.2.0.zip > tabuchan-0.2.0.zip.sha256)
+(cd dist && shasum -a 256 tabuchan-0.2.1.zip > tabuchan-0.2.1.zip.sha256)
 ```
 
 The ZIP contains `manifest.json` at its root; listing documents, screenshots, and release records are excluded. Repackaging may change its SHA-256. Match the actual ZIP checksum to the [release record](releases.md) before distribution.
@@ -106,7 +105,7 @@ Usage instructions and public documents are hosted on GitHub Pages. See the [pub
 - [Usage instructions](https://mstksb.github.io/chrome-ext-tabuchan/)
 - [Privacy policy on GitHub Pages](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)
 
-The updated `0.2.0` policy is available in this repository. Deployment to GitHub Pages is pending.
+The privacy policy on GitHub Pages was verified in all seven documentation languages over HTTPS without a login.
 
 ## Public documents
 

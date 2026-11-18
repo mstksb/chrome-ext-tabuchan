@@ -6,7 +6,7 @@ lang: pt-BR
 
 [English](privacy.md) | [日本語](privacy.ja.md) | [简体中文](privacy.zh-CN.md) | [繁體中文](privacy.zh-TW.md) | Português (Brasil) | [Español](privacy.es.md) | [Deutsch](privacy.de.md)
 
-Este rascunho é baseado no código do tabuchan `0.2.0`. Consulte o [registro](../releases.pt-BR.md) para ver pendências e o estado da verificação e do envio.
+Este rascunho é baseado no código do tabuchan `0.2.1`. Consulte o [registro](../releases.pt-BR.md) para ver pendências e o estado da verificação e do envio.
 
 ## Finalidade única
 
@@ -62,6 +62,6 @@ Reinício do navegador ou desativação/recarga/atualização apagam o históric
 
 ## Confirmações do responsável
 
-Responsável pela publicação: `mstksb`. Contato: [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com). Esta política entra em vigor na data de publicação da versão `0.2.0` do tabuchan na Chrome Web Store.
+Responsável pela publicação: `mstksb`. Contato: [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com). Esta política se aplica às versões `0.2.0` e `0.2.1` do tabuchan e entra em vigor quando a primeira delas for publicada na Chrome Web Store.
 
-O [URL existente da política](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) já foi verificado sem login. A versão atualizada da política está no repositório e aguarda implantação no GitHub Pages. A condição de Trader / Non-Trader, a verificação da conta e os destinos de distribuição seguem pendentes. Consulte o [registro](../releases.pt-BR.md) para acompanhar o estado atual.
+O [URL existente da política](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) da política foi verificado via HTTPS sem login. A condição de Trader / Non-Trader, a verificação da conta e os destinos de distribuição seguem pendentes. Consulte o [registro](../releases.pt-BR.md) para acompanhar o estado atual.

@@ -10,9 +10,28 @@ lang: zh-CN
 
 2026 年 11 月 11 日，现有 README 和公开资料通过 GitHub Pages 发布，来源为 `main` 分支根目录。README 作为主页，GitHub Pages 标准 Jekyll 处理将相对 Markdown 链接转换为 HTML 网址。页面继续以 Markdown 编辑。扩展的 `src/`、`options.html` 和 `manifest.json` 不参与网站生成。
 
-首次发布时，[使用说明](https://mstksb.github.io/chrome-ext-tabuchan/)和[隐私政策草案](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)的标准构建与部署成功，已确认可通过 HTTPS 无需登录访问，并在浏览器中查看了正文。发布者名称、联系方式和生效日期仍未确定，政策尚不是可提交商店的定稿。该历史验证不代表本次新增翻译已部署。
+公开网址为[使用说明](https://mstksb.github.io/chrome-ext-tabuchan/)和[隐私政策](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)。GitHub Pages 初次构建和部署成功，两个页面均可通过 HTTPS 无需登录访问。
 
-以上为早期部署记录。2026 年 11 月 18 日更新的部署状态尚未验证。
+2026 年 11 月 18 日，提交 `e190053` 的内容已部署到 GitHub Pages。已确认可通过 HTTPS 无需登录访问全部七种语言的隐私政策。
+
+## 0.2.1
+
+此更新将 tabuchan 吉祥物图标用于扩展程序、工具栏和设置页面，扩展行为和数据处理方式与 `0.2.0` 一致。
+
+| 项目 | 内容 |
+| --- | --- |
+| 版本 | `0.2.1` |
+| 分发 ZIP | [tabuchan-0.2.1.zip](dist/tabuchan-0.2.1.zip)，包含 28 个运行文件，清单位于 ZIP 根目录 |
+| SHA-256 | `8cbafd2a24d4f52fb8521f95df2b5f9ed46869eaa48d56df5d4e68819af143ab` |
+| 校验和文件 | [tabuchan-0.2.1.zip.sha256](dist/tabuchan-0.2.1.zip.sha256) |
+| 运行要求 | 支持 Manifest V3 的 Google Chrome；清单要求最低 Chrome 102 |
+| 商店状态 | Dashboard 中的软件包、项目 ID 和网址，以及审核和发布状态均待确认。|
+
+### 解压 ZIP 后的验证
+
+候选代码通过了 184 项 Node 测试和语法检查。解压分发 ZIP 后，在 Linux arm64（Docker）的 Chrome for Testing Stable `158.0.8127.36` 上通过了 25 组端到端测试，包括 22 组主要操作和 3 组语言测试。已确认设置页显示 `0.2.1` 并加载 48 像素 PNG，清单引用了 16 像素和 128 像素 PNG。
+
+使用此 ZIP 重新拍摄日语和英语设置页面及标签页列表的四张 1280×800 截图，所得文件与现有图片逐字节一致。
 
 ## 0.2.0
 
@@ -72,7 +91,7 @@ Chrome 显示语言为日语时，设置页面和标签页列表使用日语，�
 - Windows、旧版 Chrome 和操作系统原生输入法。
 - 普通 Chrome 中重新加载扩展后的恢复运行。
 - 许可证、分发范围和目标国家。
-- 将更新后的隐私政策部署至 GitHub Pages，并根据商店当前要求核对数据处理方式。
+- 向 Chrome 应用商店提交时适用的数据处理要求。
 - Dashboard 中商店资料／隐私申报的保存结果及审核／发布状态。
 
 请在提交商店前完成这些事项。

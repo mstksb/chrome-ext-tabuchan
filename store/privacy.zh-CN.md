@@ -6,7 +6,7 @@ lang: zh-CN
 
 [English](privacy.md) | [日本語](privacy.ja.md) | 简体中文 | [繁體中文](privacy.zh-TW.md) | [Português (Brasil)](privacy.pt-BR.md) | [Español](privacy.es.md) | [Deutsch](privacy.de.md)
 
-本申报草案依据 tabuchan `0.2.0` 的代码编写。待办事项和验证／提交状态见[发布记录](../releases.zh-CN.md)。
+本申报草案依据 tabuchan `0.2.1` 的代码编写。待办事项和验证／提交状态见[发布记录](../releases.zh-CN.md)。
 
 ## 单一用途
 
@@ -62,6 +62,6 @@ lang: zh-CN
 
 ## 发布者须确认的事项
 
-发布者为 `mstksb`。联系邮箱为 [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com)。本政策自 tabuchan `0.2.0` 在 Chrome 应用商店发布之日起生效。
+发布者为 `mstksb`。联系邮箱为 [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com)。本政策适用于 tabuchan `0.2.0` 和 `0.2.1`，自这两个版本中第一个在 Chrome 应用商店发布的版本上线之日起生效。
 
-现有政策的[现有政策网址](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)已确认无需登录即可访问。更新后的政策已在代码库中，尚未部署到 GitHub Pages。Trader／Non-Trader 身份、账户验证和分发目标仍待确定。当前状态见[发布记录](../releases.zh-CN.md)。
+已确认可通过 HTTPS 无需登录访问隐私政策的[现有政策网址](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)。Trader／Non-Trader 身份、账户验证和分发目标仍待确定。当前状态见[发布记录](../releases.zh-CN.md)。

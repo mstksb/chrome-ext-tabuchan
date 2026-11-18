@@ -6,14 +6,14 @@ lang: en
 
 English | [日本語](listing.ja.md) | [简体中文](listing.zh-CN.md) | [繁體中文](listing.zh-TW.md) | [Português (Brasil)](listing.pt-BR.md) | [Español](listing.es.md) | [Deutsch](listing.de.md)
 
-This package uses version `0.2.0`. The submission version depends on the Dashboard’s upload history. See the [release record](../releases.md) for tested environments and store status.
+This package uses version `0.2.1`. See the [release record](../releases.md) for tested environments and store status.
 
 ## Basic information
 
 | Field | Draft / current status |
 | --- | --- |
 | Listing name | tabuchan |
-| Version | `0.2.0` |
+| Version | `0.2.1` |
 | Documentation / listing languages | English, Japanese, Simplified Chinese, Traditional Chinese, Brazilian Portuguese, Spanish, and German. English is the base language. Saved Dashboard languages remain unverified |
 | Extension UI languages | Japanese when Chrome's display language is Japanese; English otherwise. Documentation languages do not expand UI support |
 | Proposed category | Functionality & UI, based on the current official category covering tab/shortcut management. The saved Dashboard value remains unverified |
@@ -46,7 +46,7 @@ History and settings are processed and stored locally. Displaying tab favicons m
 
 | Asset | Implementation / preparation status |
 | --- | --- |
-| Store icon | [icons/tab-128.png](../icons/tab-128.png), the existing tab artwork converted to a 128×128 PNG |
+| Store icon | [icons/tab-128.png](../icons/tab-128.png), Tabuchan mascot icon, 128×128 PNG |
 | English settings | [options-en-1280x800.png](images/options-en-1280x800.png), 1280×800, Default hold duration of 0.5 seconds and search matching settings |
 | English tab list | [picker-en-1280x800.png](images/picker-en-1280x800.png), 1280×800, English tab order with sample groups |
 | Japanese settings | [options-1280x800.png](images/options-1280x800.png), 1280×800, Default hold duration of 0.5 seconds and search matching settings |
@@ -56,10 +56,10 @@ The four 1280×800 screenshots show the same bilingual package on Chrome for Tes
 
 ## Reviewer testing instructions
 
-No account or login is required. Visit several regular HTTP(S) tabs in one window. Keep the modifiers held and tap the regular keys for Back and Forward. Release a required modifier and verify that the displayed tab becomes the most recent. Hold the whole shortcut for at least 0.5 seconds to open the list. Press Left to switch to tab order, filter by title, and confirm with Enter. Use the toolbar icon to open settings and check version `0.2.0`.
+No account or login is required. Visit several regular HTTP(S) tabs in one window. Keep the modifiers held and tap the regular keys for Back and Forward. Release a required modifier and verify that the displayed tab becomes the most recent. Hold the whole shortcut for at least 0.5 seconds to open the list. Press Left to switch to tab order, filter by title, and confirm with Enter. Use the toolbar icon to open settings and check version `0.2.1`.
 
 ## Basis of this draft
 
-The candidate passed 21 groups of end-to-end tests on Chrome for Testing Stable `158.0.8127.36` (Linux arm64). Three additional groups verified Japanese, English, and the English fallback with a French Chrome UI, including Unicode title search.
+See the [release record](../releases.md) for verification of the current distribution.
 
 Listing fields and image requirements were checked against official documentation on November 9, 2026. Recheck the Dashboard's current required fields before submission: [Store listing](https://developer.chrome.com/docs/webstore/cws-dashboard-listing), [Supplying Images](https://developer.chrome.com/docs/webstore/images).

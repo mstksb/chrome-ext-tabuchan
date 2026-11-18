@@ -10,9 +10,28 @@ lang: es
 
 El 11 de noviembre de 2026 se publicaron el README y los documentos existentes en GitHub Pages desde la raíz de `main`. El README es la página inicial; Jekyll convierte enlaces Markdown relativos a URLs HTML. La edición sigue en Markdown. `src/`, `options.html` y `manifest.json` se excluyen del sitio.
 
-La compilación y el despliegue iniciales de las [instrucciones](https://mstksb.github.io/chrome-ext-tabuchan/) y el [borrador de política](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) se completaron. Ambas páginas se comprobaron por HTTPS sin autenticación y en el navegador. Responsable, contacto y vigencia siguen pendientes; la política no está finalizada para el envío. Esta verificación histórica no confirma el despliegue de las nuevas traducciones.
+Las URL públicas son las [instrucciones](https://mstksb.github.io/chrome-ext-tabuchan/) y la [política de privacidad](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html). La compilación y el despliegue iniciales en GitHub Pages finalizaron correctamente y ambas páginas eran accesibles por HTTPS sin iniciar sesión.
 
-El registro anterior corresponde a despliegues previos. El despliegue de la actualización del 18 de noviembre de 2026 queda por verificar.
+El 18 de noviembre de 2026 se publicó en GitHub Pages la versión del sitio correspondiente al commit `e190053`. La política de privacidad se verificó en los siete idiomas de la documentación, por HTTPS y sin iniciar sesión.
+
+## 0.2.1
+
+Esta actualización añade el icono de la mascota de tabuchan a la extensión, la barra de herramientas y los ajustes. El comportamiento y el tratamiento de datos son los mismos que en la versión `0.2.0`.
+
+| Elemento | Detalles |
+| --- | --- |
+| Versión | `0.2.1` |
+| ZIP | [tabuchan-0.2.1.zip](dist/tabuchan-0.2.1.zip), contiene 28 archivos de ejecución y el manifiesto en la raíz del ZIP |
+| SHA-256 | `8cbafd2a24d4f52fb8521f95df2b5f9ed46869eaa48d56df5d4e68819af143ab` |
+| Suma de comprobación | [tabuchan-0.2.1.zip.sha256](dist/tabuchan-0.2.1.zip.sha256) |
+| Requisitos | Chrome con Manifest V3; mínimo declarado Chrome 102 |
+| Tienda | Queda por comprobar el paquete, el ID y la URL del elemento en el Dashboard, así como su estado de revisión y publicación. |
+
+### Verificación del ZIP descomprimido
+
+El código candidato superó 184 pruebas de Node y las comprobaciones de sintaxis. El ZIP de distribución descomprimido superó 25 grupos de pruebas de extremo a extremo (22 de operaciones y 3 de idiomas) en Chrome for Testing Stable `158.0.8127.36` sobre Linux arm64 (Docker). Los ajustes mostraron `0.2.1` y cargaron el PNG de 48 px. El manifiesto hacía referencia a los PNG de 16 px y 128 px.
+
+Se volvieron a tomar con este ZIP las cuatro capturas de 1280×800 de los ajustes y la lista en japonés e inglés. Los archivos coincidieron byte a byte con las imágenes existentes.
 
 ## 0.2.0
 
@@ -72,7 +91,7 @@ Las comprobaciones automatizadas/de configuración cubren claves japonés/inglé
 - Windows, versiones antiguas de Chrome y los IME nativos del sistema.
 - Funcionamiento tras recargar en Chrome normal.
 - Licencia, visibilidad y países de distribución.
-- Publicación de la política de privacidad actualizada en GitHub Pages y comprobación del tratamiento de los datos según los requisitos actuales de la tienda.
+- Requisitos sobre el tratamiento de datos aplicables al envío a Chrome Web Store.
 - Guardado de ficha/declaraciones en Dashboard y revisión/publicación.
 
 Completa estos puntos antes del envío.

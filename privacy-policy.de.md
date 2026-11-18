@@ -6,7 +6,7 @@ lang: de
 
 [English](privacy-policy.md) | [日本語](privacy-policy.ja.md) | [简体中文](privacy-policy.zh-CN.md) | [繁體中文](privacy-policy.zh-TW.md) | [Português (Brasil)](privacy-policy.pt-BR.md) | [Español](privacy-policy.es.md) | Deutsch
 
-Diese Richtlinie tritt am Tag der Veröffentlichung von tabuchan Version `0.2.0` im Chrome Web Store in Kraft. Den Veröffentlichungsstatus finden Sie im [Protokoll](releases.de.md).
+Diese Richtlinie gilt für die tabuchan-Versionen `0.2.0` und `0.2.1`. Sie tritt in Kraft, sobald die erste dieser beiden Versionen im Chrome Web Store veröffentlicht wird. Den Veröffentlichungsstatus finden Sie im [Protokoll](releases.de.md).
 
 ## Zweck
 

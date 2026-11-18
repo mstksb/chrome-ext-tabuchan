@@ -10,9 +10,28 @@ lang: pt-BR
 
 Em 11 de novembro de 2026, o README e os documentos públicos existentes foram publicados pelo GitHub Pages a partir da raiz da branch `main`. O README é a página inicial; o Jekyll padrão converte links Markdown relativos em URLs HTML. Os documentos continuam sendo editados em Markdown. `src/`, `options.html` e `manifest.json` ficam fora do site gerado.
 
-A compilação e a implantação iniciais das [instruções](https://mstksb.github.io/chrome-ext-tabuchan/) e da [política preliminar](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) foram concluídas. Ambas foram acessadas por HTTPS sem autenticação e conferidas no navegador. Responsável, contato e vigência seguem indefinidos; a política não está finalizada para envio. Essa verificação histórica não confirma a implantação das novas traduções.
+As URLs públicas são as [instruções](https://mstksb.github.io/chrome-ext-tabuchan/) e a [política de privacidade](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html). A primeira compilação e publicação no GitHub Pages foram concluídas, e as duas páginas estavam acessíveis em HTTPS sem login.
 
-O registro acima descreve implantações anteriores. A implantação da atualização de 18 de novembro de 2026 ainda não foi verificada.
+Em 18 de novembro de 2026, a versão do site do commit `e190053` foi publicada no GitHub Pages. A política de privacidade foi verificada nos sete idiomas da documentação, via HTTPS e sem login.
+
+## 0.2.1
+
+Esta atualização introduz o ícone do mascote do tabuchan na extensão, na barra de ferramentas e nas configurações. O comportamento e o tratamento de dados são os mesmos da versão `0.2.0`.
+
+| Item | Detalhes |
+| --- | --- |
+| Versão | `0.2.1` |
+| ZIP | [tabuchan-0.2.1.zip](dist/tabuchan-0.2.1.zip), contém 28 arquivos de execução e o manifesto na raiz do ZIP |
+| SHA-256 | `8cbafd2a24d4f52fb8521f95df2b5f9ed46869eaa48d56df5d4e68819af143ab` |
+| Soma de verificação | [tabuchan-0.2.1.zip.sha256](dist/tabuchan-0.2.1.zip.sha256) |
+| Requisitos | Chrome com Manifest V3; mínimo declarado de Chrome 102 |
+| Loja | Ainda é necessário verificar o pacote, o ID e o URL do item no Dashboard e o estado da revisão e da publicação. |
+
+### Verificação do ZIP extraído
+
+O código candidato passou em 184 testes do Node e na verificação de sintaxe. O ZIP de distribuição extraído passou em 25 grupos de testes de ponta a ponta (22 de operações e 3 de idiomas) no Chrome for Testing Stable `158.0.8127.36` em Linux arm64 (Docker). As configurações exibiram `0.2.1` e carregaram o PNG de 48 px. O manifesto fez referência aos PNGs de 16 px e 128 px.
+
+As quatro capturas de 1280×800 das configurações e listas em japonês e inglês foram refeitas com este ZIP e ficaram idênticas aos arquivos existentes, byte por byte.
 
 ## 0.2.0
 
@@ -72,7 +91,7 @@ Verificações de configuração/automatizadas cobrem chaves japonês/inglês, r
 - Windows, versões antigas do Chrome e IMEs nativos do sistema.
 - Funcionamento após recarregar no Chrome comum.
 - Licença, visibilidade e países de distribuição.
-- Publicação da política de privacidade atualizada no GitHub Pages e verificação do tratamento de dados segundo os requisitos atuais da loja.
+- Requisitos de tratamento de dados aplicáveis ao envio à Chrome Web Store.
 - Salvamento dos textos/declarações no Dashboard e situação de revisão/publicação.
 
 Finalize esses pontos antes do envio à loja.

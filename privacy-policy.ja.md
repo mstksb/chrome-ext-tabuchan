@@ -6,7 +6,7 @@ lang: ja
 
 [English](privacy-policy.md) | 日本語 | [简体中文](privacy-policy.zh-CN.md) | [繁體中文](privacy-policy.zh-TW.md) | [Português (Brasil)](privacy-policy.pt-BR.md) | [Español](privacy-policy.es.md) | [Deutsch](privacy-policy.de.md)
 
-このポリシーは、tabuchan `0.2.0` のChrome Web Storeでの公開日から適用します。公開状況は[公開記録](releases.ja.md)を参照してください。
+このポリシーは、tabuchan `0.2.0` と `0.2.1` を対象とし、そのいずれかが最初にChrome Web Storeで公開された日から適用します。公開状況は[公開記録](releases.ja.md)を参照してください。
 
 ## 目的
 

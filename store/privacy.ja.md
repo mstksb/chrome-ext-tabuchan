@@ -6,7 +6,7 @@ lang: ja
 
 [English](privacy.md) | 日本語 | [简体中文](privacy.zh-CN.md) | [繁體中文](privacy.zh-TW.md) | [Português (Brasil)](privacy.pt-BR.md) | [Español](privacy.es.md) | [Deutsch](privacy.de.md)
 
-tabuchan `0.2.0` の実装に基づく申告原稿です。未決事項と検証・提出の状況は[公開記録](../releases.ja.md)を参照してください。
+tabuchan `0.2.1` の実装に基づく申告原稿です。未決事項と検証・提出の状況は[公開記録](../releases.ja.md)を参照してください。
 
 ## 単一目的
 
@@ -62,6 +62,6 @@ tabuchan `0.2.0` の実装に基づく申告原稿です。未決事項と検証
 
 ## 公開者による確定が必要な項目
 
-公開者は `mstksb` です。お問い合わせは [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com) までお願いします。このポリシーは、tabuchan `0.2.0` のChrome Web Storeでの公開日から適用します。
+公開者は `mstksb` です。お問い合わせは [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com) までお願いします。このポリシーは、tabuchan `0.2.0` と `0.2.1` を対象とし、そのいずれかが最初にChrome Web Storeで公開された日から適用します。
 
-既存のポリシーの[公開URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)は認証なしで閲覧できることを確認済みです。更新後のポリシーはリポジトリーにあり、GitHub Pagesへの反映は未実施です。Trader／Non-Traderの区分、アカウントの認証状態、配布先は未決です。確定状況は[公開記録](../releases.ja.md)を参照してください。
+ポリシーの[公開URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)は、ログイン不要のHTTPSで閲覧できることを確認しました。Trader／Non-Traderの区分、アカウントの認証状態、配布先は未決です。確定状況は[公開記録](../releases.ja.md)を参照してください。

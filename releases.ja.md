@@ -10,9 +10,28 @@ lang: ja
 
 2026年11月11日に、既存のREADMEと公開資料をGitHub Pagesで公開しました。公開元は `main` ブランチのルートです。READMEをトップページにし、Markdown内の相対リンクはGitHub Pages標準のJekyll処理でHTMLのURLへ変換します。ページの編集は引き続きMarkdownで行います。拡張の `src/`・`options.html`・`manifest.json` はサイトの生成対象から除きます。
 
-公開URLは[使い方](https://mstksb.github.io/chrome-ext-tabuchan/)と[プライバシーポリシー草案](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)です。標準ビルドと初回デプロイが成功し、両ページを認証なしのHTTPSで取得できることと、ブラウザーで本文が表示されることを確認しました。ポリシーの公開者名・連絡先・施行日は未確定で、ストア提出用の確定版にはしていません。
+公開URLは[使い方](https://mstksb.github.io/chrome-ext-tabuchan/)と[プライバシーポリシー](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html)です。GitHub Pagesの標準ビルドと初回デプロイが成功し、両ページをログイン不要のHTTPSで閲覧できることを確認しました。
 
-上記は当時の公開記録です。2026年11月18日の更新内容のデプロイは未確認です。
+2026年11月18日に、コミット `e190053` の内容をGitHub Pagesに反映しました。プライバシーポリシーは7言語すべてでログインせずにHTTPSで閲覧できることを確認しました。
+
+## 0.2.1
+
+拡張機能、ツールバー、設定画面にtabuchanのマスコットアイコンを採用しました。動作とデータの取扱いは `0.2.0` と同じです。
+
+| 項目 | 内容 |
+| --- | --- |
+| バージョン | `0.2.1` |
+| 配布ZIP | [tabuchan-0.2.1.zip](dist/tabuchan-0.2.1.zip)。manifestを直下に置き、28実行ファイルを収録。 |
+| SHA-256 | `8cbafd2a24d4f52fb8521f95df2b5f9ed46869eaa48d56df5d4e68819af143ab` |
+| チェックサム | [tabuchan-0.2.1.zip.sha256](dist/tabuchan-0.2.1.zip.sha256) |
+| 動作要件 | Manifest V3対応のGoogle Chrome。manifestの最低バージョン指定は102 |
+| ストア状態 | Dashboardのパッケージ・項目IDとURL、審査・公開状況は確認待ちです。|
+
+### ZIP展開後の検証
+
+公開候補のNodeテスト184件と構文チェックが合格しました。配布ZIPを展開し、Linux arm64（Docker）のChrome for Testing Stable `158.0.8127.36` で主要操作22群とロケール3群の計25群に合格しました。設定画面の `0.2.1` 表示と48 px PNGの読み込み、manifestが参照する16 px・128 px PNGを確認しました。
+
+このZIPで日英の設定画面と候補一覧の1280×800画像4枚を撮り直し、既存画像とバイト単位で一致することを確認しました。
 
 ## 0.2.0
 
@@ -72,7 +91,7 @@ Linux arm64のChrome for Testing Stable `158.0.8127.36`でE2Eの主要操作21�
 - Windows、旧Chrome、OSのネイティブIMEでの動作。
 - 通常のChromeで、拡張の再読み込み後に再稼働する動作。
 - ライセンス、配布範囲・対象国。
-- 更新したプライバシーポリシーのGitHub Pagesへの反映と、現行のストア要件に照らしたデータ取扱いの確認。
+- Chrome Web Storeへの提出時に適用されるデータ取扱いの要件。
 - Dashboardの掲載・プライバシー申告の保存結果と、審査・公開状態。
 
 操作は[使い方](README.ja.md)、データの取扱いは[プライバシーポリシー](privacy-policy.ja.md)、掲載・申告の原稿は[掲載原稿](store/listing.ja.md)と[プライバシー申告原稿](store/privacy.ja.md)を参照してください。

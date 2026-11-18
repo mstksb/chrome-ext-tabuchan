@@ -6,7 +6,7 @@ lang: en
 
 English | [日本語](privacy.ja.md) | [简体中文](privacy.zh-CN.md) | [繁體中文](privacy.zh-TW.md) | [Português (Brasil)](privacy.pt-BR.md) | [Español](privacy.es.md) | [Deutsch](privacy.de.md)
 
-This draft covers tabuchan `0.2.0` and reflects the extension’s code. See the [release record](../releases.md) for open items and verification and submission status.
+This draft covers tabuchan `0.2.1` and reflects the extension’s code. See the [release record](../releases.md) for open items and verification and submission status.
 
 ## Single purpose
 
@@ -62,6 +62,6 @@ Session history is cleared on browser restart or extension disable/reload/update
 
 ## Items requiring publisher confirmation
 
-Publisher: `mstksb`. Contact: [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com). This policy takes effect on the date tabuchan version `0.2.0` is published in the Chrome Web Store.
+Publisher: `mstksb`. Contact: [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com). This policy covers tabuchan versions `0.2.0` and `0.2.1` and takes effect when the first of those versions is published in the Chrome Web Store.
 
-The existing [policy URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) was verified over HTTPS without a login. The updated policy is ready in this repository and is pending deployment to GitHub Pages. Trader / Non-Trader status, account verification, and distribution destinations remain pending. See the [release record](../releases.md) for current status.
+The [policy URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) was verified over HTTPS without a login. Trader / Non-Trader status, account verification, and distribution destinations remain pending. See the [release record](../releases.md) for current status.

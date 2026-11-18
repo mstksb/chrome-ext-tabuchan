@@ -6,14 +6,14 @@ lang: zh-TW
 
 [English](listing.md) | [日本語](listing.ja.md) | [简体中文](listing.zh-CN.md) | 繁體中文 | [Português (Brasil)](listing.pt-BR.md) | [Español](listing.es.md) | [Deutsch](listing.de.md)
 
-此套件的版本為 `0.2.0`。提交版本號將在核對 Dashboard 的上傳紀錄後決定。發佈檔案、已驗證環境及審查與發佈狀態請參閱[發佈紀錄](../releases.zh-TW.md)。
+此套件的版本為 `0.2.1`。發佈檔案、已驗證環境及審查與發佈狀態請參閱[發佈紀錄](../releases.zh-TW.md)。
 
 ## 基本資訊
 
 | 欄位 | 草案／現況 |
 | --- | --- |
 | 名稱 | tabuchan |
-| 版本 | `0.2.0` |
+| 版本 | `0.2.1` |
 | 文件／商店文案語言 | 英文、日文、簡體中文、繁體中文、巴西葡萄牙文、西班牙文、德文，以英文為基礎；Dashboard 儲存值未驗證 |
 | 擴充功能介面語言 | Chrome 顯示語言為日文時使用日文，否則英文；文件語言不代表介面支援 |
 | 建議類別 | Functionality & UI，依涵蓋分頁／快捷鍵管理的現行官方分類；Dashboard 儲存值未驗證 |
@@ -46,7 +46,7 @@ macOS 預設上一個為 Control + Shift + J，下一個為 Control + Shift + K�
 
 | 素材 | 內容／準備狀態 |
 | --- | --- |
-| 商店圖示 | [tab-128.png](../icons/tab-128.png)，現有分頁圖案轉為 128×128 PNG |
+| 商店圖示 | [tab-128.png](../icons/tab-128.png)。tabuchan 吉祥物圖示（128×128 PNG） |
 | 英文設定 | [options-en-1280x800.png](images/options-en-1280x800.png)，1280×800，預設長按時間 0.5 秒與搜尋比對設定 |
 | 英文清單 | [picker-en-1280x800.png](images/picker-en-1280x800.png), 1280×800, 含群組的英文分頁順序清單 |
 | 日文設定 | [options-1280x800.png](images/options-1280x800.png)，1280×800，預設長按時間 0.5 秒與搜尋比對設定 |
@@ -56,10 +56,10 @@ macOS 預設上一個為 Control + Shift + J，下一個為 Control + Shift + K�
 
 ## 審查人員測試說明
 
-無須帳號或登入。在同一視窗依序造訪多個一般 HTTP(S) 分頁。按住修飾鍵，短按並放開上一個、下一個對應的一般按鍵。放開必要的修飾鍵，確認目前分頁成為最近使用的分頁。長按整組快捷鍵至少 0.5 秒，按向左鍵切換到分頁順序，依標題篩選並按 Enter 確認。從工具列圖示開啟設定，確認版本 `0.2.0`。
+無須帳號或登入。在同一視窗依序造訪多個一般 HTTP(S) 分頁。按住修飾鍵，短按並放開上一個、下一個對應的一般按鍵。放開必要的修飾鍵，確認目前分頁成為最近使用的分頁。長按整組快捷鍵至少 0.5 秒，按向左鍵切換到分頁順序，依標題篩選並按 Enter 確認。從工具列圖示開啟設定，確認版本 `0.2.1`。
 
 ## 草案依據
 
-候選版本在 Linux arm64 的 Chrome for Testing Stable `158.0.8127.36` 上通過 21 組端對端測試。另有 3 組測試驗證日文與英文介面，以及 Chrome 使用法文時改用英文的行為，並涵蓋 Unicode 標題搜尋。
+目前發佈套件的驗證結果請參閱[發佈紀錄](../releases.zh-TW.md)。
 
 商店欄位與圖片要求於 2026 年 11 月 9 日依官方資料檢查；提交前須再次確認 Dashboard 必填欄位：[Store listing](https://developer.chrome.com/docs/webstore/cws-dashboard-listing)、[Supplying Images](https://developer.chrome.com/docs/webstore/images)。

@@ -10,9 +10,28 @@ English | [日本語](releases.ja.md) | [简体中文](releases.zh-CN.md) | [繁
 
 On November 11, 2026, the existing README and public documents were published on GitHub Pages from the root of the `main` branch. The README is the home page; GitHub Pages' standard Jekyll processing converts relative Markdown links to HTML URLs. Pages continue to be edited as Markdown. Extension files in `src/`, `options.html`, and `manifest.json` are excluded from the generated site.
 
-The public URLs are [usage instructions](https://mstksb.github.io/chrome-ext-tabuchan/) and the [draft privacy policy](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html). The standard build and initial deployment succeeded. Both pages were accessible over HTTPS without authentication, and their content was checked in a browser. The policy's publisher name, contact details, and effective date remain undecided; it is not a finalized store-submission policy.
+The public URLs are [usage instructions](https://mstksb.github.io/chrome-ext-tabuchan/) and the [privacy policy](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html). The initial GitHub Pages build and deployment succeeded, and both pages were accessible without authentication over HTTPS.
 
-The dates above describe earlier deployments. Deployment of the November 18, 2026 update remains unverified.
+On November 18, 2026, the site build from commit `e190053` deployed to GitHub Pages. The privacy policy pages were verified in all seven documentation languages over HTTPS without a login.
+
+## 0.2.1
+
+This update introduces the Tabuchan mascot icon for the extension, toolbar, and settings page. Behavior and data handling are the same as in `0.2.0`.
+
+| Item | Details |
+| --- | --- |
+| Version | `0.2.1` |
+| Distribution ZIP | [tabuchan-0.2.1.zip](dist/tabuchan-0.2.1.zip), contains 28 runtime files with the manifest at the ZIP root |
+| SHA-256 | `8cbafd2a24d4f52fb8521f95df2b5f9ed46869eaa48d56df5d4e68819af143ab` |
+| Checksum file | [tabuchan-0.2.1.zip.sha256](dist/tabuchan-0.2.1.zip.sha256) |
+| Requirements | Google Chrome with Manifest V3 support; the manifest declares a minimum of Chrome 102 |
+| Store status | The Dashboard’s package, item ID/URL, and review and publication status still need verification. |
+
+### Extracted ZIP verification
+
+The source candidate passed 184 Node tests and syntax checks. The extracted distribution ZIP passed 25 end-to-end test groups (22 main and 3 locale) in Chrome for Testing Stable `158.0.8127.36` on Linux arm64 (Docker). Settings showed `0.2.1` and loaded the 48 px PNG. The manifest referenced the 16 px and 128 px PNGs.
+
+Retaking the four 1280×800 Japanese and English settings and tab-list screenshots from this ZIP produced files identical to the existing images.
 
 ## 0.2.0
 
@@ -72,7 +91,7 @@ Configuration/automated checks cover Japanese/English translation keys and manif
 - Windows, older Chrome versions, and native operating system IMEs.
 - Operation after extension reload in regular Chrome.
 - License, distribution visibility, and target countries.
-- Deployment of the updated privacy policy to GitHub Pages and confirmation of data handling against the current store requirements.
+- Data-handling requirements for Chrome Web Store submission.
 - Saved listing/privacy disclosures in the Dashboard and review/publication status.
 
 Finalize these items before store submission.

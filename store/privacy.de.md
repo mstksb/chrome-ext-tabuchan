@@ -6,7 +6,7 @@ lang: de
 
 [English](privacy.md) | [日本語](privacy.ja.md) | [简体中文](privacy.zh-CN.md) | [繁體中文](privacy.zh-TW.md) | [Português (Brasil)](privacy.pt-BR.md) | [Español](privacy.es.md) | Deutsch
 
-Dieser Entwurf beruht auf dem Code von tabuchan `0.2.0`. Offene Punkte sowie Prüf- und Einreichungsstatus finden Sie im [Protokoll](../releases.de.md).
+Dieser Entwurf beruht auf dem Code von tabuchan `0.2.1`. Offene Punkte sowie Prüf- und Einreichungsstatus finden Sie im [Protokoll](../releases.de.md).
 
 ## Einziger Zweck
 
@@ -62,6 +62,6 @@ Neustart oder Deaktivieren/Neuladen/Aktualisieren löscht Sitzungsverlauf. Gesch
 
 ## Bestätigung durch Herausgeber
 
-Herausgeber: `mstksb`. Kontakt: [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com). Diese Richtlinie tritt am Tag der Veröffentlichung von tabuchan Version `0.2.0` im Chrome Web Store in Kraft.
+Herausgeber: `mstksb`. Kontakt: [mstksb.goog@gmail.com](mailto:mstksb.goog@gmail.com). Diese Richtlinie gilt für die tabuchan-Versionen `0.2.0` und `0.2.1`. Sie tritt in Kraft, sobald die erste dieser beiden Versionen im Chrome Web Store veröffentlicht wird.
 
-Die bisherige [bestehende URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) der Richtlinie war bei der Prüfung ohne Anmeldung erreichbar. Die aktualisierte Richtlinie liegt im Repository und muss noch auf GitHub Pages bereitgestellt werden. Trader-/Non-Trader-Status, Kontoprüfung und Verteilungsziele sind weiterhin offen. Den aktuellen Stand finden Sie im [Protokoll](../releases.de.md).
+Die [bestehende URL](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) der Richtlinie wurde per HTTPS ohne Anmeldung geprüft. Trader-/Non-Trader-Status, Kontoprüfung und Verteilungsziele sind weiterhin offen. Den aktuellen Stand finden Sie im [Protokoll](../releases.de.md).

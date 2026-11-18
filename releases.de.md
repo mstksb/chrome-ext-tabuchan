@@ -10,9 +10,28 @@ lang: de
 
 Am 11. November 2026 wurden bestehende README und öffentliche Dokumente über GitHub Pages aus dem Stamm von `main` veröffentlicht. Die README ist die Startseite; Jekyll wandelt relative Markdown-Links in HTML-URLs um. Bearbeitet wird weiterhin Markdown. `src/`, `options.html` und `manifest.json` sind vom erzeugten Webauftritt ausgeschlossen.
 
-Erster Build und erste Bereitstellung von [Anleitung](https://mstksb.github.io/chrome-ext-tabuchan/) und [Datenschutzentwurf](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html) waren erfolgreich. Beide Seiten wurden per HTTPS ohne Anmeldung und im Browser geprüft. Herausgeber, Kontakt und Gültigkeit sind offen; die Richtlinie ist noch keine abgeschlossene Store-Fassung. Dieser historische Nachweis bestätigt keine Bereitstellung der neuen Übersetzungen.
+Die öffentlichen URLs sind die [Anleitung](https://mstksb.github.io/chrome-ext-tabuchan/) und die [Datenschutzrichtlinie](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.html). Die erste Erstellung und Bereitstellung auf GitHub Pages war erfolgreich. Beide Seiten waren per HTTPS ohne Anmeldung erreichbar.
 
-Der obige Nachweis betrifft frühere Bereitstellungen. Die Bereitstellung des Updates vom 18. November 2026 ist noch ungeprüft.
+Am 18. November 2026 wurde der Stand des Commits `e190053` auf GitHub Pages bereitgestellt. Die Datenschutzrichtlinie wurde in allen sieben Dokumentationssprachen per HTTPS ohne Anmeldung geprüft.
+
+## 0.2.1
+
+Dieses Update führt das Tabuchan-Maskottchensymbol für die Erweiterung, die Symbolleiste und die Einstellungen ein. Verhalten und Datenverarbeitung entsprechen Version `0.2.0`.
+
+| Punkt | Angaben |
+| --- | --- |
+| Version | `0.2.1` |
+| ZIP | [tabuchan-0.2.1.zip](dist/tabuchan-0.2.1.zip), enthält 28 Laufzeitdateien und das Manifest im Stammverzeichnis des ZIPs |
+| SHA-256 | `8cbafd2a24d4f52fb8521f95df2b5f9ed46869eaa48d56df5d4e68819af143ab` |
+| Prüfsumme | [tabuchan-0.2.1.zip.sha256](dist/tabuchan-0.2.1.zip.sha256) |
+| Voraussetzungen | Chrome mit Manifest V3; angegebenes Minimum Chrome 102 |
+| Store | Paket, ID und URL des Store-Eintrags sowie Prüfungs- und Veröffentlichungsstatus im Dashboard sind noch zu prüfen. |
+
+### Prüfung des entpackten ZIPs
+
+Der Kandidat bestand 184 Node-Tests und die Syntaxprüfung. Das entpackte Distributions-ZIP bestand 25 End-to-End-Testgruppen (22 für Bedienung und 3 für Sprachen) in Chrome for Testing Stable `158.0.8127.36` auf Linux arm64 (Docker). Die Einstellungen zeigten `0.2.1` an und luden das PNG mit 48 px. Das Manifest verwies auf die PNGs mit 16 px und 128 px.
+
+Die vier Aufnahmen der Einstellungen und Tab-Listen auf Japanisch und Englisch mit 1280×800 Pixeln wurden mit diesem ZIP erneut aufgenommen. Die Dateien stimmten bytegenau mit den vorhandenen Bildern überein.
 
 ## 0.2.0
 
@@ -72,7 +91,7 @@ Konfigurations-/automatische Prüfungen umfassen japanische/englische Schlüssel
 - Windows, ältere Chrome-Versionen und systemeigene IMEs.
 - Betrieb nach Neuladen im normalen Chrome.
 - Lizenz, Sichtbarkeit und Zielländer.
-- Veröffentlichung der aktualisierten Datenschutzerklärung auf GitHub Pages und Prüfung der Datenverarbeitung anhand der aktuellen Store-Anforderungen.
+- Anforderungen des Chrome Web Store an die Datenverarbeitung bei der Einreichung.
 - Gespeicherte Store-/Datenschutzangaben im Dashboard und Prüfungs-/Veröffentlichungsstatus.
 
 Vor der Store-Einreichung klären.

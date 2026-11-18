@@ -6,14 +6,14 @@ lang: es
 
 [English](listing.md) | [日本語](listing.ja.md) | [简体中文](listing.zh-CN.md) | [繁體中文](listing.zh-TW.md) | [Português (Brasil)](listing.pt-BR.md) | Español | [Deutsch](listing.de.md)
 
-Este paquete usa la versión `0.2.0`. La versión que se enviará depende del historial de cargas en el Dashboard. Consulta el [registro](../releases.es.md) para los archivos, los entornos probados y el estado de la tienda.
+Este paquete usa la versión `0.2.1`. Consulta el [registro](../releases.es.md) para los archivos, los entornos probados y el estado de la tienda.
 
 ## Datos básicos
 
 | Campo | Texto / situación |
 | --- | --- |
 | Nombre | tabuchan |
-| Versión | `0.2.0` |
+| Versión | `0.2.1` |
 | Idiomas de documentos/ficha | Inglés como base; japonés, chino simplificado/tradicional, portugués de Brasil, español y alemán. Valores guardados en Dashboard sin verificar |
 | Interfaz | Japonés con Chrome en japonés; inglés en otros casos. Los documentos no amplían la interfaz |
 | Categoría propuesta | Functionality & UI, según la categoría oficial actual para pestañas/atajos; valor guardado sin verificar |
@@ -46,7 +46,7 @@ Historial y ajustes se procesan y guardan localmente. Los favicons pueden genera
 
 | Archivo | Contenido / preparación |
 | --- | --- |
-| [tab-128.png](../icons/tab-128.png) | Icono existente convertido a PNG 128×128 |
+| [tab-128.png](../icons/tab-128.png), Icono de la mascota de tabuchan (PNG de 128×128) |
 | [options-en-1280x800.png](images/options-en-1280x800.png) | Duración predeterminada de 0,5 segundos y opciones de coincidencia de búsqueda en inglés, 1280×800 |
 | [picker-en-1280x800.png](images/picker-en-1280x800.png) | Lista en orden de pestañas en inglés, con grupos, 1280×800 |
 | [options-1280x800.png](images/options-1280x800.png) | Duración predeterminada de 0,5 segundos y opciones de coincidencia de búsqueda en japonés, 1280×800 |
@@ -56,10 +56,10 @@ Las cuatro capturas de 1280×800 muestran el mismo paquete bilingüe en Chrome f
 
 ## Instrucciones para revisión
 
-No se requiere una cuenta ni iniciar sesión. Visita varias pestañas HTTP(S) en una ventana. Mantén pulsadas las teclas modificadoras y pulsa y suelta las teclas normales de Retroceder y Avanzar. Suelta un modificador necesario y verifica que la pestaña visible pasa a ser la más reciente. Mantén pulsada toda la combinación al menos 0,5 segundos, pasa al orden de pestañas con la flecha izquierda, filtra por título y confirma con Enter. Abre la configuración desde el icono y comprueba la versión `0.2.0`.
+No se requiere una cuenta ni iniciar sesión. Visita varias pestañas HTTP(S) en una ventana. Mantén pulsadas las teclas modificadoras y pulsa y suelta las teclas normales de Retroceder y Avanzar. Suelta un modificador necesario y verifica que la pestaña visible pasa a ser la más reciente. Mantén pulsada toda la combinación al menos 0,5 segundos, pasa al orden de pestañas con la flecha izquierda, filtra por título y confirma con Enter. Abre la configuración desde el icono y comprueba la versión `0.2.1`.
 
 ## Base del borrador
 
-La versión candidata superó 21 grupos de pruebas de extremo a extremo en Chrome for Testing Stable `158.0.8127.36` (Linux arm64). Otros tres grupos verificaron la interfaz en japonés y en inglés, el uso del inglés con Chrome en francés y la búsqueda de títulos con Unicode.
+Consulta el [registro](../releases.es.md) para ver la verificación del paquete de distribución actual.
 
 Campos e imágenes se contrastaron con documentación oficial el 9 de noviembre de 2026. Revisa los requisitos actuales antes del envío: [Store listing](https://developer.chrome.com/docs/webstore/cws-dashboard-listing), [Supplying Images](https://developer.chrome.com/docs/webstore/images).

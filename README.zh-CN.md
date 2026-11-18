@@ -8,7 +8,7 @@ lang: zh-CN
 
 通过键盘切换到最近使用的标签页的 Chrome 扩展。短按快捷键可浏览历史顺序，长按可打开标签页列表。
 
-此软件包的版本为 `0.2.0`。提交版本号将在核对 Dashboard 的上传记录后确定。分发文件、已验证环境以及审核和发布状态见[发布记录](releases.zh-CN.md)。
+此软件包的版本为 `0.2.1`。分发文件、已验证环境以及审核和发布状态见[发布记录](releases.zh-CN.md)。
 
 文档提供英语、日语、简体中文、繁体中文、巴西葡萄牙语、西班牙语和德语版本。文档语言与扩展界面语言不同：目前 Chrome 显示语言为日语时，设置页面和标签页列表使用日语，其他情况下使用英语。
 
@@ -56,15 +56,14 @@ macOS 使用实体 Control 键。在设置中实际按下所需组合即可注�
 
 ## 重新打包分发 ZIP
 
-在本 README 所在文件夹打开终端，可用 macOS 标准的 `zip` 和 `shasum` 工具将 29 个运行文件重新打包。以下命令会替换现有 ZIP 和校验和文件。
+在本 README 所在文件夹打开终端，可用 macOS 标准的 `zip` 和 `shasum` 工具将 28 个运行文件重新打包。以下命令会替换现有 ZIP 和校验和文件。
 
 ```sh
 mkdir -p dist &&
 tabuchan_package_tmp=$(mktemp -d) &&
-zip -X "$tabuchan_package_tmp/tabuchan-0.2.0.zip" \
+zip -X "$tabuchan_package_tmp/tabuchan-0.2.1.zip" \
   manifest.json \
   options.html \
-  icons/tab.svg \
   icons/tab-16.png \
   icons/tab-48.png \
   icons/tab-128.png \
@@ -91,9 +90,9 @@ zip -X "$tabuchan_package_tmp/tabuchan-0.2.0.zip" \
   src/picker.js \
   src/settings-rules.js \
   src/shortcut-changes.js && \
-  mv "$tabuchan_package_tmp/tabuchan-0.2.0.zip" dist/tabuchan-0.2.0.zip &&
+  mv "$tabuchan_package_tmp/tabuchan-0.2.1.zip" dist/tabuchan-0.2.1.zip &&
 rmdir "$tabuchan_package_tmp" &&
-(cd dist && shasum -a 256 tabuchan-0.2.0.zip > tabuchan-0.2.0.zip.sha256)
+(cd dist && shasum -a 256 tabuchan-0.2.1.zip > tabuchan-0.2.1.zip.sha256)
 ```
 
 ZIP 根目录包含 `manifest.json`，不包含商店资料、截图或发布记录。重新打包可能改变 SHA-256。分发前请将实际 ZIP 的校验和与[发布记录](releases.zh-CN.md)对应。
@@ -105,7 +104,7 @@ ZIP 根目录包含 `manifest.json`，不包含商店资料、截图或发布记
 - [使用说明](https://mstksb.github.io/chrome-ext-tabuchan/README.zh-CN.html)
 - [GitHub Pages 上的隐私政策](https://mstksb.github.io/chrome-ext-tabuchan/privacy-policy.zh-CN.html)
 
-更新后的 `0.2.0` 隐私政策已在本代码库中，尚未部署到 GitHub Pages。
+已确认可通过 HTTPS 无需登录访问 GitHub Pages 上全部七种语言的隐私政策。
 
 ## 公开资料
 
